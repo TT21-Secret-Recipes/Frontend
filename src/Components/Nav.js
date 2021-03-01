@@ -18,7 +18,7 @@ function Nav(props) {
          <RiMenuFill
             className="burgermenu"
             style={{ marginRight: "2%", fontSize: "1.8rem" }}
-            onClick={() => drawer.current.classList.toggle("closed")}
+            onClick={() => (drawer.current.style.visibility = "visible")}
          />
 
          <div
@@ -31,6 +31,7 @@ function Nav(props) {
                background: "gray",
                height: "100vh",
                paddingLeft: "3vh",
+               visibility: "hidden",
             }}
             ref={drawer}
          >
@@ -42,7 +43,7 @@ function Nav(props) {
                }}
             >
                <RiCloseFill
-                  onClick={() => drawer.current.classList.toggle("closed")}
+                  onClick={() => (drawer.current.style.visibility = "hidden")}
                />
             </div>
 
