@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { RiCloseFill } from "react-icons/ri";
 
 function AddRecipe(props) {
    const [ingredients, setIngredients] = useState([]);
    const [ingredientsToAdd, setIngredientsToAdd] = useState([]);
+   const [recipe, setRecipe] = useState({
+      title: "",
+      source: "",
+      ingredients,
+      instructions: "",
+      category: "",
+   });
+
+   useEffect(() => {
+      setRecipe({ ...recipe, ingredients: ingredients });
+   }, [ingredients]);
 
    const removeIngredients = (e, j) => {
       e.preventDefault();
@@ -16,6 +28,11 @@ function AddRecipe(props) {
       setIngredients(ingredients.concat(ingredientsToAdd[j]));
    };
 
+   const mockSubmitRecipe = (e) => {
+      e.preventDefault();
+      props.mockAddRecipe(recipe);
+   };
+
    return (
       <div>
          <form
@@ -26,11 +43,19 @@ function AddRecipe(props) {
          >
             <label>
                Title
-               <input />
+               <input
+                  onChange={(e) =>
+                     setRecipe({ ...recipe, title: e.target.value })
+                  }
+               />
             </label>
             <label>
                Source
-               <input />
+               <input
+                  onChange={(e) =>
+                     setRecipe({ ...recipe, source: e.target.value })
+                  }
+               />
             </label>
 
             <label>
@@ -57,8 +82,23 @@ function AddRecipe(props) {
 
                <div style={{ display: "flex" }}>
                   <div>
-                     {ingredients.map((i) => (
-                        <p> {i} </p>
+                     {ingredients.map((i, j) => (
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                           {i}
+                           <div className="burgermenu">
+                              <RiCloseFill
+                                 style={{
+                                    color: "#d42f2f",
+                                    cursor: "pointer",
+                                 }}
+                                 onClick={() => {
+                                    const temp = [...ingredients];
+                                    temp.splice(j, 1);
+                                    setIngredients(temp);
+                                 }}
+                              />
+                           </div>
+                        </div>
                      ))}
                   </div>
                   <div style={{ marginLeft: "5vw", marginTop: "1%" }}>
@@ -92,14 +132,24 @@ function AddRecipe(props) {
                </div>
             </label>
             <label>
-               Intructions <input />
+               Intructions
+               <input
+                  onChange={(e) =>
+                     setRecipe({ ...recipe, instructions: e.target.value })
+                  }
+               />
             </label>
             <label>
-               Category <input />{" "}
+               Category
+               <input
+                  onChange={(e) =>
+                     setRecipe({ ...recipe, category: e.target.value })
+                  }
+               />
             </label>
 
             <div>
-               <button> Submit </button>
+               <button onClick={(e) => mockSubmitRecipe(e)}> Submit </button>
                <button> Cancel </button>
             </div>
          </form>

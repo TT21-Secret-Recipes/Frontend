@@ -3,6 +3,14 @@ import { RiMenuFill, RiCloseFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 function Nav(props) {
    const drawer = useRef();
+
+   const hidedrawer = () => {
+      drawer.current.style.visibility = "hidden";
+   };
+   const showdrawer = () => {
+      drawer.current.style.visibility = "visible";
+   };
+
    return (
       <nav
          style={{
@@ -18,7 +26,7 @@ function Nav(props) {
          <RiMenuFill
             className="burgermenu"
             style={{ marginRight: "2%", fontSize: "1.8rem" }}
-            onClick={() => (drawer.current.style.visibility = "visible")}
+            onClick={showdrawer}
          />
 
          <div
@@ -42,9 +50,7 @@ function Nav(props) {
                   fontSize: "1.5rem",
                }}
             >
-               <RiCloseFill
-                  onClick={() => (drawer.current.style.visibility = "hidden")}
-               />
+               <RiCloseFill onClick={hidedrawer} />
             </div>
 
             <div
@@ -54,16 +60,26 @@ function Nav(props) {
                   marginRight: "20px",
                }}
             >
-               <NavLink to="/"> Home </NavLink>
+               <NavLink onClick={hidedrawer} to="/">
+                  Home
+               </NavLink>
                {/* loggedin && */}
-               <NavLink to="/dashboard"> Dashboard </NavLink>
+               <NavLink onClick={hidedrawer} to="/dashboard">
+                  Dashboard
+               </NavLink>
 
                {/* !loggedin && */}
-               <NavLink to="/login"> Login </NavLink>
-               <NavLink to="/register"> Register </NavLink>
+               <NavLink onClick={hidedrawer} to="/login">
+                  Login
+               </NavLink>
+               <NavLink onClick={hidedrawer} to="/register">
+                  Register
+               </NavLink>
 
                {/* loggedin && */}
-               <NavLink to="?"> Logout </NavLink>
+               <NavLink onClick={hidedrawer} to="?">
+                  Logout
+               </NavLink>
             </div>
          </div>
       </nav>
