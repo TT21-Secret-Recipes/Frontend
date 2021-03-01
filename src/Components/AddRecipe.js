@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { RiCloseFill } from "react-icons/ri";
+import { RiCloseFill, RiAddFill } from "react-icons/ri";
 
 function AddRecipe(props) {
    const [ingredients, setIngredients] = useState([]);
@@ -34,23 +34,23 @@ function AddRecipe(props) {
    };
 
    return (
-      <div>
+      <div style={{ alignSelf: "center", width: "60vw" }}>
          <form
             style={{
                display: "flex",
                flexDirection: "column",
             }}
          >
-            <label>
-               Title
+            <label className="addRecipeSection">
+               <div>Title</div>
                <input
                   onChange={(e) =>
                      setRecipe({ ...recipe, title: e.target.value })
                   }
                />
             </label>
-            <label>
-               Source
+            <label className="addRecipeSection">
+               <div>Source</div>
                <input
                   onChange={(e) =>
                      setRecipe({ ...recipe, source: e.target.value })
@@ -58,26 +58,35 @@ function AddRecipe(props) {
                />
             </label>
 
-            <label>
+            <label className="addRecipeSection">
                <div
                   style={{
                      display: "flex",
                   }}
                >
-                  <span>Ingredients</span>
                   <div
+                     style={{
+                        display: "flex",
+                        alignItems: "center",
+                     }}
+                  >
+                     Ingredients
+                  </div>
+                  <RiAddFill
                      onClick={(e) => {
                         e.preventDefault();
                         setIngredientsToAdd([...ingredientsToAdd].concat(""));
                      }}
+                     className="menuicon"
                      style={{
-                        padding: "4px 8px",
-                        backgroundColor: "#c5c5c5",
+                        padding: "4px 3px",
+                        backgroundColor: "#e4e4e4",
                         cursor: "pointer",
+                        width: "2vh",
+                        borderRadius: "6px",
+                        margin: "1%",
                      }}
-                  >
-                     Add
-                  </div>
+                  ></RiAddFill>
                </div>
 
                <div style={{ display: "flex" }}>
@@ -85,7 +94,7 @@ function AddRecipe(props) {
                      {ingredients.map((i, j) => (
                         <div style={{ display: "flex", alignItems: "center" }}>
                            {i}
-                           <div className="burgermenu">
+                           <div className="menuicon">
                               <RiCloseFill
                                  style={{
                                     color: "#d42f2f",
@@ -131,15 +140,15 @@ function AddRecipe(props) {
                   </div>
                </div>
             </label>
-            <label>
-               Intructions
-               <input
+            <label className="addRecipeSection">
+               Instructions
+               <textarea
                   onChange={(e) =>
                      setRecipe({ ...recipe, instructions: e.target.value })
                   }
                />
             </label>
-            <label>
+            <label className="addRecipeSection">
                Category
                <input
                   onChange={(e) =>
@@ -148,9 +157,42 @@ function AddRecipe(props) {
                />
             </label>
 
-            <div>
-               <button onClick={(e) => mockSubmitRecipe(e)}> Submit </button>
-               <button> Cancel </button>
+            <div
+               style={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  marginTop: "2%",
+               }}
+            >
+               <button
+                  style={{
+                     padding: "1vh 2vh",
+                     fontSize: "1rem",
+                     backgroundColor: "#e4e4e4",
+                     border: "0",
+                     cursor: "pointer",
+
+                     borderRadius: "6px",
+                     margin: "1%",
+                  }}
+                  onClick={(e) => mockSubmitRecipe(e)}
+               >
+                  Submit
+               </button>
+               <button
+                  style={{
+                     padding: "1vh 2vh",
+                     fontSize: "1rem",
+                     backgroundColor: "#e4e4e4",
+                     border: "0",
+                     cursor: "pointer",
+
+                     borderRadius: "6px",
+                     margin: "1%",
+                  }}
+               >
+                  Cancel
+               </button>
             </div>
          </form>
       </div>

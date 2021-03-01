@@ -3,19 +3,36 @@ import React from "react";
 function RecipeCard(props) {
    const { title, source, ingredients, instructions, category } = props.recipe;
    return (
-      <div>
+      <div
+         style={{
+            display: "flex",
+            flexDirection: "column",
+            width: "75vw",
+            alignSelf: "center",
+            background: "#f1f1f1",
+            borderRadius: "12px",
+            padding: "4%",
+            margin: "2%",
+         }}
+      >
          {/* optional img */}
-
-         <p> Title: {title} </p>
-         <p> Source: {source} </p>
-         <p> Category: {category} </p>
+         <h2> {title} </h2>
          <div>
-            <p> Ingredients: </p>
-            {ingredients.map((i) => (
-               <p> {i} </p>
-            ))}
+            <span style={{ fontWeight: "600" }}> Source: </span> {source}
          </div>
-         <p> Instructions: {instructions} </p>
+         <div>
+            <span style={{ fontWeight: "600" }}> Category: </span> {category}
+         </div>
+         <div>
+            <h3>Ingredients:</h3>
+            <ul>
+               {ingredients.map((i) => (
+                  <li> {i} </li>
+               ))}
+            </ul>
+         </div>
+         <h3>Instructions:</h3>
+         <div> {instructions} </div>
       </div>
    );
 }

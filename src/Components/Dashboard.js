@@ -13,7 +13,7 @@ function Dashboard(props) {
    };
 
    return (
-      <div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
          <DashNav />
 
          <Switch>

@@ -24,8 +24,8 @@ function Nav(props) {
             <h2>Secret Family Recipes Cookbook</h2>
          </div>
          <RiMenuFill
-            className="burgermenu"
-            style={{ marginRight: "2%", fontSize: "1.8rem" }}
+            className="menuicon"
+            style={{ marginRight: "3%", fontSize: "1.8rem", cursor: "pointer" }}
             onClick={showdrawer}
          />
 
@@ -36,8 +36,9 @@ function Nav(props) {
                position: "absolute",
                right: "0",
                top: "0",
-               background: "gray",
+               background: "rgba(55,55,55,0.99)",
                height: "100vh",
+               width: "15vh",
                paddingLeft: "3vh",
                visibility: "hidden",
             }}
@@ -50,7 +51,17 @@ function Nav(props) {
                   fontSize: "1.5rem",
                }}
             >
-               <RiCloseFill onClick={hidedrawer} />
+               <RiCloseFill
+                  onClick={hidedrawer}
+                  className="menuicon"
+                  style={{
+                     cursor: "pointer",
+                     color: "white",
+                     marginRight: "5%",
+                     marginTop: "5%",
+                     fontSize: "2rem",
+                  }}
+               />
             </div>
 
             <div
@@ -60,24 +71,28 @@ function Nav(props) {
                   marginRight: "20px",
                }}
             >
-               <NavLink onClick={hidedrawer} to="/">
+               <NavLink className="navlink" onClick={hidedrawer} to="/">
                   Home
                </NavLink>
                {/* loggedin && */}
-               <NavLink onClick={hidedrawer} to="/dashboard">
+               <NavLink
+                  className="navlink"
+                  onClick={hidedrawer}
+                  to="/dashboard"
+               >
                   Dashboard
                </NavLink>
 
                {/* !loggedin && */}
-               <NavLink onClick={hidedrawer} to="/login">
+               <NavLink className="navlink" onClick={hidedrawer} to="/login">
                   Login
                </NavLink>
-               <NavLink onClick={hidedrawer} to="/register">
+               <NavLink className="navlink" onClick={hidedrawer} to="/register">
                   Register
                </NavLink>
 
                {/* loggedin && */}
-               <NavLink onClick={hidedrawer} to="?">
+               <NavLink className="navlink" onClick={hidedrawer} to="?">
                   Logout
                </NavLink>
             </div>
