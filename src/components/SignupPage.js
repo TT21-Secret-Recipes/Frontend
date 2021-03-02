@@ -76,7 +76,7 @@ export default function SignupPage(){
 
         <H1TitleStyled>Register</H1TitleStyled>
 
-        <form onSubmit={onSubmit} id='login'>
+        <form onSubmit={onSubmit} id='register'>
           
           <DivFieldsetStyled>
             <LabelStyled focus={focus.username} htmlFor='username' hasData={values.username === '' ? false : true}>Username</LabelStyled>
@@ -132,7 +132,7 @@ export default function SignupPage(){
       </DivFlexGrowStyled>
 
       <DivButtonPaddingStyled>
-        <ButtonSubmitStyled type='submit' form='login'>Login</ButtonSubmitStyled>
+        <ButtonSubmitStyled type='submit' form='register'>Register</ButtonSubmitStyled>
       </DivButtonPaddingStyled>
     </DivFlexStyled>
   )

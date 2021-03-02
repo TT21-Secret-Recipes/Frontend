@@ -80,7 +80,7 @@ export const InputStyled = styled.input`
 `
 
 export const DivButtonPaddingStyled = styled.div`
-  padding: 10px 0;
+  padding-bottom: 10px;
 `
 
 export const ButtonSubmitStyled = styled.button`
@@ -99,5 +99,4 @@ export const ButtonSubmitStyled = styled.button`
 `
 export const PRedStyled = styled.p`
   color: red;
-  line-height: 16px;
 `
