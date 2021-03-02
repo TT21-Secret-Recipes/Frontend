@@ -117,7 +117,7 @@ export default function SignupPage(){
         
         </form>
 
-        <p>{error}</p>
+        <p style={{color: 'red',}}>{error}</p>
       </DivFlexGrowStyled>
 
       <DivButtonPaddingStyled>

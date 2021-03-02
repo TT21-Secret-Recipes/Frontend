@@ -97,3 +97,6 @@ export const ButtonSubmitStyled = styled.button`
     color: #adadad
   }
 `
+export const PRedStyled = styled.p`
+  color: red;
+`
