@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import { path } from '../Routes/routes';
-import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled, H1TitleStyled, DivFieldsetStyled, LabelStyled, InputStyled, DivButtonPaddingStyled, ButtonSubmitStyled } from './SharedStyles';
+import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled, H1TitleStyled, DivFieldsetStyled, LabelStyled, InputStyled, DivButtonPaddingStyled, ButtonSubmitStyled, PRedStyled } from './SharedStyles';
+import schema from '../yupSchema/registerSchema';
 
 const initialValues = {
   username: '',
@@ -23,7 +24,7 @@ const initialFocus = {
 export default function SignupPage(){
   const [ values, setValues ] = useState(initialValues);
   const [ focus, setFocus ] = useState(initialFocus)
-  const [ error, setError ] = useState('');
+  const [ errors, setErrors ] = useState([]);
 
   function onChange(evt){
     const { name, value } = evt.target;
@@ -44,13 +45,23 @@ export default function SignupPage(){
     // clean up data and check if ready
     // (valid email, username, passwords match...)
 
+    try {
+      schema.validateSync(values, { abortEarly: false });
+      setErrors([]);
+    } catch(err) {
+      console.log(err.inner);
+      const list = err.inner.map( error => error.errors[0] );
+      console.log(list);
+      setErrors(list);
+    }
+
     axios.post('url', values)
       .then( respones => {
         //confirmation and login user
       })
       .catch( err => {
         // assuming the error looks something like "username/email already taken"
-        setError(err.data);
+        //setErrors(err.data);
       });
   }
 
@@ -117,7 +128,7 @@ export default function SignupPage(){
         
         </form>
 
-        <p style={{color: 'red',}}>{error}</p>
+        {errors.map( (error, i) => <PRedStyled key={i}>{error}</PRedStyled>)}
       </DivFlexGrowStyled>
 
       <DivButtonPaddingStyled>

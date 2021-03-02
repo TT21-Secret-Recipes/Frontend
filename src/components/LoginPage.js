@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import { validateSync } from 'yup';
 
 import { path } from '../Routes/routes';
 import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled, H1TitleStyled, DivFieldsetStyled, LabelStyled, InputStyled, DivButtonPaddingStyled, ButtonSubmitStyled, PRedStyled } from './SharedStyles';
 import schema from '../yupSchema/loginSchema';
-import { object } from 'yup/lib/locale';
 
 const initialValues = {
   username: '',
@@ -40,7 +38,7 @@ export default function LoginPage({submit}){
 
   function onSubmit(evt){
     evt.preventDefault();
-    
+
     try {
       schema.validateSync(values, { abortEarly: false });
       setErrors([]);
@@ -99,7 +97,7 @@ export default function LoginPage({submit}){
           </DivFieldsetStyled>
         
         </form>
-        {errors.map( error => <PRedStyled>{error}</PRedStyled>)}
+        {errors.map( (error, i) => <PRedStyled key={i}>{error}</PRedStyled>)}
       </DivFlexGrowStyled>
 
       <DivButtonPaddingStyled>

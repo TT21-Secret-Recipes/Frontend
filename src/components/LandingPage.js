@@ -15,10 +15,10 @@ const DivMainStyled = styled.div`
    margin: 0;
    position: absolute;
    top: 50%;
-   transform: translate(-50%, -100%);
+   transform: translate(-50%, -75%);
    text-align: center;
-   width: 400px;
-   height: 400px;
+   width: 500px;
+   height: 500px;
 `;
 
 export default function LandingPage() {

@@ -99,4 +99,5 @@ export const ButtonSubmitStyled = styled.button`
 `
 export const PRedStyled = styled.p`
   color: red;
+  line-height: 16px;
 `
