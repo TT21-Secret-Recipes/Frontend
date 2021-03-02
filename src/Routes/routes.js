@@ -1,5 +1,5 @@
 export const path = {
-  welcome: '/welcome',
-  login: '/login',
-  signup: '/sign-up',
-}
+   welcome: "/auth",
+   login: "/auth/login",
+   signup: "/auth/sign-up",
+};

@@ -84,10 +84,18 @@ function Nav(props) {
                </NavLink>
 
                {/* !loggedin && */}
-               <NavLink className="navlink" onClick={hidedrawer} to="/login">
+               <NavLink
+                  className="navlink"
+                  onClick={hidedrawer}
+                  to="/auth/login"
+               >
                   Login
                </NavLink>
-               <NavLink className="navlink" onClick={hidedrawer} to="/register">
+               <NavLink
+                  className="navlink"
+                  onClick={hidedrawer}
+                  to="/auth/sign-up"
+               >
                   Register
                </NavLink>
 
@@ -95,7 +103,11 @@ function Nav(props) {
                <NavLink className="navlink" onClick={hidedrawer} to="?">
                   Logout
                </NavLink>
-               <NavLink className="navlink" onClick={hidedrawer} to="/UserProfile">
+               <NavLink
+                  className="navlink"
+                  onClick={hidedrawer}
+                  to="/userprofile"
+               >
                   My Profile
                </NavLink>
             </div>

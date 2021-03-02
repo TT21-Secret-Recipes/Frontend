@@ -1,31 +1,35 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from "react-router-dom";
 import Nav from "./Components/Nav";
 import Dashboard from "./Components/Dashboard";
-import ProfilePage from "./Components/ProfilePage"
-import LandingPage from './components/LandingPage';
-import LoginPage from './components/LoginPage'
+import ProfilePage from "./Components/ProfilePage";
+import LandingPage from "./Components/LandingPage";
+import LoginPage from "./Components/LoginPage";
 import "./App.css";
 
 function App() {
    return (
-   <div className="App">
+      <div className="App">
          <header>
             <Nav />
          </header>
-      <Switch>
-         <Route path='/'>
-            <LandingPage/>
-         </Route>
-         <Route path= "/UserProfile">
-            <ProfilePage />
-         </Route>
-         <Route path="/Dashboard">
-            <Dashboard />
-         </Route>
-      </Switch>
+         <Switch>
+            <Route exact path="/">
+               <Redirect to="/auth"></Redirect>
+            </Route>
+            <Route path="/auth">
+               <LandingPage />
+            </Route>
+            <Route path="/userprofile">
+               <ProfilePage />
+            </Route>
+            <Route path="/dashboard">
+               <Dashboard />
+            </Route>
+         </Switch>
+
          <footer> </footer>
-   </div>
-)
+      </div>
+   );
 }
 
 export default App;
