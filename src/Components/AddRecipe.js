@@ -8,7 +8,7 @@ const LabelStyled = styled.label`
 
 function AddRecipe(props) {
    const [ingredients, setIngredients] = useState([]);
-   const [ingredientsToAdd, setIngredientsToAdd] = useState([]);
+   const [ingredientsToAdd, setIngredientsToAdd] = useState('');
    const [recipe, setRecipe] = useState({
       title: "",
       source: "",
@@ -27,12 +27,12 @@ function AddRecipe(props) {
       e.preventDefault();
       const newIngredientsToAdd = [...ingredientsToAdd];
       newIngredientsToAdd.splice(j, 1);
-      setIngredientsToAdd(newIngredientsToAdd);
+      setIngredientsToAdd('');
    };
 
    const addIngredients = (e, j) => {
       e.preventDefault();
-      setIngredients(ingredients.concat(ingredientsToAdd[j]));
+      setIngredients(ingredients.concat(ingredientsToAdd));
    };
 
    const mockSubmitRecipe = (e) => {
@@ -79,25 +79,32 @@ function AddRecipe(props) {
                   >
                      Ingredients
                   </div>
-                  <RiAddFill
-                     onClick={(e) => {
-                        e.preventDefault();
-                        setIngredientsToAdd([...ingredientsToAdd].concat(""));
-                     }}
-                     className="menuicon"
-                     style={{
-                        padding: "4px 3px",
-                        backgroundColor: "#e4e4e4",
-                        cursor: "pointer",
-                        width: "2vh",
-                        borderRadius: "6px",
-                        margin: "1%",
-                     }}
-                  ></RiAddFill>
+                  
                </div>
 
                <div style={{ marginLeft: "40px", marginTop: "4%" }}>
-                     {ingredientsToAdd.map((i, j) => (
+                  <div style={{ display: "flex" }}>
+                     <input
+                        value={ingredientsToAdd}
+                        onChange={ e => {
+                           setIngredientsToAdd(e.target.value);
+                        }}
+                     />
+                     <button
+                        onClick={ e => {
+                           addIngredients(e);
+                           removeIngredients(e);
+                        }}
+                     >
+                        OK
+                     </button>
+                     <button
+                        onClick={ e => removeIngredients(e)}
+                     >
+                        Delete
+                     </button>
+                  </div>
+                     {/* {ingredientsToAdd.map((i, j) => (
                         <div key={j} style={{ display: "flex" }}>
                            <input
                               value={ingredientsToAdd[j]}
@@ -122,7 +129,7 @@ function AddRecipe(props) {
                               Delete
                            </button>
                         </div>
-                     ))}
+                     ))} */}
                   </div>
 
                <div style={{ display: "flex" }}>
