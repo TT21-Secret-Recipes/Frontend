@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import { path } from '../Routes/routes';
-import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled, H1TitleStyled, DivFieldsetStyled, LabelStyled, InputStyled, DivButtonPaddingStyled, ButtonSubmitStyled } from './SharedStyles';
+import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled, H1TitleStyled, DivFieldsetStyled, LabelStyled, InputStyled, DivButtonPaddingStyled, ButtonSubmitStyled, PRedStyled } from './SharedStyles';
+import schema from '../yupSchema/loginSchema';
 
 const initialValues = {
   username: '',
@@ -19,7 +20,7 @@ const initialFocus = {
 export default function LoginPage({submit}){
   const [ values, setValues ] = useState(initialValues);
   const [ focus, setFocus ] = useState(initialFocus);
-  const [ error, setError ] = useState('');
+  const [ errors, setErrors ] = useState([]);
 
   function onChange(evt){
     const { name, value } = evt.target;
@@ -37,13 +38,22 @@ export default function LoginPage({submit}){
 
   function onSubmit(evt){
     evt.preventDefault();
+
+    try {
+      schema.validateSync(values, { abortEarly: false });
+      setErrors([]);
+    } catch(err) {
+      const list = err.inner.map( error => error.errors[0] );
+      setErrors(list);
+    }
+
     axios.post('url', values)
       .then( respones => {
         //login user
       })
       .catch( err => {
         // assuming the error looks something like "username and password do not match"
-        setError(err.data);
+        //setErrors(err.data);
       });
   }
 
@@ -61,7 +71,7 @@ export default function LoginPage({submit}){
         <form onSubmit={onSubmit} id='login'>
           
           <DivFieldsetStyled>
-            <LabelStyled focus={focus.username} htmlFor='username'>Username</LabelStyled>
+            <LabelStyled focus={focus.username} htmlFor='username' hasData={values.username === '' ? false : true}>Username</LabelStyled>
               <InputStyled
                 id='username'
                 type='text'
@@ -73,7 +83,7 @@ export default function LoginPage({submit}){
           </DivFieldsetStyled>
 
           <DivFieldsetStyled>
-            <LabelStyled focus={focus.password} htmlFor='password'>Password</LabelStyled>
+            <LabelStyled htmlFor='password' focus={focus.password} hasData={values.password === '' ? false : true}>Password</LabelStyled>
             <InputStyled
               id='password'
               type='text'
@@ -85,8 +95,7 @@ export default function LoginPage({submit}){
           </DivFieldsetStyled>
         
         </form>
-
-        <p>{error}</p>
+        {errors.map( (error, i) => <PRedStyled key={i}>{error}</PRedStyled>)}
       </DivFlexGrowStyled>
 
       <DivButtonPaddingStyled>

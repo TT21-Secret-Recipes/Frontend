@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import styled from 'styled-components';
 import { RiCloseFill, RiAddFill } from "react-icons/ri";
+
+const LabelStyled = styled.label`
+  margin-top: 16px;
+`
 
 function AddRecipe(props) {
    const [ingredients, setIngredients] = useState([]);
-   const [ingredientsToAdd, setIngredientsToAdd] = useState([]);
+   const [ingredientsToAdd, setIngredientsToAdd] = useState('');
    const [recipe, setRecipe] = useState({
       title: "",
       source: "",
@@ -18,14 +23,12 @@ function AddRecipe(props) {
 
    const removeIngredients = (e, j) => {
       e.preventDefault();
-      const newIngredientsToAdd = [...ingredientsToAdd];
-      newIngredientsToAdd.splice(j, 1);
-      setIngredientsToAdd(newIngredientsToAdd);
+      setIngredientsToAdd('');
    };
 
    const addIngredients = (e, j) => {
       e.preventDefault();
-      setIngredients(ingredients.concat(ingredientsToAdd[j]));
+      setIngredients(ingredients.concat(ingredientsToAdd));
    };
 
    const mockSubmitRecipe = (e) => {
@@ -34,31 +37,31 @@ function AddRecipe(props) {
    };
 
    return (
-      <div style={{ alignSelf: "center", width: "60vw" }}>
+      <div style={{ alignSelf: "center", minWidth: "330px", width: "20vw" }}>
          <form
             style={{
                display: "flex",
                flexDirection: "column",
             }}
          >
-            <label className="addRecipeSection">
+            <LabelStyled className="addRecipeSection">
                <div>Title</div>
                <input
                   onChange={(e) =>
                      setRecipe({ ...recipe, title: e.target.value })
                   }
                />
-            </label>
-            <label className="addRecipeSection">
+            </LabelStyled>
+            <LabelStyled className="addRecipeSection">
                <div>Source</div>
                <input
                   onChange={(e) =>
                      setRecipe({ ...recipe, source: e.target.value })
                   }
                />
-            </label>
+            </LabelStyled>
 
-            <label className="addRecipeSection">
+            <LabelStyled className="addRecipeSection">
                <div
                   style={{
                      display: "flex",
@@ -72,28 +75,39 @@ function AddRecipe(props) {
                   >
                      Ingredients
                   </div>
-                  <RiAddFill
-                     onClick={(e) => {
-                        e.preventDefault();
-                        setIngredientsToAdd([...ingredientsToAdd].concat(""));
-                     }}
-                     className="menuicon"
-                     style={{
-                        padding: "4px 3px",
-                        backgroundColor: "#e4e4e4",
-                        cursor: "pointer",
-                        width: "2vh",
-                        borderRadius: "6px",
-                        margin: "1%",
-                     }}
-                  ></RiAddFill>
+                  
+               </div>
+
+               <div style={{ marginLeft: "40px", marginTop: "4%" }}>
+                  <div style={{ display: "flex" }}>
+                     <input
+                        value={ingredientsToAdd}
+                        onChange={ e => {
+                           setIngredientsToAdd(e.target.value);
+                        }}
+                     />
+                     <button
+                        onClick={ e => {
+                           addIngredients(e);
+                           removeIngredients(e);
+                        }}
+                     >
+                        OK
+                     </button>
+                     <button
+                        onClick={ e => removeIngredients(e)}
+                     >
+                        Delete
+                     </button>
+                  </div>
+                     
                </div>
 
                <div style={{ display: "flex" }}>
-                  <div>
+                  <ul>
                      {ingredients.map((i, j) => (
                         <div style={{ display: "flex", alignItems: "center" }}>
-                           {i}
+                           <li>{i}</li>
                            <div className="menuicon">
                               <RiCloseFill
                                  style={{
@@ -109,53 +123,25 @@ function AddRecipe(props) {
                            </div>
                         </div>
                      ))}
-                  </div>
-                  <div style={{ marginLeft: "5vw", marginTop: "1%" }}>
-                     {ingredientsToAdd.map((i, j) => (
-                        <div key={j} style={{ display: "flex" }}>
-                           <input
-                              value={ingredientsToAdd[j]}
-                              onChange={(e) => {
-                                 const temp = [...ingredientsToAdd];
-                                 temp[j] = e.target.value;
-                                 setIngredientsToAdd(temp);
-                              }}
-                           />
-                           <button
-                              onClick={(e) => {
-                                 addIngredients(e, j);
-                                 removeIngredients(e, j);
-                              }}
-                           >
-                              OK
-                           </button>
-                           <button
-                              id={j}
-                              onClick={(e, j) => removeIngredients(e, j)}
-                           >
-                              Delete
-                           </button>
-                        </div>
-                     ))}
-                  </div>
+                  </ul>
                </div>
-            </label>
-            <label className="addRecipeSection">
+            </LabelStyled>
+            <LabelStyled className="addRecipeSection">
                Instructions
-               <textarea
+               <textarea style={{height: '190px',}}
                   onChange={(e) =>
                      setRecipe({ ...recipe, instructions: e.target.value })
                   }
                />
-            </label>
-            <label className="addRecipeSection">
-               Category
+            </LabelStyled>
+            <LabelStyled className="addRecipeSection">
+               <div style={{'margin-bottom': '2px',}}>Category</div>
                <input
                   onChange={(e) =>
                      setRecipe({ ...recipe, category: e.target.value })
                   }
                />
-            </label>
+            </LabelStyled>
 
             <div
                style={{

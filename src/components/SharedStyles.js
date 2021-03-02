@@ -49,11 +49,22 @@ export const DivFieldsetStyled = styled.div`
 `
 
 // needs boolean focus prop
+// needs boolean 'hasData' prop. Otherwise it will cover userinput :/
 export const LabelStyled = styled.label`
   background: #fff;
-  font-size: ${props => props.focus ? '18px' : '24px'};
+  font-size: ${props => {
+      if(!props.hasData)
+        return props.focus ? '18px' : '24px'
+      return '18px'
+    }
+  };
   line-height: 1;
-  margin-top: ${props => props.focus ? '-9px' : '8px'}; /* negative margin half of fontsize, other margin trial and error ig */
+  margin-top: ${props => {
+      if(!props.hasData)
+        return props.focus ? '-9px' : '8px'
+      return '-9px'
+    }
+  }; /* negative margin half of fontsize, other margin trial and error ig */
   padding: 0 3px;
   position: absolute;
   top: 0;
@@ -69,7 +80,7 @@ export const InputStyled = styled.input`
 `
 
 export const DivButtonPaddingStyled = styled.div`
-  padding: 10px 0;
+  padding-bottom: 10px;
 `
 
 export const ButtonSubmitStyled = styled.button`
@@ -85,4 +96,7 @@ export const ButtonSubmitStyled = styled.button`
     background: #006b0e;
     color: #adadad
   }
+`
+export const PRedStyled = styled.p`
+  color: red;
 `

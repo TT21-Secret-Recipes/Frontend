@@ -5,6 +5,11 @@ import axios from 'axios';
 
 import { path } from '../Routes/routes';
 
+const DivStyled = styled.div`
+  padding: 25%;
+  width: 50%;
+`
+
 const LinkStyled = styled(Link)`
   background: #00a816;
   border-radius: 4px;
@@ -23,11 +28,11 @@ const LinkStyled = styled(Link)`
 export default function LoginPage(){
 
   return (
-    <div>
+    <DivStyled>
       <h2>Welcome back</h2>
       <LinkStyled to={path.login}>Login</LinkStyled>
       <h4>Don't have an account?</h4>
       <LinkStyled to={path.signup}>Register</LinkStyled>
-    </div>
+    </DivStyled>
   )
 }
