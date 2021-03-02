@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import { path } from '../Routes/routes';
-import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled,  DivFieldsetStyled, LabelStyled, InputStyled, DivButtonPaddingStyled, ButtonSubmitStyled } from './SharedStyles';
+import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled, H1TitleStyled, DivFieldsetStyled, LabelStyled, InputStyled, DivButtonPaddingStyled, ButtonSubmitStyled } from './SharedStyles';
 
 const initialValues = {
   username: '',
@@ -56,7 +56,7 @@ export default function LoginPage({submit}){
           <LinkStyled to={path.signup}>Register</LinkStyled>
         </DivToggleFormStyled>
 
-        <h1>Login</h1>
+        <H1TitleStyled>Login</H1TitleStyled>
 
         <form onSubmit={onSubmit} id='login'>
           
@@ -91,6 +91,7 @@ export default function LoginPage({submit}){
 
         <p>{error}</p>
       </DivFlexGrowStyled>
+
       <DivButtonPaddingStyled>
         <ButtonSubmitStyled type='submit' form='login'>Login</ButtonSubmitStyled>
       </DivButtonPaddingStyled>

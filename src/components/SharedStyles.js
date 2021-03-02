@@ -33,6 +33,10 @@ export const DivToggleFormStyled = styled.div`
   justify-content: flex-end;
   padding: 10px;
 `
+
+export const H1TitleStyled = styled.h1`
+  margin-top: 0;
+`
 // Thank you Chris from css tricks for giving me the css to make the "fieldset" work, ready to copy and paste
 // https://css-tricks.com/snippets/css/non-form-fieldset-look/
 export const DivFieldsetStyled = styled.div`
