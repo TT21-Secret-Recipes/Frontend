@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import { path } from '../Routes/routes'
+import { path } from '../Routes/routes';
+import { DivFieldsetStyled, LabelStyled, InputStyled, LinkStyled } from './SharedStyles';
 
 const initialValues = {
   username: '',

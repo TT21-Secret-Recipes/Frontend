@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import { path } from '../Routes/routes';
+import { FormFlexStyled, DivFlexGrowStyled, LinkStyled, SubmitButtonStyled } from './SharedStyles';
 
 
 const InputStyled = styled.input`
@@ -13,7 +14,7 @@ const InputStyled = styled.input`
   outline: none;
   width: 250px;
 `
-// Thank you Chriss from css tricks for giving me the css to make the "fieldset" work, ready to copy and paste
+// Thank you Chris from css tricks for giving me the css to make the "fieldset" work, ready to copy and paste
 // https://css-tricks.com/snippets/css/non-form-fieldset-look/
 const DivFieldsetStyled = styled.div`
   border: 1px solid black;
@@ -57,7 +58,6 @@ export default function LoginPage({submit}){
   }
 
   function onFocus(evt){
-    console.log(evt);
     const { name } = evt.target;
     setFocus({...initialFocus, [name]: true});
   }
@@ -79,43 +79,47 @@ export default function LoginPage({submit}){
   }
 
   return (
-    <div>
+    <div height='100%'>
       <div>
-        <Link to={path.signup}>Register</Link>
+        <LinkStyled to={path.signup}>Register</LinkStyled>
       </div>
       <h1>Login</h1>
-      <form onSubmit={onSubmit}>
-        <DivFieldsetStyled>
-          <LabelStyled focus={focus.username}>Username</LabelStyled>
-          {/* <LabelStyled>{focus.username ? 'Username' : undefined}</LabelStyled> */}
+      <FormFlexStyled onSubmit={onSubmit}>
+        <DivFlexGrowStyled>
+          <DivFieldsetStyled>
+            <LabelStyled focus={focus.username} htmlFor='username'>Username</LabelStyled>
+            {/* <LabelStyled>{focus.username ? 'Username' : undefined}</LabelStyled> */}
+              <InputStyled
+                id='username'
+                type='text'
+                name='username' 
+                // placeholder={!focus.username ? 'Username...' : undefined}
+                value={values.username}
+                onChange={onChange} 
+                onFocus={onFocus} 
+                onBlur={onBlur}/>
+          </DivFieldsetStyled>
+
+          <DivFieldsetStyled>
+            <LabelStyled focus={focus.password} htmlFor='password'>Password</LabelStyled>
             <InputStyled
+              id='password'
               type='text'
-              name='username' 
-              // placeholder={!focus.username ? 'Username...' : undefined}
-              value={values.username}
+              name='password'
+              // placeholder={!focus.password ? 'Password...' : undefined}
+              value={values.password}
               onChange={onChange} 
               onFocus={onFocus} 
               onBlur={onBlur}/>
-        </DivFieldsetStyled>
+          </DivFieldsetStyled>
 
-        <DivFieldsetStyled>
-          <LabelStyled>{focus.password ? 'Password' : undefined}</LabelStyled>
-          <InputStyled
-            type='text'
-            name='password'
-            // placeholder={!focus.password ? 'Password...' : undefined}
-            value={values.password}
-            onChange={onChange} 
-            onFocus={onFocus} 
-            onBlur={onBlur}/>
-        </DivFieldsetStyled>
-
-        <p>{error}</p>
-
+          <p>{error}</p>
+        </DivFlexGrowStyled>
+        
         <div>
-          <button type='submit'>Login</button>
+          <SubmitButtonStyled type='submit'>Login</SubmitButtonStyled>
         </div>
-      </form>
+      </FormFlexStyled>
     </div>
   )
 }
