@@ -17,7 +17,7 @@ const DivMainStyled = styled.div`
   top: 50%;
   transform: translate(-50%, -100%);
   text-align: center;
-  width: 300px;
+  width: 400px;
   height: 400px;
 `
 

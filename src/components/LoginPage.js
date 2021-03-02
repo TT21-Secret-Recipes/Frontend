@@ -5,55 +5,36 @@ import axios from 'axios';
 
 import { path } from '../Routes/routes';
 
-// const DivElementContainerStyled = styled.div`
-//   border: 2px solid black;
-// `
-
-// const DivElementTitleStyled = styled.div`
-//   background: white;
-//   display: inline-block;
-//   padding: 0 2px;
-//   margin-left: 20px;
-// `
-
-// const DivElementContensStyled = styled.div`
-//   padding: 0 3px;
-// `
-
-const FieldSetStyled = styled.fieldset`
-  border: ${props => props.focus ? undefined : '1px solid black'};
-  height: 44px;
-  margin-top: -3px;
-`
-
-const LegendStyled = styled.legend`
-  margin-left: -100px;
-`
 
 const InputStyled = styled.input`
   border: none;
   display: inline-block;
   font-size: 20px;
-  margin-top: ${props => props.focus ? undefined : '19px'};
   outline: none;
   width: 250px;
 `
-
+// Thank you Chriss from css tricks for giving me the css to make the "fieldset" work, ready to copy and paste
+// https://css-tricks.com/snippets/css/non-form-fieldset-look/
 const DivFieldsetStyled = styled.div`
-  position: relative;
   border: 1px solid black;
+  border-radius: 4px;
+  position: relative;
+  margin: 10px auto;
   padding: 10px;
+  width: 300px;
 `
 
 const LabelStyled = styled.label`
+  background: #fff;
+  font-size: ${props => props.focus ? '18px' : '24px'};
+  line-height: 1;
+  margin-top: ${props => props.focus ? '-9px' : '8px'}; /* negative margin half of fontsize */
+  padding: 0 3px;
   position: absolute;
   top: 0;
-  font-size: 18px;
-  line-height: 1;
-  margin: -9px 0 0; /* half of font-size */
-  background: #fff;
-  padding: 0 3px;
+  transition: margin-top 0.15s, font-size 0.15s;
 `
+
 
 const initialValues = {
   username: '',
@@ -104,25 +85,25 @@ export default function LoginPage({submit}){
       </div>
       <h1>Login</h1>
       <form onSubmit={onSubmit}>
-        <FieldSetStyled focus={focus.username}>
-          <legend></legend>
-          {focus.username && <LegendStyled>Username</LegendStyled>}
-            <InputStyled focus={focus.username}
+        <DivFieldsetStyled>
+          <LabelStyled focus={focus.username}>Username</LabelStyled>
+          {/* <LabelStyled>{focus.username ? 'Username' : undefined}</LabelStyled> */}
+            <InputStyled
               type='text'
               name='username' 
-              placeholder={!focus.username ? 'Username...' : undefined}
+              // placeholder={!focus.username ? 'Username...' : undefined}
               value={values.username}
               onChange={onChange} 
               onFocus={onFocus} 
               onBlur={onBlur}/>
-        </FieldSetStyled>
+        </DivFieldsetStyled>
 
         <DivFieldsetStyled>
           <LabelStyled>{focus.password ? 'Password' : undefined}</LabelStyled>
           <InputStyled
             type='text'
             name='password'
-            placeholder={!focus.password ? 'Password...' : undefined}
+            // placeholder={!focus.password ? 'Password...' : undefined}
             value={values.password}
             onChange={onChange} 
             onFocus={onFocus} 
