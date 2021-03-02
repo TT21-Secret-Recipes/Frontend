@@ -10,7 +10,7 @@ function App() {
             <Nav />
          </header>
 
-         {/* routes */}
+         {/* routes  hi go china! */}
 
          <Route path="/Dashboard">
             <Dashboard />
