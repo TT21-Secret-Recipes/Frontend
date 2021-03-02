@@ -41,11 +41,15 @@ export default function SignupPage(){
 
   function onSubmit(evt){
     evt.preventDefault();
+    // clean up data and check if ready
+    // (valid email, username, passwords match...)
+
     axios.post('url', values)
       .then( respones => {
-        //login user
+        //confirmation and login user
       })
       .catch( err => {
+        // assuming the error looks something like "username/email already taken"
         setError(err.data);
       });
   }
@@ -65,12 +69,10 @@ export default function SignupPage(){
           
           <DivFieldsetStyled>
             <LabelStyled focus={focus.username} htmlFor='username'>Username</LabelStyled>
-            {/* <LabelStyled>{focus.username ? 'Username' : undefined}</LabelStyled> */}
               <InputStyled
                 id='username'
                 type='text'
                 name='username' 
-                // placeholder={!focus.username ? 'Username...' : undefined}
                 value={values.username}
                 onChange={onChange} 
                 onFocus={onFocus} 
@@ -83,7 +85,6 @@ export default function SignupPage(){
               id='email'
               type='text'
               name='email'
-              // placeholder={!focus.email ? 'email...' : undefined}
               value={values.email}
               onChange={onChange}
               onFocus={onFocus}
@@ -96,7 +97,6 @@ export default function SignupPage(){
               id='password'
               type='text'
               name='password'
-              // placeholder={!focus.password ? 'Password...' : undefined}
               value={values.password}
               onChange={onChange}
               onFocus={onFocus}
@@ -109,7 +109,6 @@ export default function SignupPage(){
               id='passwordConf'
               type='text'
               name='passwordConf'
-              // placeholder={!focus.passwordConf ? 'PasswordConf...' : undefined}
               value={values.passwordConf}
               onChange={onChange}
               onFocus={onFocus}

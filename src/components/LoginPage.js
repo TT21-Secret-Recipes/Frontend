@@ -62,12 +62,10 @@ export default function LoginPage({submit}){
           
           <DivFieldsetStyled>
             <LabelStyled focus={focus.username} htmlFor='username'>Username</LabelStyled>
-            {/* <LabelStyled>{focus.username ? 'Username' : undefined}</LabelStyled> */}
               <InputStyled
                 id='username'
                 type='text'
                 name='username' 
-                // placeholder={!focus.username ? 'Username...' : undefined}
                 value={values.username}
                 onChange={onChange} 
                 onFocus={onFocus} 
@@ -80,7 +78,6 @@ export default function LoginPage({submit}){
               id='password'
               type='text'
               name='password'
-              // placeholder={!focus.password ? 'Password...' : undefined}
               value={values.password}
               onChange={onChange}
               onFocus={onFocus}
