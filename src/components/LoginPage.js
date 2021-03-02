@@ -61,7 +61,7 @@ export default function LoginPage({submit}){
         <form onSubmit={onSubmit} id='login'>
           
           <DivFieldsetStyled>
-            <LabelStyled focus={focus.username} htmlFor='username'>Username</LabelStyled>
+            <LabelStyled focus={focus.username} htmlFor='username' hasData={values.username === '' ? false : true}>Username</LabelStyled>
               <InputStyled
                 id='username'
                 type='text'
@@ -73,7 +73,7 @@ export default function LoginPage({submit}){
           </DivFieldsetStyled>
 
           <DivFieldsetStyled>
-            <LabelStyled focus={focus.password} htmlFor='password'>Password</LabelStyled>
+            <LabelStyled htmlFor='password' focus={focus.password} hasData={values.password === '' ? false : true}>Password</LabelStyled>
             <InputStyled
               id='password'
               type='text'
