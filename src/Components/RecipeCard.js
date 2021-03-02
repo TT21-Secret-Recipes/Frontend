@@ -32,7 +32,7 @@ function RecipeCard(props) {
             </ul>
          </div>
          <h3>Instructions:</h3>
-         <div> {instructions} </div>
+         <div style={{whiteSpace: "pre-wrap"}}> {instructions} </div>
       </div>
    );
 }
