@@ -64,6 +64,7 @@ function Nav(props) {
 
                {/* loggedin && */}
                <NavLink to="?"> Logout </NavLink>
+               <NavLink to="/UserProfile"> My Profile </NavLink>
             </div>
          </div>
       </nav>
