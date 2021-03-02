@@ -4,38 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import { path } from '../Routes/routes';
-import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled, DivButtonPaddingStyled, ButtonSubmitStyled } from './SharedStyles';
-
-
-const InputStyled = styled.input`
-  border: none;
-  display: inline-block;
-  font-size: 20px;
-  outline: none;
-  width: 250px;
-`
-// Thank you Chris from css tricks for giving me the css to make the "fieldset" work, ready to copy and paste
-// https://css-tricks.com/snippets/css/non-form-fieldset-look/
-const DivFieldsetStyled = styled.div`
-  border: 1px solid black;
-  border-radius: 4px;
-  position: relative;
-  margin: 10px auto;
-  padding: 10px;
-  width: 300px;
-`
-
-const LabelStyled = styled.label`
-  background: #fff;
-  font-size: ${props => props.focus ? '18px' : '24px'};
-  line-height: 1;
-  margin-top: ${props => props.focus ? '-9px' : '8px'}; /* negative margin half of fontsize */
-  padding: 0 3px;
-  position: absolute;
-  top: 0;
-  transition: margin-top 0.15s, font-size 0.15s;
-`
-
+import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled,  DivFieldsetStyled, LabelStyled, InputStyled, DivButtonPaddingStyled, ButtonSubmitStyled } from './SharedStyles';
 
 const initialValues = {
   username: '',

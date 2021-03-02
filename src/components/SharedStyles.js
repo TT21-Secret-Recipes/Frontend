@@ -33,7 +33,8 @@ export const DivToggleFormStyled = styled.div`
   justify-content: flex-end;
   padding: 10px;
 `
-
+// Thank you Chris from css tricks for giving me the css to make the "fieldset" work, ready to copy and paste
+// https://css-tricks.com/snippets/css/non-form-fieldset-look/
 export const DivFieldsetStyled = styled.div`
   border: 1px solid black;
   border-radius: 4px;
