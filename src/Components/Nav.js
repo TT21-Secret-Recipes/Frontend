@@ -95,7 +95,9 @@ function Nav(props) {
                <NavLink className="navlink" onClick={hidedrawer} to="?">
                   Logout
                </NavLink>
-               <NavLink to="/UserProfile"> My Profile </NavLink>
+               <NavLink className="navlink" onClick={hidedrawer} to="/UserProfile">
+                  My Profile
+               </NavLink>
             </div>
          </div>
       </nav>
