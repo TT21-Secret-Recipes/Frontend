@@ -39,6 +39,22 @@ const InputStyled = styled.input`
   width: 250px;
 `
 
+const DivFieldsetStyled = styled.div`
+  position: relative;
+  border: 1px solid black;
+  padding: 10px;
+`
+
+const LabelStyled = styled.label`
+  position: absolute;
+  top: 0;
+  font-size: 18px;
+  line-height: 1;
+  margin: -9px 0 0; /* half of font-size */
+  background: #fff;
+  padding: 0 3px;
+`
+
 const initialValues = {
   username: '',
   password: '',
@@ -101,8 +117,8 @@ export default function LoginPage({submit}){
               onBlur={onBlur}/>
         </FieldSetStyled>
 
-        <fieldset>
-          {focus.password && <LegendStyled>Password</LegendStyled>}
+        <DivFieldsetStyled>
+          <LabelStyled>{focus.password ? 'Password' : undefined}</LabelStyled>
           <InputStyled
             type='text'
             name='password'
@@ -111,7 +127,7 @@ export default function LoginPage({submit}){
             onChange={onChange} 
             onFocus={onFocus} 
             onBlur={onBlur}/>
-        </fieldset>
+        </DivFieldsetStyled>
 
         <p>{error}</p>
 
