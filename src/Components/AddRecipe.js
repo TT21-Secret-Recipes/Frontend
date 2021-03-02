@@ -25,8 +25,6 @@ function AddRecipe(props) {
 
    const removeIngredients = (e, j) => {
       e.preventDefault();
-      const newIngredientsToAdd = [...ingredientsToAdd];
-      newIngredientsToAdd.splice(j, 1);
       setIngredientsToAdd('');
    };
 
@@ -104,33 +102,8 @@ function AddRecipe(props) {
                         Delete
                      </button>
                   </div>
-                     {/* {ingredientsToAdd.map((i, j) => (
-                        <div key={j} style={{ display: "flex" }}>
-                           <input
-                              value={ingredientsToAdd[j]}
-                              onChange={(e) => {
-                                 const temp = [...ingredientsToAdd];
-                                 temp[j] = e.target.value;
-                                 setIngredientsToAdd(temp);
-                              }}
-                           />
-                           <button
-                              onClick={(e) => {
-                                 addIngredients(e, j);
-                                 removeIngredients(e, j);
-                              }}
-                           >
-                              OK
-                           </button>
-                           <button
-                              id={j}
-                              onClick={(e, j) => removeIngredients(e, j)}
-                           >
-                              Delete
-                           </button>
-                        </div>
-                     ))} */}
-                  </div>
+                     
+               </div>
 
                <div style={{ display: "flex" }}>
                   <ul>
