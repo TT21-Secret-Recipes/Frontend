@@ -17,8 +17,6 @@ function AddRecipe(props) {
       category: "",
    });
 
-   console.log(recipe.instructions)
-
    useEffect(() => {
       setRecipe({ ...recipe, ingredients: ingredients });
    }, [ingredients]);

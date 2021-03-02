@@ -49,9 +49,7 @@ export default function SignupPage(){
       schema.validateSync(values, { abortEarly: false });
       setErrors([]);
     } catch(err) {
-      console.log(err.inner);
       const list = err.inner.map( error => error.errors[0] );
-      console.log(list);
       setErrors(list);
     }
 
