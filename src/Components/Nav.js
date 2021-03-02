@@ -16,7 +16,7 @@ function Nav(props) {
          style={{
             display: "flex",
             justifyContent: "space-between",
-            width: "100vw",
+            width: "100%",
             alignItems: "center",
          }}
       >
