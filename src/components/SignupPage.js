@@ -68,7 +68,7 @@ export default function SignupPage(){
         <form onSubmit={onSubmit} id='login'>
           
           <DivFieldsetStyled>
-            <LabelStyled focus={focus.username} htmlFor='username'>Username</LabelStyled>
+            <LabelStyled focus={focus.username} htmlFor='username' hasData={values.username === '' ? false : true}>Username</LabelStyled>
               <InputStyled
                 id='username'
                 type='text'
@@ -80,7 +80,7 @@ export default function SignupPage(){
           </DivFieldsetStyled>
 
           <DivFieldsetStyled>
-            <LabelStyled focus={focus.email} htmlFor='email'>Email</LabelStyled>
+            <LabelStyled focus={focus.email} htmlFor='email' hasData={values.email === '' ? false : true}>Email</LabelStyled>
             <InputStyled
               id='email'
               type='text'
@@ -92,7 +92,7 @@ export default function SignupPage(){
           </DivFieldsetStyled>
 
           <DivFieldsetStyled>
-            <LabelStyled focus={focus.password} htmlFor='password'>Password</LabelStyled>
+            <LabelStyled focus={focus.password} htmlFor='password' hasData={values.password === '' ? false : true}>Password</LabelStyled>
             <InputStyled
               id='password'
               type='text'
@@ -104,7 +104,7 @@ export default function SignupPage(){
           </DivFieldsetStyled>
 
           <DivFieldsetStyled>
-            <LabelStyled focus={focus.passwordConf} htmlFor='passwordConf'>Confirm Password</LabelStyled>
+            <LabelStyled focus={focus.passwordConf} htmlFor='passwordConf' hasData={values.passwordConf === '' ? false : true}>Confirm Password</LabelStyled>
             <InputStyled
               id='passwordConf'
               type='text'
