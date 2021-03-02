@@ -1,31 +1,31 @@
-import "./App.css";
+import { Switch, Route } from 'react-router-dom';
 import Nav from "./Components/Nav";
-import { Route } from "react-router-dom";
 import Dashboard from "./Components/Dashboard";
-import ProfilePage from "./Components/ProfilePage";
+import ProfilePage from "./Components/ProfilePage"
+import LandingPage from './components/LandingPage';
+import LoginPage from './components/LoginPage'
+import "./App.css";
 
 function App() {
-   
    return (
-      <div className="App">
+   <div className="App">
          <header>
             <Nav />
          </header>
-
-         {/* routes */}
-
-         <Route path="/Dashboard">
-            <Dashboard />
+      <Switch>
+         <Route path='/'>
+            <LandingPage/>
          </Route>
-         {/* nate vv */}
          <Route path= "/UserProfile">
             <ProfilePage />
          </Route>
-
-
+         <Route path="/Dashboard">
+            <Dashboard />
+         </Route>
+      </Switch>
          <footer> </footer>
-      </div>
-   );
+   </div>
+)
 }
 
 export default App;
