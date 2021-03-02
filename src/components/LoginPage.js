@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 import { path } from '../Routes/routes';
-import { FormFlexStyled, DivFlexGrowStyled, LinkStyled, SubmitButtonStyled } from './SharedStyles';
+import { DivFlexStyled, DivFlexGrowStyled, DivToggleFormStyled, LinkStyled, DivButtonPaddingStyled, ButtonSubmitStyled } from './SharedStyles';
 
 
 const InputStyled = styled.input`
@@ -79,13 +79,18 @@ export default function LoginPage({submit}){
   }
 
   return (
-    <div height='100%'>
-      <div>
-        <LinkStyled to={path.signup}>Register</LinkStyled>
-      </div>
-      <h1>Login</h1>
-      <FormFlexStyled onSubmit={onSubmit}>
-        <DivFlexGrowStyled>
+    <DivFlexStyled>
+      
+      <DivFlexGrowStyled>
+
+        <DivToggleFormStyled>
+          <LinkStyled to={path.signup}>Register</LinkStyled>
+        </DivToggleFormStyled>
+
+        <h1>Login</h1>
+
+        <form onSubmit={onSubmit} id='login'>
+          
           <DivFieldsetStyled>
             <LabelStyled focus={focus.username} htmlFor='username'>Username</LabelStyled>
             {/* <LabelStyled>{focus.username ? 'Username' : undefined}</LabelStyled> */}
@@ -108,18 +113,18 @@ export default function LoginPage({submit}){
               name='password'
               // placeholder={!focus.password ? 'Password...' : undefined}
               value={values.password}
-              onChange={onChange} 
-              onFocus={onFocus} 
+              onChange={onChange}
+              onFocus={onFocus}
               onBlur={onBlur}/>
           </DivFieldsetStyled>
-
-          <p>{error}</p>
-        </DivFlexGrowStyled>
         
-        <div>
-          <SubmitButtonStyled type='submit'>Login</SubmitButtonStyled>
-        </div>
-      </FormFlexStyled>
-    </div>
+        </form>
+
+        <p>{error}</p>
+      </DivFlexGrowStyled>
+      <DivButtonPaddingStyled>
+        <ButtonSubmitStyled type='submit' form='login'>Login</ButtonSubmitStyled>
+      </DivButtonPaddingStyled>
+    </DivFlexStyled>
   )
 }

@@ -17,14 +17,21 @@ export const LinkStyled = styled(Link)`
   }
 `
 
-// For forms
-export const FormFlexStyled = styled.form`
+// For forms specifically
+export const DivFlexStyled = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%;
 `
 
 export const DivFlexGrowStyled = styled.div`
   flex: 1 0 auto;
+`
+
+export const DivToggleFormStyled = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
 `
 
 export const DivFieldsetStyled = styled.div`
@@ -36,6 +43,7 @@ export const DivFieldsetStyled = styled.div`
   width: 300px;
 `
 
+// needs boolean focus prop
 export const LabelStyled = styled.label`
   background: #fff;
   font-size: ${props => props.focus ? '18px' : '24px'};
@@ -55,7 +63,11 @@ export const InputStyled = styled.input`
   width: 250px;
 `
 
-export const SubmitButtonStyled = styled.button`
+export const DivButtonPaddingStyled = styled.div`
+  padding: 10px 0;
+`
+
+export const ButtonSubmitStyled = styled.button`
   background: #00a816;
   border: none;
   border-radius: 4px;
