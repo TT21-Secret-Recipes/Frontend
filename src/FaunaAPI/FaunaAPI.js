@@ -213,6 +213,66 @@ export function updateRecipe({ client, q }, userid, params) {
    });
 }
 
+export function search({ client, q }, term, category) {
+   if (term === "" && category !== "") {
+      return getRecipesByCategory({ client, q }, category);
+   }
+
+   if (term !== "" && category === "") {
+      return new Promise((resolve, reject) => {
+         client
+            .query(
+               q.Map(
+                  q.Filter(
+                     q.Paginate(q.Match(q.Index("RecipesNamesID"))),
+                     q.Lambda(
+                        "x",
+                        q.ContainsStrRegex(
+                           q.Select([1], q.Var("x")),
+                           "(?i)" + term
+                        )
+                     )
+                  ),
+                  q.Lambda(
+                     "a",
+                     q.Get(
+                        q.Match(
+                           q.Index("RefByRecipeID"),
+                           q.Select([0], q.Var("a"))
+                        )
+                     )
+                  )
+               )
+            )
+            .then((res) => console.log(res));
+      });
+   }
+
+   return new Promise((resolve, reject) => {
+      client
+         .query(
+            q.Map(
+               q.Filter(
+                  q.Paginate(q.Match(q.Index("RefByRecipeCategory"), category)),
+                  q.Lambda(
+                     "x",
+                     q.ContainsStrRegex(
+                        q.Select(["data", "title"], q.Get(q.Var("x"))),
+                        "(?i)" + term
+                     )
+                  )
+               ),
+               q.Lambda("a", q.Get(q.Var("a")))
+            )
+         )
+         .then((res) => {
+            // console.log(res.data.map((i) => i.data));
+            resolve(res.data.map((i) => i.data));
+         })
+         .catch((err) => reject("no such found"));
+   });
+}
+
 export default function useFauna() {
    var clnt = new faunadb.Client({
       secret: DBKEY,
