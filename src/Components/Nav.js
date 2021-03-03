@@ -78,41 +78,59 @@ function Nav(props) {
                   Home
                </NavLink>
                {/* loggedin && */}
-               <NavLink
-                  className="navlink"
-                  onClick={hidedrawer}
-                  to="/dashboard"
-               >
-                  Dashboard
-               </NavLink>
+
+               {props.currentUser.id && (
+                  <NavLink
+                     className="navlink"
+                     onClick={hidedrawer}
+                     to="/dashboard"
+                  >
+                     Dashboard
+                  </NavLink>
+               )}
 
                {/* !loggedin && */}
-               <NavLink
-                  className="navlink"
-                  onClick={hidedrawer}
-                  to="/auth/login"
-               >
-                  Login
-               </NavLink>
-               <NavLink
-                  className="navlink"
-                  onClick={hidedrawer}
-                  to="/auth/sign-up"
-               >
-                  Register
-               </NavLink>
-
+               {!props.currentUser.id && (
+                  <NavLink
+                     className="navlink"
+                     onClick={hidedrawer}
+                     to="/auth/login"
+                  >
+                     Login
+                  </NavLink>
+               )}
+               {!props.currentUser.id && (
+                  <NavLink
+                     className="navlink"
+                     onClick={hidedrawer}
+                     to="/auth/sign-up"
+                  >
+                     Register
+                  </NavLink>
+               )}
                {/* loggedin && */}
-               <NavLink className="navlink" onClick={hidedrawer} to="?">
-                  Logout
-               </NavLink>
-               <NavLink
-                  className="navlink"
-                  onClick={hidedrawer}
-                  to="/userprofile"
-               >
-                  My Profile
-               </NavLink>
+               {props.currentUser.id && (
+                  <NavLink
+                     className="navlink"
+                     onClick={() => {
+                        props.logout();
+                        hidedrawer();
+                        localStorage.setItem("tt21_token", "");
+                     }}
+                     to="?"
+                  >
+                     Logout
+                  </NavLink>
+               )}
+               {props.currentUser.id && (
+                  <NavLink
+                     className="navlink"
+                     onClick={hidedrawer}
+                     to="/userprofile"
+                  >
+                     My Profile
+                  </NavLink>
+               )}
             </div>
          </div>
       </nav>

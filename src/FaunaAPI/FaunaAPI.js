@@ -4,7 +4,7 @@ import sha512 from "crypto-js/sha512";
 import { v4 } from "uuid";
 const DBKEY = "fnAEDU6P0MACCG7RBdvmIKviKzteD2ATpMvtVVxF";
 
-export function login({ client, q }, req) {
+export function login2({ client, q }, req) {
    return new Promise((resolve, reject) => {
       // rewrite this with index, this is way too expensive
       client
@@ -34,15 +34,64 @@ export function login({ client, q }, req) {
                      } else {
                         // login success
                         // generate token, for now we use a fixed token
-                        localStorage.setItem(
-                           "tt21_token",
-                           "7deb9d7066be4e8bbf5b603e71817b6c"
-                        );
+                        localStorage.setItem("tt21_token", usermatch[0].id);
                         alert("login success");
                         resolve(localStorage.getItem("tt21_token"));
                      }
                   }
                });
+         });
+   });
+}
+
+export function login({ client, q }, req) {
+   return new Promise((resolve, reject) => {
+      client
+         .query(q.Get(q.Match(q.Index("HashByEmail"), req.email)))
+         .then((ret) => {
+            if (
+               ret.data.passwordHash ===
+               sha512(req.password + "_tt21").toString()
+            ) {
+               localStorage.setItem("tt21_token", ret.data.id);
+               resolve({ ...ret.data, passwordHash: "" });
+            } else {
+               localStorage.setItem("tt21_token", "");
+               reject("bad password");
+            }
+         })
+         .catch((err) => {
+            localStorage.setItem("tt21_token", "");
+            reject("bad email");
+         });
+   });
+}
+
+// for localstorage
+export function getUserByID({ client, q }, id) {
+   return new Promise((resolve, reject) => {
+      client
+         .query(q.Get(q.Match(q.Index("RefByUserID"), id)))
+         .then((ret) => {
+            resolve({ ...ret.data, passwordHash: "" });
+         })
+         .catch((err) => {
+            reject("bad token");
+         });
+   });
+}
+
+export function getCurrentUserRecipes({ client, q }, userid) {
+   return new Promise((resolve, reject) => {
+      client
+         .query(
+            q.Map(
+               q.Paginate(q.Match(q.Index("RecipesBySubmittedUserID"), userid)),
+               q.Lambda("x", q.Get(q.Var("x")))
+            )
+         )
+         .then((ret) => {
+            resolve(ret.data.map((i) => i.data));
          });
    });
 }
@@ -136,6 +185,18 @@ export function submitRecipe({ client, q }, req) {
             })
          )
          .then((ret) => resolve(ret));
+   });
+}
+
+export function updateUser({ client, q }, userid, params) {
+   return new Promise((resolve, reject) => {
+      client
+         .query(q.Get(q.Match(q.Index("RefByUserID"), userid)))
+         .then((ret) => {
+            client
+               .query(q.Update(ret.ref, { data: params }))
+               .then((ret) => resolve(ret));
+         });
    });
 }
 

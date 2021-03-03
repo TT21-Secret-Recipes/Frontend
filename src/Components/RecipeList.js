@@ -1,18 +1,21 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import useFauna, {
    getRecipes,
    getCategories,
    getRecipesByCategory,
 } from "../FaunaAPI/FaunaAPI";
-// import { NavLink } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 
 function RecipeList(props) {
    const fauna = useFauna();
    const [recipes, setRecipes] = useState([]);
    const [existingCategory, setExistingCategory] = useState([]);
    const [searchCategory, setSearchCategory] = useState("");
+   const { path } = useRouteMatch();
+   const onMyRecipes = () =>
+      path.split("/")[path.split("/").length - 1] === "myrecipes";
 
    function Search() {
       return (
@@ -56,29 +59,41 @@ function RecipeList(props) {
    }
 
    useEffect(() => {
-      getRecipes(fauna).then((res) => setRecipes(res));
-      // getCategories(fauna).then((res) => setExistingCategory(res.data));
-      getCategories(fauna).then(
-         (res) => {
-            // console.log(res.data);
+      if (existingCategory.length === 0) {
+         getCategories(fauna).then((res) => {
             setExistingCategory(res.data);
-         }
-         // setExistingCategory(res.data)
-      );
-      // eslint-disable-next-line
-   }, []);
+         });
+      }
 
-   useEffect(() => {
-      if (searchCategory === "all") {
-         getRecipes(fauna).then((res) => setRecipes(res));
+      if (onMyRecipes()) {
+         if (!props.myrecipes) {
+            getCurrentUserRecipes(
+               fauna,
+               localStorage.getItem("tt21_token")
+            ).then((res) => setCurrentUsersRecipes(res));
+         }
+
+         setRecipes(props.myrecipes);
+         // disable recipe fetch for myrecipe for now
          return;
+      }
+
+      // we fetch the data
+      else if (searchCategory === "all" || searchCategory === "") {
+         if (props.recipes) {
+            setRecipes(props.recipes);
+            return;
+         } else {
+            getRecipes(fauna).then((res) => setRecipes(res));
+            return;
+         }
       } else {
          getRecipesByCategory(fauna, searchCategory).then((res) =>
             setRecipes(res)
          );
       }
       // eslint-disable-next-line
-   }, [searchCategory]);
+   }, [searchCategory, path]);
 
    return (
       <div
@@ -87,7 +102,8 @@ function RecipeList(props) {
             flexDirection: "column",
          }}
       >
-         <Search />
+         {!onMyRecipes() && <Search />}
+
          {recipes.map((i) => (
             <RecipeCard recipe={i} key={i.id} />
          ))}
