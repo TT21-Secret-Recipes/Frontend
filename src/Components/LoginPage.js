@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import axios from "axios";
+// import { Link } from "react-router-dom";
+// import styled from "styled-components";
+// import axios from "axios";
 import useFauna, { login } from "../FaunaAPI/FaunaAPI";
 
 import { path } from "../Routes/routes";

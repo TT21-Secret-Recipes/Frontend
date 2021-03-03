@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import useFauna, {
@@ -5,7 +6,7 @@ import useFauna, {
    getCategories,
    getRecipesByCategory,
 } from "../FaunaAPI/FaunaAPI";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 
 function RecipeList(props) {
    const fauna = useFauna();
@@ -61,6 +62,7 @@ function RecipeList(props) {
          (res) => setExistingCategory([...new Set(res.data)])
          // setExistingCategory(res.data)
       );
+      // eslint-disable-next-line
    }, []);
 
    useEffect(() => {
@@ -72,6 +74,7 @@ function RecipeList(props) {
             setRecipes(res)
          );
       }
+      // eslint-disable-next-line
    }, [searchCategory]);
 
    return (

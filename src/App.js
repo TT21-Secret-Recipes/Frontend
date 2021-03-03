@@ -3,7 +3,6 @@ import Nav from "./Components/Nav";
 import Dashboard from "./Components/Dashboard";
 import ProfilePage from "./Components/ProfilePage";
 import LandingPage from "./Components/LandingPage";
-import LoginPage from "./Components/LoginPage";
 import "./App.css";
 import RecipePage from "./Components/RecipePage";
 

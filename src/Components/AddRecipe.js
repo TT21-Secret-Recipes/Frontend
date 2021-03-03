@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { RiCloseFill, RiAddFill } from "react-icons/ri";
+import { RiCloseFill } from "react-icons/ri";
 import useFauna, { submitRecipe } from "../FaunaAPI/FaunaAPI";
 import { useHistory } from "react-router-dom";
 const LabelStyled = styled.label`
@@ -22,6 +22,7 @@ function AddRecipe(props) {
 
    useEffect(() => {
       setRecipe({ ...recipe, ingredients: ingredients });
+      // eslint-disable-next-line
    }, [ingredients]);
 
    const addIngredient = (e) => {
@@ -29,10 +30,10 @@ function AddRecipe(props) {
       setIngredients(ingredients.concat(ingredientToAdd));
    };
 
-   const mockSubmitRecipe = (e) => {
-      e.preventDefault();
-      props.mockAddRecipe(recipe);
-   };
+   // const mockSubmitRecipe = (e) => {
+   //    e.preventDefault();
+   //    props.mockAddRecipe(recipe);
+   // };
 
    const faunaSubmitRecipe = (e) => {
       e.preventDefault();

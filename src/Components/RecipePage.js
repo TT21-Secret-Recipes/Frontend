@@ -19,6 +19,7 @@ function RecipePage(props) {
       getRecipe(fauna, id)
          .then((res) => setRecipe(res.data))
          .catch((err) => console.log(err));
+      // eslint-disable-next-line
    }, []);
 
    return (
