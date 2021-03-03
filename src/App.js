@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Nav from "./Components/Nav";
 import Dashboard from "./Components/Dashboard";
 import ProfilePage from "./Components/ProfilePage";
@@ -9,7 +9,7 @@ import "./App.css";
 import PrivateRoute from "./Components/PrivateRoute";
 import RecipePage from "./Components/RecipePage";
 import {
-   // RecipeContext,
+   RecipeContext,
    LoginContext,
    ProfileContext,
    DashContext,
@@ -20,6 +20,7 @@ function App() {
    const [currentUser, setCurrentUser] = useState({});
    const [currentUsersRecipes, setCurrentUsersRecipes] = useState([]);
    const [currentPage, setCurrentPage] = useState("");
+   const [searchCategories, setSearchCategories] = useState([]);
    const [currentDisplayedRecipes, setCurrentDisplayedRecipes] = useState([]);
    const logout = () => {
       setCurrentUser({});
@@ -48,9 +49,7 @@ function App() {
             <Nav currentUser={currentUser} logout={logout} />
          </header>
 
-         <Route exact path="/">
-            <Redirect to="/dashboard"></Redirect>
-         </Route>
+         <Route exact path="/"></Route>
          <Route path="/auth">
             <LoginContext.Provider value={{ currentUser, setCurrentUser }}>
                <LandingPage />
@@ -58,10 +57,19 @@ function App() {
          </Route>
 
          <ProfileContext.Provider value={{ currentUser }}>
-            <PrivateRoute path="/userprofile" component={<ProfilePage />} />
+            <PrivateRoute path="/userprofile" component={ProfilePage} />
          </ProfileContext.Provider>
 
-         <PrivateRoute path="/recipes/:id" component={RecipePage} />
+         <RecipeContext.Provider value={{ currentUser }}>
+            <PrivateRoute
+               path="/recipes/:id"
+               component={RecipePage}
+               componentProps={{
+                  currentDisplayedRecipes: currentDisplayedRecipes,
+               }}
+            />
+         </RecipeContext.Provider>
+
          <DashContext.Provider
             value={{
                currentPage,
@@ -69,6 +77,8 @@ function App() {
                currentUsersRecipes,
                setCurrentUsersRecipes,
                setCurrentPage,
+               searchCategories,
+               setSearchCategories,
                currentDisplayedRecipes,
                setCurrentDisplayedRecipes,
             }}

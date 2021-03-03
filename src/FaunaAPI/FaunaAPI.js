@@ -200,6 +200,19 @@ export function updateUser({ client, q }, userid, params) {
    });
 }
 
+// edit recipe not yet finished
+export function updateRecipe({ client, q }, userid, params) {
+   return new Promise((resolve, reject) => {
+      client
+         .query(q.Get(q.Match(q.Index("RefByRecipeID"), userid)))
+         .then((ret) => {
+            client
+               .query(q.Update(ret.ref, { data: params }))
+               .then((ret) => resolve(ret));
+         });
+   });
+}
+
 export default function useFauna() {
    var clnt = new faunadb.Client({
       secret: DBKEY,

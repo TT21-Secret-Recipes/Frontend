@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { RiArrowGoBackFill } from "react-icons/ri";
+import { RiArrowGoBackFill, RiAddBoxFill } from "react-icons/ri";
 import useFauna, { getRecipe } from "../FaunaAPI/FaunaAPI";
+import { RecipeContext } from "../Contexts";
 
 function RecipePage(props) {
    const fauna = useFauna();
    const history = useHistory();
+   const { currentUser } = useContext(RecipeContext);
    const [recipe, setRecipe] = useState({
       title: "",
       source: "",
@@ -13,12 +15,23 @@ function RecipePage(props) {
       instructions: "",
       category: "",
    });
+   const [editmode, setEditmode] = useState(false);
+   const toggle = () => {
+      setEditmode(!editmode);
+   };
    const id = useParams().id;
    // console.log(id);
    useEffect(() => {
-      getRecipe(fauna, id)
-         .then((res) => setRecipe(res.data))
-         .catch((err) => console.log(err));
+      const tryRetrive = props.currentDisplayedRecipes.filter(
+         (i) => i.id === id
+      );
+      if (tryRetrive.length > 0) {
+         setRecipe(tryRetrive[0]);
+      } else {
+         getRecipe(fauna, id)
+            .then((res) => setRecipe(res.data))
+            .catch((err) => console.log(err));
+      }
       // eslint-disable-next-line
    }, []);
 
@@ -36,29 +49,97 @@ function RecipePage(props) {
          }}
       >
          {/* optional img */}
-         <RiArrowGoBackFill
-            style={{ fontSize: "1.4rem", alignSelf: "flex-end" }}
-            onClick={() => history.goBack()}
-            className="menuicon"
-         />
+         <div
+            style={{ fontSize: "1rem", alignSelf: "flex-end", display: "flex" }}
+            onClick={() => toggle()}
+         >
+            {recipe.submittedBy === currentUser.id && (
+               <div style={{ marginRight: "2vh" }} className="menuicon">
+                  {editmode ? "OK" : "Edit"}
+               </div>
+            )}
+            <RiArrowGoBackFill
+               style={{ fontSize: "1.4rem" }}
+               onClick={() => history.goBack()}
+               className="menuicon"
+            />
+         </div>
+
          <h2> {recipe.title} </h2>
          <div>
-            <span style={{ fontWeight: "600" }}> Source: </span> {recipe.source}
+            <span style={{ fontWeight: "600" }}> Source: </span>{" "}
+            {editmode ? (
+               <input defaultValue={recipe.source} />
+            ) : (
+               <span>{recipe.source}</span>
+            )}
          </div>
          <div>
-            <span style={{ fontWeight: "600" }}> Category: </span>{" "}
-            {recipe.category}
+            <span style={{ fontWeight: "600" }}> Category: </span>
+            {editmode ? (
+               <input defaultValue={recipe.category} />
+            ) : (
+               <span>{recipe.category}</span>
+            )}
          </div>
          <div>
-            <h3>Ingredients:</h3>
-            <ul>
-               {recipe.ingredients.map((i, j) => (
-                  <li key={j}> {i} </li>
-               ))}
-            </ul>
+            <div style={{ display: "flex", alignItems: "center" }}>
+               <h3>Ingredients: </h3>{" "}
+               {editmode ? (
+                  <RiAddBoxFill
+                     className="menuicon"
+                     style={{
+                        color: "#333333",
+                        fontSize: "1.4rem",
+                        marginLeft: "0.7rem",
+                        textAlign: "center",
+                     }}
+                     onClick={() => {
+                        const newingredients = recipe.ingredients.concat("");
+                        setRecipe({ ...recipe, ingredients: newingredients });
+                     }}
+                  ></RiAddBoxFill>
+               ) : (
+                  <></>
+               )}
+            </div>
+            {editmode ? (
+               <ul>
+                  {recipe.ingredients.map((i, j) => (
+                     <div key={j}>
+                        <input defaultValue={i} />
+                        <span
+                           className="menuicon"
+                           style={{
+                              color: "red",
+                              fontSize: "1.2rem",
+                              marginLeft: "0.7rem",
+                           }}
+                           onClick={() => {
+                              const temp = [...recipe.ingredients];
+                              temp.splice(j, 1);
+                              setRecipe({ ...recipe, ingredients: temp });
+                           }}
+                        >
+                           x
+                        </span>
+                     </div>
+                  ))}
+               </ul>
+            ) : (
+               <ul>
+                  {recipe.ingredients.map((i, j) => (
+                     <li key={j}> {i} </li>
+                  ))}
+               </ul>
+            )}
          </div>
          <h3>Instructions:</h3>
-         <div> {recipe.instructions} </div>
+         {editmode ? (
+            <textarea defaultValue={recipe.instructions} />
+         ) : (
+            <div> {recipe.instructions} </div>
+         )}
       </div>
    );
 }

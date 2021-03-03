@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { DashContext } from "../Contexts";
 import RecipeCard from "./RecipeCard";
 import useFauna, {
    getRecipes,
-   getCategories,
    getRecipesByCategory,
 } from "../FaunaAPI/FaunaAPI";
 import { useRouteMatch } from "react-router-dom";
@@ -13,6 +13,7 @@ function RecipeList(props) {
    const [recipes, setRecipes] = useState([]);
    const [existingCategory, setExistingCategory] = useState([]);
    const [searchCategory, setSearchCategory] = useState("");
+   const { searchCategories } = useContext(DashContext);
    const { path } = useRouteMatch();
    const onMyRecipes = () =>
       path.split("/")[path.split("/").length - 1] === "myrecipes";
@@ -46,7 +47,7 @@ function RecipeList(props) {
                onChange={(e) => setSearchCategory(e.target.value)}
                value={searchCategory}
             >
-               <option value="all"> All </option>
+               <option value=""> </option>
                {/* this ideally should be a .map() by searching against api for all available categories somewhere in the app*/}
                {existingCategory.map((i) => (
                   <option value={String(i)} key={i}>
@@ -54,16 +55,26 @@ function RecipeList(props) {
                   </option>
                ))}
             </select>
+            <button
+               style={{ marginLeft: "2%", padding: "4px 12px" }}
+               onClick={() => {
+                  if (searchCategory === "") {
+                     return;
+                  }
+
+                  getRecipesByCategory(fauna, searchCategory).then((res) =>
+                     setRecipes(res)
+                  );
+               }}
+            >
+               OK
+            </button>
          </div>
       );
    }
 
    useEffect(() => {
-      if (existingCategory.length === 0) {
-         getCategories(fauna).then((res) => {
-            setExistingCategory(res.data);
-         });
-      }
+      setExistingCategory(searchCategories);
 
       if (onMyRecipes()) {
          if (!props.myrecipes) {
@@ -76,10 +87,7 @@ function RecipeList(props) {
          setRecipes(props.myrecipes);
          // disable recipe fetch for myrecipe for now
          return;
-      }
-
-      // we fetch the data
-      else if (searchCategory === "all" || searchCategory === "") {
+      } else {
          if (props.recipes) {
             setRecipes(props.recipes);
             return;
@@ -87,13 +95,10 @@ function RecipeList(props) {
             getRecipes(fauna).then((res) => setRecipes(res));
             return;
          }
-      } else {
-         getRecipesByCategory(fauna, searchCategory).then((res) =>
-            setRecipes(res)
-         );
       }
+
       // eslint-disable-next-line
-   }, [searchCategory, path]);
+   }, [path]);
 
    return (
       <div

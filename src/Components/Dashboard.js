@@ -2,12 +2,13 @@ import React, { useContext, useEffect } from "react";
 import DashNav from "./DashNav";
 import AddRecipe from "./AddRecipe";
 import RecipeList from "./RecipeList";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 
 import { DashContext } from "../Contexts";
 import useFauna, {
    getCurrentUserRecipes,
    getRecipes,
+   getCategories,
 } from "../FaunaAPI/FaunaAPI";
 
 function Dashboard(props) {
@@ -15,10 +16,12 @@ function Dashboard(props) {
       currentUser,
       currentUsersRecipes,
       setCurrentUsersRecipes,
+      setSearchCategories,
       currentDisplayedRecipes,
       setCurrentDisplayedRecipes,
    } = useContext(DashContext);
    const fauna = useFauna();
+   const history = useHistory();
 
    useEffect(() => {
       if (localStorage.getItem("tt21_token")) {
@@ -27,6 +30,13 @@ function Dashboard(props) {
             getCurrentUserRecipes(fauna, currentUser.id).then((res) =>
                setCurrentUsersRecipes(res)
             );
+            getCategories(fauna).then((res) => setSearchCategories(res.data));
+         } else {
+            history.push("/");
+            // well since the code is getting messy, just hacking here.
+            setTimeout(() => {
+               history.push("/dashboard");
+            }, 50);
          }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
