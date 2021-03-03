@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Nav from "./Components/Nav";
 import Dashboard from "./Components/Dashboard";
 import ProfilePage from "./Components/ProfilePage";
@@ -14,7 +14,6 @@ import {
    ProfileContext,
    DashContext,
 } from "./Contexts";
-import { Logout } from "faunadb";
 import useFauna, { getUserByID } from "./FaunaAPI/FaunaAPI";
 
 function App() {
@@ -27,8 +26,10 @@ function App() {
       setCurrentUsersRecipes([]);
       setCurrentPage("");
       setCurrentDisplayedRecipes([]);
+      localStorage.setItem("tt21_token", "");
    };
    const fauna = useFauna();
+   // if localstorage has a token stored, retrieve that user
    useEffect(() => {
       if (localStorage.getItem("tt21_token").length > 0) {
          getUserByID(fauna, localStorage.getItem("tt21_token")).then((res) =>

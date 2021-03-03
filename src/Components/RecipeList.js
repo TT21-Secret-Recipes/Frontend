@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import RecipeCard from "./RecipeCard";
 import useFauna, {
    getRecipes,

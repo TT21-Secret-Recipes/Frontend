@@ -67,7 +67,7 @@ export function login({ client, q }, req) {
    });
 }
 
-// for localstorage
+// for localstorage user retrival
 export function getUserByID({ client, q }, id) {
    return new Promise((resolve, reject) => {
       client
