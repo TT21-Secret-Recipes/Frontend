@@ -31,7 +31,10 @@ function App() {
    const fauna = useFauna();
    // if localstorage has a token stored, retrieve that user
    useEffect(() => {
-      if (localStorage.getItem("tt21_token").length > 0) {
+      if (
+         localStorage.getItem("tt21_token") !== null &&
+         localStorage.getItem("tt21_token") !== ""
+      ) {
          getUserByID(fauna, localStorage.getItem("tt21_token")).then((res) =>
             setCurrentUser(res)
          );
