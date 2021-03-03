@@ -1,7 +1,9 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 function RecipeCard(props) {
-   const { title, source, ingredients, instructions, category } = props.recipe;
+   const { title, source, category } = props.recipe;
+   const history = useHistory();
    return (
       <div
          style={{
@@ -11,28 +13,22 @@ function RecipeCard(props) {
             alignSelf: "center",
             background: "#f1f1f1",
             borderRadius: "12px",
-            padding: "4%",
-            margin: "2%",
+            padding: "1% 2%",
+            marginTop: "2%",
+         }}
+         className="menuicon"
+         onClick={() => {
+            history.push("/recipes/" + props.recipe.id);
          }}
       >
          {/* optional img */}
-         <h2> {title} </h2>
+         <div style={{ fontWeight: "700", fontSize: "1.3rem" }}> {title} </div>
          <div>
             <span style={{ fontWeight: "600" }}> Source: </span> {source}
          </div>
          <div>
             <span style={{ fontWeight: "600" }}> Category: </span> {category}
          </div>
-         <div>
-            <h3>Ingredients:</h3>
-            <ul>
-               {ingredients.map((i) => (
-                  <li> {i} </li>
-               ))}
-            </ul>
-         </div>
-         <h3>Instructions:</h3>
-         <div style={{whiteSpace: "pre-wrap"}}> {instructions} </div>
       </div>
    );
 }
