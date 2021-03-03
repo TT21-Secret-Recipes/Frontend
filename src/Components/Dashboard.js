@@ -2,9 +2,11 @@ import React, { useContext, useEffect } from "react";
 import DashNav from "./DashNav";
 import AddRecipe from "./AddRecipe";
 import RecipeList from "./RecipeList";
+import PrivateRoute from "./PrivateRoute";
+import RecipePage from "./RecipePage";
 import { Route, Switch, useHistory } from "react-router-dom";
 
-import { DashContext } from "../Contexts";
+import { DashContext, RecipeContext } from "../Contexts";
 import useFauna, {
    getCurrentUserRecipes,
    getRecipes,
@@ -45,6 +47,17 @@ function Dashboard(props) {
    return (
       <div style={{ display: "flex", flexDirection: "column" }}>
          <DashNav />
+
+         <RecipeContext.Provider value={{ currentUser }}>
+            <PrivateRoute
+               exact
+               path="/dashboard/recipes/:id"
+               component={RecipePage}
+               componentProps={{
+                  currentDisplayedRecipes: currentDisplayedRecipes,
+               }}
+            />
+         </RecipeContext.Provider>
          <Switch>
             <Route exact path="/dashboard/">
                <div style={{ marginLeft: "1%" }}>
@@ -54,7 +67,7 @@ function Dashboard(props) {
             <Route path="/dashboard/addnew">
                <AddRecipe />
             </Route>
-            <Route path="/dashboard/recipes">
+            <Route exact path="/dashboard/recipes">
                <RecipeList recipes={currentDisplayedRecipes} />
             </Route>
 

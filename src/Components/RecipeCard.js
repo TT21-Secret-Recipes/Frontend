@@ -18,7 +18,7 @@ function RecipeCard(props) {
          }}
          className="menuicon"
          onClick={() => {
-            history.push("/recipes/" + props.recipe.id);
+            history.push("/dashboard/recipes/" + props.recipe.id);
          }}
       >
          {/* optional img */}

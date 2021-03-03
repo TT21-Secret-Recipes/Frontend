@@ -7,13 +7,7 @@ import ProfilePage from "./Components/ProfilePage";
 import LandingPage from "./Components/LandingPage";
 import "./App.css";
 import PrivateRoute from "./Components/PrivateRoute";
-import RecipePage from "./Components/RecipePage";
-import {
-   RecipeContext,
-   LoginContext,
-   ProfileContext,
-   DashContext,
-} from "./Contexts";
+import { LoginContext, ProfileContext, DashContext } from "./Contexts";
 import useFauna, { getUserByID } from "./FaunaAPI/FaunaAPI";
 
 function App() {
@@ -59,16 +53,6 @@ function App() {
          <ProfileContext.Provider value={{ currentUser }}>
             <PrivateRoute path="/userprofile" component={ProfilePage} />
          </ProfileContext.Provider>
-
-         <RecipeContext.Provider value={{ currentUser }}>
-            <PrivateRoute
-               path="/recipes/:id"
-               component={RecipePage}
-               componentProps={{
-                  currentDisplayedRecipes: currentDisplayedRecipes,
-               }}
-            />
-         </RecipeContext.Provider>
 
          <DashContext.Provider
             value={{

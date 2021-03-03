@@ -59,7 +59,13 @@ function RecipeList(props) {
                style={{ marginLeft: "2%", padding: "4px 12px" }}
                onClick={() => {
                   if (searchCategory === "") {
-                     return;
+                     if (props.recipes) {
+                        setRecipes(props.recipes);
+                        return;
+                     } else {
+                        getRecipes(fauna).then((res) => setRecipes(res));
+                        return;
+                     }
                   }
 
                   getRecipesByCategory(fauna, searchCategory).then((res) =>
@@ -75,7 +81,7 @@ function RecipeList(props) {
 
    useEffect(() => {
       setExistingCategory(searchCategories);
-
+      setSearchCategory("");
       if (onMyRecipes()) {
          if (!props.myrecipes) {
             getCurrentUserRecipes(
