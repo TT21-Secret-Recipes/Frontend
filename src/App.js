@@ -3,8 +3,8 @@ import Nav from "./Components/Nav";
 import Dashboard from "./Components/Dashboard";
 import ProfilePage from "./Components/ProfilePage";
 import LandingPage from "./Components/LandingPage";
-import LoginPage from "./Components/LoginPage";
 import "./App.css";
+import RecipePage from "./Components/RecipePage";
 
 function App() {
    return (
@@ -24,6 +24,9 @@ function App() {
             </Route>
             <Route path="/dashboard">
                <Dashboard />
+            </Route>
+            <Route path="/recipes/:id">
+               <RecipePage />
             </Route>
          </Switch>
 

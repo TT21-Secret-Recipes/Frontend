@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import styled from 'styled-components';
-import { RiCloseFill, RiAddFill } from "react-icons/ri";
-
+import styled from "styled-components";
+import { RiCloseFill } from "react-icons/ri";
+import useFauna, { submitRecipe } from "../FaunaAPI/FaunaAPI";
+import { useHistory } from "react-router-dom";
 const LabelStyled = styled.label`
-  margin-top: 16px;
-`
+   margin-top: 16px;
+`;
 
 function AddRecipe(props) {
+   const fauna = useFauna();
+   const history = useHistory();
    const [ingredients, setIngredients] = useState([]);
-   const [ingredientsToAdd, setIngredientsToAdd] = useState('');
+   const [ingredientToAdd, setIngredientToAdd] = useState("");
    const [recipe, setRecipe] = useState({
       title: "",
       source: "",
@@ -19,21 +22,28 @@ function AddRecipe(props) {
 
    useEffect(() => {
       setRecipe({ ...recipe, ingredients: ingredients });
+      // eslint-disable-next-line
    }, [ingredients]);
 
-   const removeIngredients = (e, j) => {
+   const addIngredient = (e) => {
       e.preventDefault();
-      setIngredientsToAdd('');
+      setIngredients(ingredients.concat(ingredientToAdd));
    };
 
-   const addIngredients = (e, j) => {
-      e.preventDefault();
-      setIngredients(ingredients.concat(ingredientsToAdd));
-   };
+   // const mockSubmitRecipe = (e) => {
+   //    e.preventDefault();
+   //    props.mockAddRecipe(recipe);
+   // };
 
-   const mockSubmitRecipe = (e) => {
+   const faunaSubmitRecipe = (e) => {
       e.preventDefault();
-      props.mockAddRecipe(recipe);
+      submitRecipe(fauna, {
+         ...recipe,
+         // submittedBy: props.currentUserId,
+      }).then((res) => {
+         console.log(res);
+         history.goBack();
+      });
    };
 
    return (
@@ -75,38 +85,42 @@ function AddRecipe(props) {
                   >
                      Ingredients
                   </div>
-                  
                </div>
 
                <div style={{ marginLeft: "40px", marginTop: "4%" }}>
                   <div style={{ display: "flex" }}>
                      <input
-                        value={ingredientsToAdd}
-                        onChange={ e => {
-                           setIngredientsToAdd(e.target.value);
+                        value={ingredientToAdd}
+                        onChange={(e) => {
+                           setIngredientToAdd(e.target.value);
                         }}
                      />
                      <button
-                        onClick={ e => {
-                           addIngredients(e);
-                           removeIngredients(e);
+                        onClick={(e) => {
+                           addIngredient(e);
+                           setIngredientToAdd("");
                         }}
                      >
                         OK
                      </button>
                      <button
-                        onClick={ e => removeIngredients(e)}
+                        onClick={(e) => {
+                           e.preventDefault();
+                           setIngredientToAdd("");
+                        }}
                      >
-                        Delete
+                        Clear
                      </button>
                   </div>
-                     
                </div>
 
                <div style={{ display: "flex" }}>
                   <ul>
                      {ingredients.map((i, j) => (
-                        <div style={{ display: "flex", alignItems: "center" }}>
+                        <div
+                           key={j + i}
+                           style={{ display: "flex", alignItems: "center" }}
+                        >
                            <li>{i}</li>
                            <div className="menuicon">
                               <RiCloseFill
@@ -128,14 +142,15 @@ function AddRecipe(props) {
             </LabelStyled>
             <LabelStyled className="addRecipeSection">
                Instructions
-               <textarea style={{height: '190px',}}
+               <textarea
+                  style={{ height: "190px" }}
                   onChange={(e) =>
                      setRecipe({ ...recipe, instructions: e.target.value })
                   }
                />
             </LabelStyled>
             <LabelStyled className="addRecipeSection">
-               <div style={{'margin-bottom': '2px',}}>Category</div>
+               <div style={{ marginBottom: "2px" }}>Category</div>
                <input
                   onChange={(e) =>
                      setRecipe({ ...recipe, category: e.target.value })
@@ -161,7 +176,7 @@ function AddRecipe(props) {
                      borderRadius: "6px",
                      margin: "1%",
                   }}
-                  onClick={(e) => mockSubmitRecipe(e)}
+                  onClick={(e) => faunaSubmitRecipe(e)}
                >
                   Submit
                </button>
@@ -176,6 +191,7 @@ function AddRecipe(props) {
                      borderRadius: "6px",
                      margin: "1%",
                   }}
+                  onClick={() => history.push("/dashboard")}
                >
                   Cancel
                </button>

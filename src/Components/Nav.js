@@ -17,7 +17,9 @@ function Nav(props) {
             display: "flex",
             justifyContent: "space-between",
             width: "100%",
+            minWidth: "300px",
             alignItems: "center",
+            zIndex: 50,
          }}
       >
          <div style={{ marginLeft: "2%" }}>
@@ -33,7 +35,7 @@ function Nav(props) {
             style={{
                display: "flex",
                flexDirection: "column",
-               position: "absolute",
+               position: "fixed",
                right: "0",
                top: "0",
                background: "rgba(55,55,55,0.99)",
@@ -41,6 +43,7 @@ function Nav(props) {
                width: "15vh",
                paddingLeft: "3vh",
                visibility: "hidden",
+               zIndex: 999,
             }}
             ref={drawer}
          >

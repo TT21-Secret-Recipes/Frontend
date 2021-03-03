@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { Route, Link, Switch } from "react-router-dom";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
 
 import { path } from "../Routes/routes";
 import LoginPage from "./LoginPage";

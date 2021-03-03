@@ -1,12 +1,14 @@
 .App {
    display: flex;
    flex-direction: column;
+   width: 100vw;
 }
 
 .menuicon:hover {
    transition: 0.125s;
    transform: scale(1.07);
    opacity: 0.7;
+   cursor: pointer;
 }
 
 .closed {
