@@ -17,7 +17,9 @@ function Nav(props) {
             display: "flex",
             justifyContent: "space-between",
             width: "100%",
+            minWidth: "300px",
             alignItems: "center",
+            zIndex: 50,
          }}
       >
          <div style={{ marginLeft: "2%" }}>

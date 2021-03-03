@@ -6,6 +6,7 @@ const DBKEY = "fnAEDU6P0MACCG7RBdvmIKviKzteD2ATpMvtVVxF";
 
 export function login({ client, q }, req) {
    return new Promise((resolve, reject) => {
+      // rewrite this with index, this is way too expensive
       client
          .query(q.Paginate(q.Documents(q.Collection("users"))))
          .then((ret) => {
@@ -119,7 +120,7 @@ export function getRecipe({ client, q }, id) {
 export function getCategories({ client, q }) {
    return new Promise((resolve, reject) => {
       client
-         .query(q.Paginate(q.Match(q.Index("Category"))))
+         .query(q.Paginate(q.Distinct(q.Match(q.Index("Category")))))
          .then((ret) => resolve(ret))
          .catch((err) => console.log(err));
    });

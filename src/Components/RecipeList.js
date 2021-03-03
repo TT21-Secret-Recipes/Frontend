@@ -59,7 +59,10 @@ function RecipeList(props) {
       getRecipes(fauna).then((res) => setRecipes(res));
       // getCategories(fauna).then((res) => setExistingCategory(res.data));
       getCategories(fauna).then(
-         (res) => setExistingCategory([...new Set(res.data)])
+         (res) => {
+            // console.log(res.data);
+            setExistingCategory(res.data);
+         }
          // setExistingCategory(res.data)
       );
       // eslint-disable-next-line
