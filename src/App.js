@@ -1,10 +1,12 @@
 import { Switch, Route, Redirect } from "react-router-dom";
 import Nav from "./Components/Nav";
 import Dashboard from "./Components/Dashboard";
-import ProfilePage from "./Components/ProfilePage";
+
+import Profile from "./Components/Profile";
 import LandingPage from "./Components/LandingPage";
 import LoginPage from "./Components/LoginPage";
 import "./App.css";
+import EditProfile from "./Components/EditProfile";
 
 function App() {
    return (
@@ -20,8 +22,11 @@ function App() {
                <LandingPage />
             </Route>
             <Route path="/userprofile">
-               <ProfilePage />
+               <Profile />
             </Route>
+            <Route path="/edituserprofile">
+               <EditProfile />
+               </Route>
             <Route path="/dashboard">
                <Dashboard />
             </Route>

@@ -2,10 +2,18 @@ import React, { useState } from 'react';
 import defaultPic from '../assets/def_prof_pic.jpg';
 import styled from 'styled-components';
 import { NavLink } from "react-router-dom";
+import editlogo from '../assets/edit-button.png';
+import { path } from '../Routes/routes';
+import { Route, Link, Switch } from "react-router-dom";
+import EditProfile from './EditProfile';
+import axios from 'axios';
+
+
 
 const defaultProfile = {
     username: 'CookieMonster',
-    name: 'Ettore Boiardi',
+    firstname: 'Ettore',
+    lastname: 'Boiardi',
     pic: `${defaultPic}`,
     bio: 'I love to cook, but I need to learn more!',
     onlinestatus: 'online',
@@ -14,7 +22,10 @@ const defaultProfile = {
 }
 
 function Profile(){
-    const [userProfile, setUserProfile] = useState(defaultProfile)
+    const [userProfile, setUserProfile] = useState(defaultProfile);
+
+    const [error, setError] = useState('');
+
 
     return(
         <Styledpage>
@@ -22,22 +33,30 @@ function Profile(){
                 <Styledpicbox>
                     <Styleimg src={userProfile.pic}/>
                 </Styledpicbox>
-                {/* <Styledinfospread> */}
-                    <Styledinfobox>
-                        <h1>{userProfile.username}</h1>
-                        <h2>{userProfile.name}</h2>
-                        <p>Bio: {userProfile.bio}</p>
-                    </Styledinfobox>
-                    <Stylededit>
-                    <p>
-                  Not you? 
-                  <NavLink to="/login"> Login </NavLink>
-               
-                  or 
-                  <NavLink to="/register"> Register </NavLink>
-                  </p>
-                    </Stylededit>
-                {/* </Styledinfospread> */}
+                <Styledsinimg>
+                        <Styledinfobox>
+                            <h1>{userProfile.username}</h1>
+                            <h2>{userProfile.firstname} {userProfile.lastname}</h2>
+                            <p>Bio: {userProfile.bio}</p>
+                        </Styledinfobox>
+                    <Styledinfospread>
+                        <Styledchange>
+                        <p>
+                    Not you? 
+                    <NavLink to="/login"> Login </NavLink>
+                
+                    or 
+                    <NavLink to="/register"> Register </NavLink>
+                    </p>
+                        </Styledchange>
+                        <Stylededit>
+                            
+                            <NavLink to="/edituserprofile">
+                            <Stylededitlogo src={editlogo} />
+                            </NavLink>
+                        </Stylededit>
+                    </Styledinfospread>
+                </Styledsinimg>
             </Styledheader>
             <Styledbody>
                 <Stylebodydiv>
@@ -72,6 +91,7 @@ width: 100%;
 background-color: #d9d9d9;
 margin-bottom: 20px;
 border-radius: 4px;
+
 `
 const Styledpicbox = styled.div`
 display: flex;
@@ -85,13 +105,15 @@ const Styledinfobox = styled.div`
 
 padding: .5rem 1.5rem;
 `
-const Stylededit = styled.div`
+const Styledchange = styled.div`
 height: 30px;
 `
-// const Styledinfospread = styled.div`
-// display:flex;
-// justify-content: space-between;
-// `
+const Styledinfospread = styled.div`
+display:flex;
+justify-content: space-between;
+flex-direction: column;
+padding: .5rem 1.5rem;
+`
 
 const Styledbody = styled.div`
 display:flex;
@@ -105,4 +127,32 @@ justify-content: space-evenly;
 const Stylebodydiv = styled.div`
 display:flex;
 padding: .5rem 1.5rem;
+`
+const Styledlink = styled.link`
+
+`
+const Stylededit = styled.div`
+height: 30px;
+display:flex;
+justify-content:flex-end;
+align-items:center;
+
+
+`
+
+const Stylededitlogo = styled.img`
+width: 25px;
+height:25px;
+&:hover {
+    width:27px;
+    height:27px;
+  }
+
+`
+
+
+const Styledsinimg = styled.div`
+display:flex;
+justify-content: space-between;
+width:100%;
 `
