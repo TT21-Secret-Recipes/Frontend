@@ -14,8 +14,11 @@ import useFauna, { getUserByID } from "./FaunaAPI/FaunaAPI";
 
 function App() {
    const [currentUser, setCurrentUser] = useState({});
+   const [currentBefore, setCurrentBefore] = useState({});
+   const [currentAfter, setCurrentAfter] = useState({});
    const [currentUsersRecipes, setCurrentUsersRecipes] = useState([]);
-   const [currentPage, setCurrentPage] = useState("");
+   const [currentPage, setCurrentPage] = useState(1);
+   const [maxPage, setMaxPage] = useState(1);
    const [searchCategories, setSearchCategories] = useState([]);
    const [currentDisplayedRecipes, setCurrentDisplayedRecipes] = useState([]);
    const logout = () => {
@@ -76,10 +79,16 @@ function App() {
                   currentUsersRecipes,
                   setCurrentUsersRecipes,
                   setCurrentPage,
+                  maxPage,
+                  setMaxPage,
                   searchCategories,
                   setSearchCategories,
                   currentDisplayedRecipes,
                   setCurrentDisplayedRecipes,
+                  currentBefore,
+                  setCurrentBefore,
+                  currentAfter,
+                  setCurrentAfter,
                }}
             >
                <PrivateRoute path="/dashboard" component={Dashboard} />
