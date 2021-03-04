@@ -1,13 +1,14 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { RiArrowGoBackFill, RiAddBoxFill } from "react-icons/ri";
-import useFauna, { getRecipe } from "../FaunaAPI/FaunaAPI";
+import useFauna, { getRecipe, deleteRecipe } from "../FaunaAPI/FaunaAPI";
 import { RecipeContext } from "../Contexts";
 
 function RecipePage(props) {
    const fauna = useFauna();
    const history = useHistory();
    const { currentUser } = useContext(RecipeContext);
+   const modalref = useRef();
    const [recipe, setRecipe] = useState({
       title: "",
       source: "",
@@ -49,13 +50,63 @@ function RecipePage(props) {
          }}
       >
          {/* optional img */}
+
+         <div className="delete_recipe_modal_background closed" ref={modalref}>
+            <div className="delete_recipe_modal">
+               <div style={{ width: "65%" }}>
+                  <div>Are you sure you want to delete</div>
+                  <div style={{ fontSize: "1.6rem" }}>
+                     {recipe.title} <span> ? </span>
+                  </div>
+               </div>
+               <div
+                  style={{
+                     display: "flex",
+                     justifyContent: "space-between",
+                     width: "80%",
+                  }}
+               >
+                  <button
+                     onClick={() => {
+                        deleteRecipe(fauna, recipe.id).then((res) => {
+                           history.push("/dashboard/");
+                           window.location.reload();
+                        });
+                     }}
+                  >
+                     I'm Sure
+                  </button>
+                  <button
+                     onClick={() => {
+                        modalref.current.classList.toggle("closed");
+                     }}
+                  >
+                     Go Back
+                  </button>
+               </div>
+            </div>
+         </div>
          <div
             style={{ fontSize: "1rem", alignSelf: "flex-end", display: "flex" }}
-            onClick={() => toggle()}
          >
             {recipe.submittedBy === currentUser.id && (
-               <div style={{ marginRight: "2vh" }} className="menuicon">
-                  {editmode ? "OK" : "Edit"}
+               <div style={{ display: "flex" }}>
+                  <div
+                     style={{ marginRight: "2vh", color: "#e41212" }}
+                     className="menuicon"
+                     onClick={() => {
+                        modalref.current.classList.toggle("closed");
+                     }}
+                  >
+                     {editmode ? "Delete?" : <></>}
+                  </div>
+                  <div
+                     style={{ marginRight: "2vh" }}
+                     className="menuicon"
+                     onClick={() => toggle()}
+                  >
+                     {editmode ? "OK" : "Edit"}
+                  </div>
                </div>
             )}
             <RiArrowGoBackFill

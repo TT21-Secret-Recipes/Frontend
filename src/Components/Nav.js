@@ -3,13 +3,23 @@ import { RiMenuFill, RiCloseFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 function Nav(props) {
    const drawer = useRef();
+   const drawerback = useRef();
 
    const hidedrawer = () => {
       drawer.current.style.visibility = "hidden";
+      drawerback.current.style.visibility = "hidden";
    };
    const showdrawer = () => {
       drawer.current.style.visibility = "visible";
+      drawerback.current.style.visibility = "visible";
    };
+
+   // const hidedrawerback = () => {
+   //    drawerback.current.style.visibility = "hidden";
+   // };
+   // const showdrawerback = () => {
+   //    drawerback.current.style.visibility = "visible";
+   // };
 
    return (
       <nav
@@ -33,104 +43,118 @@ function Nav(props) {
 
          <div
             style={{
-               display: "flex",
-               flexDirection: "column",
                position: "fixed",
-               right: "0",
+               left: "0",
                top: "0",
-               background: "rgba(55,55,55,0.99)",
-               height: "100vh",
-               width: "15vh",
-               paddingLeft: "3vh",
+               width: "100vw",
                visibility: "hidden",
-               zIndex: 999,
+               height: "100vh",
+               zIndex: 998,
             }}
-            ref={drawer}
+            ref={drawerback}
+            onClick={hidedrawer}
          >
             <div
                style={{
                   display: "flex",
-                  justifyContent: "flex-end",
-                  fontSize: "1.5rem",
-               }}
-            >
-               <RiCloseFill
-                  onClick={hidedrawer}
-                  className="menuicon"
-                  style={{
-                     cursor: "pointer",
-                     color: "white",
-                     marginRight: "5%",
-                     marginTop: "5%",
-                     fontSize: "2rem",
-                  }}
-               />
-            </div>
-
-            <div
-               style={{
-                  display: "flex",
                   flexDirection: "column",
-                  marginRight: "20px",
+                  position: "fixed",
+                  right: "0",
+                  top: "0",
+                  background: "rgba(55,55,55,0.99)",
+                  height: "100vh",
+                  width: "15vh",
+                  paddingLeft: "3vh",
+                  visibility: "hidden",
+                  zIndex: 999,
                }}
+               ref={drawer}
             >
-               <NavLink className="navlink" onClick={hidedrawer} to="/">
-                  Home
-               </NavLink>
-               {/* loggedin && */}
-
-               {props.currentUser.id && (
-                  <NavLink
-                     className="navlink"
+               <div
+                  style={{
+                     display: "flex",
+                     justifyContent: "flex-end",
+                     fontSize: "1.5rem",
+                  }}
+               >
+                  <RiCloseFill
                      onClick={hidedrawer}
-                     to="/dashboard"
-                  >
-                     Dashboard
-                  </NavLink>
-               )}
-
-               {/* !loggedin && */}
-               {!props.currentUser.id && (
-                  <NavLink
-                     className="navlink"
-                     onClick={hidedrawer}
-                     to="/auth/login"
-                  >
-                     Login
-                  </NavLink>
-               )}
-               {!props.currentUser.id && (
-                  <NavLink
-                     className="navlink"
-                     onClick={hidedrawer}
-                     to="/auth/sign-up"
-                  >
-                     Register
-                  </NavLink>
-               )}
-               {/* loggedin && */}
-               {props.currentUser.id && (
-                  <NavLink
-                     className="navlink"
-                     onClick={() => {
-                        props.logout();
-                        hidedrawer();
-                        localStorage.setItem("tt21_token", "");
+                     className="menuicon"
+                     style={{
+                        cursor: "pointer",
+                        color: "white",
+                        marginRight: "5%",
+                        marginTop: "5%",
+                        fontSize: "2rem",
                      }}
-                     to="?"
-                  >
-                     Logout
+                  />
+               </div>
+
+               <div
+                  style={{
+                     display: "flex",
+                     flexDirection: "column",
+                     marginRight: "20px",
+                  }}
+               >
+                  <NavLink className="navlink" onClick={hidedrawer} to="/">
+                     Home
                   </NavLink>
-               )}
-               {props.currentUser.id && (
-                  <NavLink
-                     className="navlink"
-                     onClick={hidedrawer}
-                     to="/userprofile"
-                  >
-                     My Profile
-                  </NavLink>
-               )}
+                  {/* loggedin && */}
+
+                  {props.currentUser.id && (
+                     <NavLink
+                        className="navlink"
+                        onClick={hidedrawer}
+                        to="/dashboard"
+                     >
+                        Dashboard
+                     </NavLink>
+                  )}
+
+                  {/* !loggedin && */}
+                  {!props.currentUser.id && (
+                     <NavLink
+                        className="navlink"
+                        onClick={hidedrawer}
+                        to="/auth/login"
+                     >
+                        Login
+                     </NavLink>
+                  )}
+                  {!props.currentUser.id && (
+                     <NavLink
+                        className="navlink"
+                        onClick={hidedrawer}
+                        to="/auth/sign-up"
+                     >
+                        Register
+                     </NavLink>
+                  )}
+                  {/* loggedin && */}
+                  {props.currentUser.id && (
+                     <NavLink
+                        className="navlink"
+                        onClick={() => {
+                           props.logout();
+                           hidedrawer();
+                           localStorage.setItem("tt21_token", "");
+                        }}
+                        to="?"
+                     >
+                        Logout
+                     </NavLink>
+                  )}
+                  {props.currentUser.id && (
+                     <NavLink
+                        className="navlink"
+                        onClick={hidedrawer}
+                        to="/userprofile"
+                     >
+                        My Profile
+                     </NavLink>
+                  )}
+               </div>
             </div>
          </div>
       </nav>

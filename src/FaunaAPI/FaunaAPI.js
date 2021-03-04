@@ -129,7 +129,7 @@ export function getRecipes({ client, q }) {
    // currently no authentication for getting recipes
    return new Promise((resolve, reject) => {
       client
-         .query(q.Paginate(q.Documents(q.Collection("recipes")), { size: 10 }))
+         .query(q.Paginate(q.Documents(q.Collection("recipes")), { size: 20 }))
          .then((ret) => {
             client
                .query(q.Map(ret.data, q.Lambda("x", q.Get(q.Var("x")))))
@@ -145,14 +145,14 @@ export function getRecipesByCategory({ client, q }, category) {
       client
          .query(
             q.Paginate(q.Match(q.Index("RefByRecipeCategory"), category), {
-               size: 10,
+               size: 15,
             })
          )
          .then((ret) => {
             client
                .query(q.Map(ret.data, q.Lambda("x", q.Get(q.Var("x")))))
                .then((ret) => resolve(ret.map((i) => i.data)))
-               .catch((err) => console.log(err));
+               .catch((err) => reject(err));
          });
    });
 }
@@ -162,7 +162,7 @@ export function getRecipe({ client, q }, id) {
       client
          .query(q.Get(q.Match(q.Index("RefByRecipeID"), id)))
          .then((ret) => resolve(ret))
-         .catch((err) => console.log(err));
+         .catch((err) => reject(err));
    });
 }
 
@@ -171,7 +171,7 @@ export function getCategories({ client, q }) {
       client
          .query(q.Paginate(q.Distinct(q.Match(q.Index("Category")))))
          .then((ret) => resolve(ret))
-         .catch((err) => console.log(err));
+         .catch((err) => reject(err));
    });
 }
 
@@ -270,6 +270,22 @@ export function search({ client, q }, term, category) {
             resolve(res.data.map((i) => i.data));
          })
          .catch((err) => reject("no such found"));
+   });
+}
+
+export function deleteRecipe({ client, q }, itemID) {
+   return new Promise((resolve, reject) => {
+      client
+         .query(
+            q.Delete(
+               q.Select(
+                  ["ref"],
+                  q.Get(q.Match(q.Index("RefByRecipeID"), itemID))
+               )
+            )
+         )
+         .then((res) => resolve("delete success"))
+         .catch((err) => reject(err));
    });
 }
 

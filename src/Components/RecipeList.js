@@ -152,8 +152,7 @@ function RecipeList(props) {
             flexDirection: "column",
          }}
       >
-         {/* {!onMyRecipes() && } */}
-         <Search bundle={bundle} />
+         {!onMyRecipes() && <Search bundle={bundle} />}
 
          {recipes.map((i) => (
             <RecipeCard recipe={i} key={i.id} />

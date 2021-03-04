@@ -179,7 +179,10 @@ function AddRecipe(props) {
                      borderRadius: "6px",
                      margin: "1%",
                   }}
-                  onClick={(e) => faunaSubmitRecipe(e)}
+                  onClick={(e) => {
+                     faunaSubmitRecipe(e);
+                     window.location.reload();
+                  }}
                >
                   Submit
                </button>

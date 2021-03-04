@@ -53,3 +53,30 @@
    background-color: rgb(82, 82, 82);
    color: rgb(247, 247, 247);
 }
+
+.delete_recipe_modal_background {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 10000px;
+   height: 10000px;
+
+   z-index: 80;
+   background-color: rgba(0, 0, 0, 0.726);
+}
+
+.delete_recipe_modal {
+   position: fixed;
+   z-index: 81;
+   top: 25vh;
+   left: 25vh;
+   padding: 5% 5%;
+   height: 20%;
+   background-color: rgb(240, 240, 240);
+   border-radius: 16px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-around;
+
+   align-items: center;
+}
