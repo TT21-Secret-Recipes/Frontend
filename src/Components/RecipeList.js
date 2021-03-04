@@ -156,8 +156,8 @@ function RecipeList(props) {
          {!onMyRecipes() && <Search bundle={bundle} />}
 
          {onMyRecipes()
-            ? recipes.map((i) => <MyRecipeCard recipe={i} key={i.id} />)
-            : recipes.map((i) => <RecipeCard recipe={i} key={i.id} />)}
+            ? recipes.map((i) => <RecipeCard recipe={i} key={i.id} isMyRecipe={true}/>)
+            : recipes.map((i) => <RecipeCard recipe={i} key={i.id} isMyRecipe={false}/>)}
          {}
       </div>
    );

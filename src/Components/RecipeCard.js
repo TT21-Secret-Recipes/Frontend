@@ -66,8 +66,15 @@ const H1VStyled = styled.h1`
    transition: transform 0.5s;
 `;
 
+const H4EditStyled = styled.h4`
+   margin: 0;
+   opacity: ${ props => props.expanded ? 1 : 0};
+   transition: opacity 0.5s linear;
+`
+
 function RecipeCard(props) {
    const { title, source, category } = props.recipe;
+   const isMyRecipe = props.isMyRecipe;
    const [expanded, setExpanded] = useState(false);
 
    //console.log('Props:', props)
@@ -108,21 +115,7 @@ function RecipeCard(props) {
                   alignItems: "center",
                }}
             >
-               {/* {expanded && (
-                  <div
-                     style={{
-                        fontWeight: "500",
-                        fontSize: "1.1rem",
-                        marginRight: "1rem",
-                     }}
-                     className="menuicon"
-                     onClick={() => {
-                        history.push("/dashboard/recipes/" + props.recipe.id);
-                     }}
-                  >
-                     Recipe Page
-                  </div>
-               )} */}
+               { ( isMyRecipe ) && <H4EditStyled expanded={expanded}>Edit</H4EditStyled>}
                <H1VStyled expanded={expanded} onClick={toggleExpand}>
                   <RiArrowDownSFill className="menuicon" />
                </H1VStyled>
