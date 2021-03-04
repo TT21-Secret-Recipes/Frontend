@@ -60,7 +60,11 @@ export default function SignupPage() {
 
       try {
          schema.validateSync(values, { abortEarly: false });
-         setErrors([]);
+         setErrors([]); // sucsess! register user
+
+         register(fauna, values)
+         .then((res) => alert("registered"))
+         .catch((err) => alert(err));
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);
@@ -74,10 +78,6 @@ export default function SignupPage() {
       //     // assuming the error looks something like "username/email already taken"
       //     //setErrors(err.data);
       //   });
-
-      register(fauna, values)
-         .then((res) => alert("registered"))
-         .catch((err) => alert(err));
    }
 
    return (
