@@ -23,6 +23,8 @@ const DivMainStyled = styled.div`
 export default function LandingPage() {
    return (
       <DivMainStyled>
+         <p>{`Width: ${window.screen.width}
+         Height: ${window.screen.height}`}</p>
          <Switch>
             <Route exact path={path.welcome}>
                <WelcomePage />
