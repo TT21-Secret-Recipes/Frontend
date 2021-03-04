@@ -4,6 +4,7 @@ import { RiArrowDownSFill } from "react-icons/ri";
 import useFauna, { getRecipe } from "../FaunaAPI/FaunaAPI";
 import { DashContext } from "../Contexts";
 import styled from "styled-components";
+import RecipePage from './RecipePage';
 
 const DivDescriptionStyled = styled.div`
    height: auto;
@@ -76,6 +77,7 @@ function RecipeCard(props) {
    const { title, source, category } = props.recipe;
    const isMyRecipe = props.isMyRecipe;
    const [expanded, setExpanded] = useState(false);
+   const [editMode, setEditMode] = useState(false);
 
    //console.log('Props:', props)
 
@@ -115,7 +117,7 @@ function RecipeCard(props) {
                   alignItems: "center",
                }}
             >
-               { ( isMyRecipe ) && <H4EditStyled expanded={expanded}>Edit</H4EditStyled>}
+               { ( isMyRecipe ) && <H4EditStyled expanded={expanded} onClick={setEditMode.bind(!editMode)}>Edit</H4EditStyled>}
                <H1VStyled expanded={expanded} onClick={toggleExpand}>
                   <RiArrowDownSFill className="menuicon" />
                </H1VStyled>
