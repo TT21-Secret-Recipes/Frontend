@@ -69,11 +69,11 @@ function Search(props) {
                      return;
                   }
                }
-               search(
-                  fauna,
-                  searchbox.current.value,
-                  searchCategory
-               ).then((res) => setRecipes(res));
+               search(fauna, searchbox.current.value, searchCategory)
+                  .then((res) => {
+                     setRecipes(res);
+                  })
+                  .catch((err) => alert(err));
 
                // if (searchCategory === "") {
                //    if (props.recipes) {

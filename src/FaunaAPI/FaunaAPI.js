@@ -224,58 +224,55 @@ export function search({ client, q }, term, category) {
    }
 
    if (term !== "" && category === "") {
+      return new Promise((resolve1, reject1) => {
+         client
+            .query(
+               q.Map(
+                  q.Filter(
+                     q.Paginate(q.Documents(q.Collection("recipes"))),
+                     q.Lambda(
+                        "x",
+                        q.ContainsStrRegex(
+                           q.Select(["data", "title"], q.Get(q.Var("x"))),
+                           "(?i)" + term
+                        )
+                     )
+                  ),
+                  q.Lambda("a", q.Get(q.Var("a")))
+               )
+            )
+            .then((res) => {
+               resolve1(res.data.map((i) => i.data));
+            })
+            .catch((err) => reject1("no such found"));
+      });
+   } else {
       return new Promise((resolve, reject) => {
          client
             .query(
                q.Map(
                   q.Filter(
-                     q.Paginate(q.Match(q.Index("RecipesNamesID"))),
+                     q.Paginate(
+                        q.Match(q.Index("RefByRecipeCategory"), category)
+                     ),
                      q.Lambda(
                         "x",
                         q.ContainsStrRegex(
-                           q.Select([1], q.Var("x")),
+                           q.Select(["data", "title"], q.Get(q.Var("x"))),
                            "(?i)" + term
                         )
                      )
                   ),
-                  q.Lambda(
-                     "a",
-                     q.Get(
-                        q.Match(
-                           q.Index("RefByRecipeID"),
-                           q.Select([0], q.Var("a"))
-                        )
-                     )
-                  )
+                  q.Lambda("a", q.Get(q.Var("a")))
                )
             )
-            .then((res) => console.log(res));
+            .then((res) => {
+               // console.log(res.data.map((i) => i.data));
+               resolve(res.data.map((i) => i.data));
+            })
+            .catch((err) => reject("no such found"));
       });
    }
-
-   return new Promise((resolve, reject) => {
-      client
-         .query(
-            q.Map(
-               q.Filter(
-                  q.Paginate(q.Match(q.Index("RefByRecipeCategory"), category)),
-                  q.Lambda(
-                     "x",
-                     q.ContainsStrRegex(
-                        q.Select(["data", "title"], q.Get(q.Var("x"))),
-                        "(?i)" + term
-                     )
-                  )
-               ),
-               q.Lambda("a", q.Get(q.Var("a")))
-            )
-         )
-         .then((res) => {
-            // console.log(res.data.map((i) => i.data));
-            resolve(res.data.map((i) => i.data));
-         })
-         .catch((err) => reject("no such found"));
-   });
 }
 
 export function deleteRecipe({ client, q }, itemID) {
