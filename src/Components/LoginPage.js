@@ -21,6 +21,8 @@ import {
    DivButtonPaddingStyled,
    ButtonSubmitStyled,
    PRedStyled,
+   ImgEyeStyled,
+   DivEyeStyled,
 } from './SharedStyles';
 import schema from '../yupSchema/loginSchema';
 
@@ -116,7 +118,7 @@ export default function LoginPage() {
                      onFocus={onFocus}
                      onBlur={onBlur}
                   />
-                  <div style={{display: 'inline-block', height: '20px', width: '20px'}}></div>
+                  <DivEyeStyled />
                </DivFieldsetStyled>
 
                <DivFieldsetStyled>
@@ -136,7 +138,11 @@ export default function LoginPage() {
                      onFocus={onFocus}
                      onBlur={onBlur}
                   />
-                  <img src={passwordVisible ? eyeNotVisible : eyeVisible} alt='' style={{ width: '20px', height: '20px', display: 'inline-block',}} onClick={togglePasswordVisibilty}/>
+                  <ImgEyeStyled 
+                     src={passwordVisible ? eyeNotVisible : eyeVisible}
+                     alt=''
+                     onClick={togglePasswordVisibilty}
+                  />
                </DivFieldsetStyled>
             </form>
             {errors.map((error, i) => (

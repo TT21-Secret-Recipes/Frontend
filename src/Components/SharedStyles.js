@@ -100,3 +100,11 @@ export const ButtonSubmitStyled = styled.button`
 export const PRedStyled = styled.p`
   color: red;
 `
+
+const eyeSize = `
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+`
+export const ImgEyeStyled = styled.img(eyeSize)
+export const DivEyeStyled = styled.div(eyeSize)
