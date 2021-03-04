@@ -127,7 +127,7 @@ export default function SignupPage() {
                      htmlFor="username"
                      hasData={values.username === "" ? false : true}
                   >
-                     Username
+                     Name
                   </LabelStyled>
                   <InputStyled
                      id="username"
