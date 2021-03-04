@@ -42,9 +42,10 @@ export const H1TitleStyled = styled.h1`
 export const DivFieldsetStyled = styled.div`
   border: 1px solid black;
   border-radius: 4px;
-  position: relative;
   margin: 10px auto;
   padding: 10px;
+  position: relative;
+  text-align: left;
   width: 300px;
 `
 
@@ -76,7 +77,7 @@ export const InputStyled = styled.input`
   display: inline-block;
   font-size: 20px;
   outline: none;
-  width: 250px;
+  width: 270px;
 `
 
 export const DivButtonPaddingStyled = styled.div`
@@ -101,10 +102,9 @@ export const PRedStyled = styled.p`
   color: red;
 `
 
-const eyeSize = `
+export const ImgEyeStyled = styled.img`
   display: inline-block;
-  height: 20px;
+  height: 16px;
+  margin-top: 4px;
   width: 20px;
 `
-export const ImgEyeStyled = styled.img(eyeSize)
-export const DivEyeStyled = styled.div(eyeSize)

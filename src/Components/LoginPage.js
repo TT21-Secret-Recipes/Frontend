@@ -6,7 +6,7 @@ import useFauna, { login } from '../FaunaAPI/FaunaAPI';
 import { LoginContext } from '../Contexts';
 
 import { path } from '../Routes/routes';
-import eyeVisible from '../assets/iconmonstr-eye-thin.svg'
+import eyeVisible from '../assets/iconmonstr-eye-thin.svg';
 import eyeNotVisible from '../assets/iconmonstr-eye-off-thin.svg';
 
 import {
@@ -22,7 +22,6 @@ import {
    ButtonSubmitStyled,
    PRedStyled,
    ImgEyeStyled,
-   DivEyeStyled,
 } from './SharedStyles';
 import schema from '../yupSchema/loginSchema';
 
@@ -118,7 +117,6 @@ export default function LoginPage() {
                      onFocus={onFocus}
                      onBlur={onBlur}
                   />
-                  <DivEyeStyled />
                </DivFieldsetStyled>
 
                <DivFieldsetStyled>
@@ -145,9 +143,11 @@ export default function LoginPage() {
                   />
                </DivFieldsetStyled>
             </form>
+
             {errors.map((error, i) => (
                <PRedStyled key={i}>{error}</PRedStyled>
             ))}
+
          </DivFlexGrowStyled>
 
          <DivButtonPaddingStyled>
