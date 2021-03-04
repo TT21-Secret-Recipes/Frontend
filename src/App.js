@@ -5,6 +5,7 @@ import Nav from "./Components/Nav";
 import Dashboard from "./Components/Dashboard";
 import ProfilePage from "./Components/ProfilePage";
 import LandingPage from "./Components/LandingPage";
+import EditProfile from "./Components/EditProfile";
 import "./App.css";
 import PrivateRoute from "./Components/PrivateRoute";
 import { LoginContext, ProfileContext, DashContext } from "./Contexts";
@@ -52,6 +53,7 @@ function App() {
 
          <ProfileContext.Provider value={{ currentUser }}>
             <PrivateRoute path="/userprofile" component={ProfilePage} />
+            <PrivateRoute path="/edituserprofile" component={EditProfile} />
          </ProfileContext.Provider>
 
          <DashContext.Provider

@@ -19,6 +19,9 @@ function DashNav(props) {
          <NavLink to="/dashboard/myrecipes" className="navbutton">
             <div>My Recipe</div>
          </NavLink>
+         <NavLink to="/userprofile" className="navbutton">
+            <div>My Profile</div>
+         </NavLink>
       </div>
    );
 }
