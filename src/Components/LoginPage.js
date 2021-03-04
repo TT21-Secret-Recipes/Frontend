@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-// import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 // import styled from "styled-components";
 // import axios from "axios";
 import useFauna, { login } from "../FaunaAPI/FaunaAPI";
+import { LoginContext } from "../Contexts";
 
 import { path } from "../Routes/routes";
 import {
@@ -35,6 +36,8 @@ export default function LoginPage({ submit }) {
    const [focus, setFocus] = useState(initialFocus);
    const [errors, setErrors] = useState([]);
    const fauna = useFauna();
+   const { setCurrentUser } = useContext(LoginContext);
+   const history = useHistory();
 
    function onChange(evt) {
       const { name, value } = evt.target;
@@ -72,7 +75,13 @@ export default function LoginPage({ submit }) {
       login(fauna, {
          email: values.username,
          password: values.password,
-      }).then((res) => console.log(res));
+      })
+         .then((res) => {
+            // alert(res);
+            setCurrentUser(res);
+            history.push("/dashboard");
+         })
+         .catch((err) => alert(err));
    }
 
    return (

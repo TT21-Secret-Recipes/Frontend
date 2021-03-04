@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { RiCloseFill } from "react-icons/ri";
 import useFauna, { submitRecipe } from "../FaunaAPI/FaunaAPI";
 import { useHistory } from "react-router-dom";
+import { DashContext } from "../Contexts";
 const LabelStyled = styled.label`
    margin-top: 16px;
 `;
@@ -19,6 +20,8 @@ function AddRecipe(props) {
       instructions: "",
       category: "",
    });
+
+   const { currentUser } = useContext(DashContext);
 
    useEffect(() => {
       setRecipe({ ...recipe, ingredients: ingredients });
@@ -39,7 +42,7 @@ function AddRecipe(props) {
       e.preventDefault();
       submitRecipe(fauna, {
          ...recipe,
-         // submittedBy: props.currentUserId,
+         submittedBy: currentUser.id,
       }).then((res) => {
          console.log(res);
          history.goBack();
@@ -176,7 +179,10 @@ function AddRecipe(props) {
                      borderRadius: "6px",
                      margin: "1%",
                   }}
-                  onClick={(e) => faunaSubmitRecipe(e)}
+                  onClick={(e) => {
+                     faunaSubmitRecipe(e);
+                     window.location.reload();
+                  }}
                >
                   Submit
                </button>

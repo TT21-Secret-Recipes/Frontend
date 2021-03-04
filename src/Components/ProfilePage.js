@@ -6,7 +6,6 @@ function ProfilePage(props) {
       <div>
          <div></div>
          {/* <DashNav /> */}
-
          {/* profile stuff */}
          <Profile />
       </div>
