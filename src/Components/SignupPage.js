@@ -3,7 +3,11 @@ import React, { useState } from "react";
 // import styled from "styled-components";
 // import axios from "axios";
 import useFauna, { register } from "../FaunaAPI/FaunaAPI";
+
 import { path } from "../Routes/routes";
+import eyeVisible from '../assets/iconmonstr-eye-thin.svg';
+import eyeNotVisible from '../assets/iconmonstr-eye-off-thin.svg';
+
 import {
    DivFlexStyled,
    DivFlexGrowStyled,
@@ -16,6 +20,7 @@ import {
    DivButtonPaddingStyled,
    ButtonSubmitStyled,
    PRedStyled,
+   ImgEyeStyled,
 } from "./SharedStyles";
 import schema from "../yupSchema/registerSchema";
 
@@ -37,7 +42,13 @@ export default function SignupPage() {
    const [values, setValues] = useState(initialValues);
    const [focus, setFocus] = useState(initialFocus);
    const [errors, setErrors] = useState([]);
+   const [passwordVisible, setPasswordVisible] = useState(false);
+
    const fauna = useFauna();
+
+   function togglePasswordVisibilty(){
+      setPasswordVisible(!passwordVisible);
+   }
 
    function onChange(evt) {
       const { name, value } = evt.target;
@@ -60,7 +71,11 @@ export default function SignupPage() {
 
       try {
          schema.validateSync(values, { abortEarly: false });
-         setErrors([]);
+         setErrors([]); // sucsess! register user
+
+         register(fauna, values)
+         .then((res) => alert("registered"))
+         .catch((err) => alert(err));
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);
@@ -74,10 +89,6 @@ export default function SignupPage() {
       //     // assuming the error looks something like "username/email already taken"
       //     //setErrors(err.data);
       //   });
-
-      register(fauna, values)
-         .then((res) => alert("registered"))
-         .catch((err) => alert(err));
    }
 
    return (
@@ -138,12 +149,17 @@ export default function SignupPage() {
                   </LabelStyled>
                   <InputStyled
                      id="password"
-                     type="text"
+                     type={passwordVisible ? 'text' : 'password'}
                      name="password"
                      value={values.password}
                      onChange={onChange}
                      onFocus={onFocus}
                      onBlur={onBlur}
+                  />
+                  <ImgEyeStyled 
+                     src={passwordVisible ? eyeNotVisible : eyeVisible}
+                     alt=''
+                     onClick={togglePasswordVisibilty}
                   />
                </DivFieldsetStyled>
 
@@ -157,12 +173,17 @@ export default function SignupPage() {
                   </LabelStyled>
                   <InputStyled
                      id="passwordConf"
-                     type="text"
+                     type={passwordVisible ? 'text' : 'password'}
                      name="passwordConf"
                      value={values.passwordConf}
                      onChange={onChange}
                      onFocus={onFocus}
                      onBlur={onBlur}
+                  />
+                  <ImgEyeStyled 
+                     src={passwordVisible ? eyeNotVisible : eyeVisible}
+                     alt=''
+                     onClick={togglePasswordVisibilty}
                   />
                </DivFieldsetStyled>
             </form>

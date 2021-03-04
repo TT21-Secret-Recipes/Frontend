@@ -1,11 +1,14 @@
-import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
-// import styled from "styled-components";
-// import axios from "axios";
-import useFauna, { login } from "../FaunaAPI/FaunaAPI";
-import { LoginContext } from "../Contexts";
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
-import { path } from "../Routes/routes";
+
+import useFauna, { login } from '../FaunaAPI/FaunaAPI';
+import { LoginContext } from '../Contexts';
+
+import { path } from '../Routes/routes';
+import eyeVisible from '../assets/iconmonstr-eye-thin.svg';
+import eyeNotVisible from '../assets/iconmonstr-eye-off-thin.svg';
+
 import {
    DivFlexStyled,
    DivFlexGrowStyled,
@@ -18,26 +21,33 @@ import {
    DivButtonPaddingStyled,
    ButtonSubmitStyled,
    PRedStyled,
-} from "./SharedStyles";
-import schema from "../yupSchema/loginSchema";
+   ImgEyeStyled,
+} from './SharedStyles';
+import schema from '../yupSchema/loginSchema';
 
 const initialValues = {
-   username: "",
-   password: "",
+   email: '',
+   password: '',
 };
 
 const initialFocus = {
-   username: false,
+   email: false,
    password: false,
 };
 
-export default function LoginPage({ submit }) {
+export default function LoginPage() {
    const [values, setValues] = useState(initialValues);
    const [focus, setFocus] = useState(initialFocus);
    const [errors, setErrors] = useState([]);
+   const [passwordVisible, setPasswordVisible] = useState(false);
+
    const fauna = useFauna();
    const { setCurrentUser } = useContext(LoginContext);
    const history = useHistory();
+
+   function togglePasswordVisibilty(){
+      setPasswordVisible(!passwordVisible);
+   }
 
    function onChange(evt) {
       const { name, value } = evt.target;
@@ -58,30 +68,26 @@ export default function LoginPage({ submit }) {
 
       try {
          schema.validateSync(values, { abortEarly: false });
-         setErrors([]);
+         setErrors([]); // succsess! login user
+
+         login(fauna, {
+            email: values.email,
+            password: values.password,
+         })
+            .then((res) => {
+               // alert(res);
+               setCurrentUser(res);
+               history.push('/dashboard');
+            })
+            .catch((err) => {
+               // alert(err)
+               setErrors(['The provided email/password do not match']);
+            });
+
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);
       }
-
-      // axios.post('url', values)
-      //   .then( respones => {
-      //     //login user
-      //   })
-      //   .catch( err => {
-      //     // assuming the error looks something like "username and password do not match"
-      //     //setErrors(err.data);
-      //   });
-      login(fauna, {
-         email: values.username,
-         password: values.password,
-      })
-         .then((res) => {
-            // alert(res);
-            setCurrentUser(res);
-            history.push("/dashboard");
-         })
-         .catch((err) => alert(err));
    }
 
    return (
@@ -93,20 +99,20 @@ export default function LoginPage({ submit }) {
 
             <H1TitleStyled>Login</H1TitleStyled>
 
-            <form onSubmit={onSubmit} id="login">
+            <form onSubmit={onSubmit} id='login'>
                <DivFieldsetStyled>
                   <LabelStyled
-                     focus={focus.username}
-                     htmlFor="username"
-                     hasData={values.username === "" ? false : true}
+                     focus={focus.email}
+                     htmlFor='email'
+                     hasData={values.email === '' ? false : true}
                   >
-                     Username
+                     Email
                   </LabelStyled>
                   <InputStyled
-                     id="username"
-                     type="text"
-                     name="username"
-                     value={values.username}
+                     id='email'
+                     type='text'
+                     name='email'
+                     value={values.email}
                      onChange={onChange}
                      onFocus={onFocus}
                      onBlur={onBlur}
@@ -115,30 +121,37 @@ export default function LoginPage({ submit }) {
 
                <DivFieldsetStyled>
                   <LabelStyled
-                     htmlFor="password"
+                     htmlFor='password'
                      focus={focus.password}
-                     hasData={values.password === "" ? false : true}
+                     hasData={values.password === '' ? false : true}
                   >
                      Password
                   </LabelStyled>
                   <InputStyled
-                     id="password"
-                     type="text"
-                     name="password"
+                     id='password'
+                     type={passwordVisible ? 'text' : 'password'}
+                     name='password'
                      value={values.password}
                      onChange={onChange}
                      onFocus={onFocus}
                      onBlur={onBlur}
                   />
+                  <ImgEyeStyled 
+                     src={passwordVisible ? eyeNotVisible : eyeVisible}
+                     alt=''
+                     onClick={togglePasswordVisibilty}
+                  />
                </DivFieldsetStyled>
             </form>
+
             {errors.map((error, i) => (
                <PRedStyled key={i}>{error}</PRedStyled>
             ))}
+
          </DivFlexGrowStyled>
 
          <DivButtonPaddingStyled>
-            <ButtonSubmitStyled type="submit" form="login">
+            <ButtonSubmitStyled type='submit' form='login'>
                Login
             </ButtonSubmitStyled>
          </DivButtonPaddingStyled>

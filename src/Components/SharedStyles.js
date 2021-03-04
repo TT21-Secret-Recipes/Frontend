@@ -42,9 +42,10 @@ export const H1TitleStyled = styled.h1`
 export const DivFieldsetStyled = styled.div`
   border: 1px solid black;
   border-radius: 4px;
-  position: relative;
   margin: 10px auto;
   padding: 10px;
+  position: relative;
+  text-align: left;
   width: 300px;
 `
 
@@ -52,6 +53,11 @@ export const DivFieldsetStyled = styled.div`
 // needs boolean 'hasData' prop. Otherwise it will cover userinput :/
 export const LabelStyled = styled.label`
   background: #fff;
+  color: ${props => {
+    if(!props.hasData)
+        return props.focus ? 'black' : 'grey'
+      return 'black'
+  }};
   font-size: ${props => {
       if(!props.hasData)
         return props.focus ? '18px' : '24px'
@@ -68,7 +74,7 @@ export const LabelStyled = styled.label`
   padding: 0 3px;
   position: absolute;
   top: 0;
-  transition: margin-top 0.15s, font-size 0.15s; // transitions from over input to part of div
+  transition: margin-top 0.15s, font-size 0.15s, color 0.15s; // transitions from over input to part of div
 `
 
 export const InputStyled = styled.input`
@@ -76,7 +82,7 @@ export const InputStyled = styled.input`
   display: inline-block;
   font-size: 20px;
   outline: none;
-  width: 250px;
+  width: 270px;
 `
 
 export const DivButtonPaddingStyled = styled.div`
@@ -99,4 +105,11 @@ export const ButtonSubmitStyled = styled.button`
 `
 export const PRedStyled = styled.p`
   color: red;
+`
+
+export const ImgEyeStyled = styled.img`
+  display: inline-block;
+  height: 16px;
+  margin-top: 4px;
+  width: 20px;
 `

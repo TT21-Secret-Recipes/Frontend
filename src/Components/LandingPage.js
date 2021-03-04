@@ -11,18 +11,33 @@ const DivMainStyled = styled.div`
    border: 1px solid black;
    border-radius: 7px;
    left: 50%;
+   height: 500px;
+   min-width: 300px;
    margin: 0;
    position: absolute;
    top: 50%;
    transform: translate(-50%, -75%);
    text-align: center;
    width: 500px;
-   height: 500px;
+
+   @media (max-height: 900px){
+      border: none;
+      margin: 0 auto;
+      position: static;
+      transform: translate(0, 0);
+      width: 100%;
+   }
+
+   @media (max-width: 600px){
+      border: none;
+   }
 `;
 
 export default function LandingPage() {
    return (
       <DivMainStyled>
+         {/* <p>{`Width: ${window.screen.width}
+         Height: ${window.screen.height}`}</p> */}
          <Switch>
             <Route exact path={path.welcome}>
                <WelcomePage />
