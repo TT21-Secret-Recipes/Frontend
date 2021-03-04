@@ -58,7 +58,22 @@ export default function LoginPage({ submit }) {
 
       try {
          schema.validateSync(values, { abortEarly: false });
-         setErrors([]);
+         setErrors([]); // succsess! login user
+
+         login(fauna, {
+            email: values.email,
+            password: values.password,
+         })
+            .then((res) => {
+               // alert(res);
+               setCurrentUser(res);
+               history.push("/dashboard");
+            })
+            .catch((err) => {
+               // alert(err)
+               setErrors(['The provided email/password do not match']);
+            });
+
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);
@@ -72,16 +87,6 @@ export default function LoginPage({ submit }) {
       //     // assuming the error looks something like "email and password do not match"
       //     //setErrors(err.data);
       //   });
-      login(fauna, {
-         email: values.email,
-         password: values.password,
-      })
-         .then((res) => {
-            // alert(res);
-            setCurrentUser(res);
-            history.push("/dashboard");
-         })
-         .catch((err) => alert(err));
    }
 
    return (
