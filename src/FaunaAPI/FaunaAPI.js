@@ -3,7 +3,7 @@ import { useState } from "react";
 import sha512 from "crypto-js/sha512";
 import { v4 } from "uuid";
 import dayjs from "dayjs";
-const DBKEY = process.env.DBKEY;
+const DBKEY = process.env.REACT_APP_DBKEY;
 
 export function login2({ client, q }, req) {
    return new Promise((resolve, reject) => {
