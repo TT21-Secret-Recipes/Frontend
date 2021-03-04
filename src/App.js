@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import Nav from "./Components/Nav";
 import Dashboard from "./Components/Dashboard";
 import ProfilePage from "./Components/ProfilePage";
 import LandingPage from "./Components/LandingPage";
 import EditProfile from "./Components/EditProfile";
+import HomePage from "./Components/HomePage";
 import "./App.css";
 import PrivateRoute from "./Components/PrivateRoute";
 import { LoginContext, ProfileContext, DashContext } from "./Contexts";
@@ -40,39 +41,51 @@ function App() {
 
    return (
       <div className="App">
-         <header>
-            <Nav currentUser={currentUser} logout={logout} />
-         </header>
-
-         <Route exact path="/"></Route>
-         <Route path="/auth">
-            <LoginContext.Provider value={{ currentUser, setCurrentUser }}>
-               <LandingPage />
-            </LoginContext.Provider>
-         </Route>
-
-         <ProfileContext.Provider value={{ currentUser }}>
-            <PrivateRoute path="/userprofile" component={ProfilePage} />
-            <PrivateRoute path="/edituserprofile" component={EditProfile} />
-         </ProfileContext.Provider>
-
-         <DashContext.Provider
-            value={{
-               currentPage,
-               currentUser,
-               currentUsersRecipes,
-               setCurrentUsersRecipes,
-               setCurrentPage,
-               searchCategories,
-               setSearchCategories,
-               currentDisplayedRecipes,
-               setCurrentDisplayedRecipes,
+         <header
+            style={{
+               height: "8vh",
+               position: "fixed",
+               width: "100vw",
+               zIndex: "50",
+               background: "white",
             }}
          >
-            <PrivateRoute path="/dashboard" component={Dashboard} />
-         </DashContext.Provider>
+            <Nav currentUser={currentUser} logout={logout} />
+         </header>
+         <div style={{ marginTop: "8vh" }}>
+            <Route exact path="/">
+               {currentUser.id && <Redirect to="/dashboard/" />}
+               <HomePage></HomePage>
+            </Route>
+            <Route path="/auth">
+               <LoginContext.Provider value={{ currentUser, setCurrentUser }}>
+                  <LandingPage />
+               </LoginContext.Provider>
+            </Route>
 
-         <footer> </footer>
+            <ProfileContext.Provider value={{ currentUser }}>
+               <PrivateRoute path="/userprofile" component={ProfilePage} />
+               <PrivateRoute path="/edituserprofile" component={EditProfile} />
+            </ProfileContext.Provider>
+
+            <DashContext.Provider
+               value={{
+                  currentPage,
+                  currentUser,
+                  currentUsersRecipes,
+                  setCurrentUsersRecipes,
+                  setCurrentPage,
+                  searchCategories,
+                  setSearchCategories,
+                  currentDisplayedRecipes,
+                  setCurrentDisplayedRecipes,
+               }}
+            >
+               <PrivateRoute path="/dashboard" component={Dashboard} />
+            </DashContext.Provider>
+
+            <footer> </footer>
+         </div>
       </div>
    );
 }

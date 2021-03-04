@@ -140,7 +140,7 @@ function Nav(props) {
                            hidedrawer();
                            localStorage.setItem("tt21_token", "");
                         }}
-                        to="?"
+                        to="/"
                      >
                         Logout
                      </NavLink>
