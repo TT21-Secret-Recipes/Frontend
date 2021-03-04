@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { DashContext } from "../Contexts";
 import RecipeCard from "./RecipeCard";
+import MyRecipeCard from "./MyRecipeCard";
 import useFauna, { getRecipes, search } from "../FaunaAPI/FaunaAPI";
 import { useRouteMatch } from "react-router-dom";
 
@@ -154,9 +155,10 @@ function RecipeList(props) {
       >
          {!onMyRecipes() && <Search bundle={bundle} />}
 
-         {recipes.map((i) => (
-            <RecipeCard recipe={i} key={i.id} />
-         ))}
+         {onMyRecipes()
+            ? recipes.map((i) => <MyRecipeCard recipe={i} key={i.id} />)
+            : recipes.map((i) => <RecipeCard recipe={i} key={i.id} />)}
+         {}
       </div>
    );
 }
