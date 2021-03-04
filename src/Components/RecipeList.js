@@ -150,6 +150,7 @@ function RecipeList(props) {
          style={{
             display: "flex",
             flexDirection: "column",
+            width: '100vw',
          }}
       >
          {!onMyRecipes() && <Search bundle={bundle} />}
