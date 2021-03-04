@@ -11,6 +11,7 @@ import EditProfile from "./Components/EditProfile";
 function App() {
    return (
       <div className="App">
+         
          <header>
             <Nav />
          </header>

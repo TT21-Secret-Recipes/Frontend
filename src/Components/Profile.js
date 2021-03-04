@@ -30,6 +30,7 @@ function Profile(){
     return(
         <Styledpage>
             <Styledheader class = "profheader">
+            
                 <Styledpicbox>
                     <Styleimg src={userProfile.pic}/>
                 </Styledpicbox>
@@ -43,10 +44,10 @@ function Profile(){
                         <Styledchange>
                         <p>
                     Not you? 
-                    <NavLink to="/login"> Login </NavLink>
+                    <NavLink to="/auth/login"> Login </NavLink>
                 
                     or 
-                    <NavLink to="/register"> Register </NavLink>
+                    <NavLink to="/auth/sign-up"> Register </NavLink>
                     </p>
                         </Styledchange>
                         <Stylededit>
