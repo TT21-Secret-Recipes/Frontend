@@ -22,12 +22,12 @@ import {
 import schema from "../yupSchema/loginSchema";
 
 const initialValues = {
-   username: "",
+   email: "",
    password: "",
 };
 
 const initialFocus = {
-   username: false,
+   email: false,
    password: false,
 };
 
@@ -69,11 +69,11 @@ export default function LoginPage({ submit }) {
       //     //login user
       //   })
       //   .catch( err => {
-      //     // assuming the error looks something like "username and password do not match"
+      //     // assuming the error looks something like "email and password do not match"
       //     //setErrors(err.data);
       //   });
       login(fauna, {
-         email: values.username,
+         email: values.email,
          password: values.password,
       })
          .then((res) => {
@@ -96,17 +96,17 @@ export default function LoginPage({ submit }) {
             <form onSubmit={onSubmit} id="login">
                <DivFieldsetStyled>
                   <LabelStyled
-                     focus={focus.username}
-                     htmlFor="username"
-                     hasData={values.username === "" ? false : true}
+                     focus={focus.email}
+                     htmlFor="email"
+                     hasData={values.email === "" ? false : true}
                   >
-                     Username
+                     Email
                   </LabelStyled>
                   <InputStyled
-                     id="username"
+                     id="email"
                      type="text"
-                     name="username"
-                     value={values.username}
+                     name="email"
+                     value={values.email}
                      onChange={onChange}
                      onFocus={onFocus}
                      onBlur={onBlur}
