@@ -5,8 +5,8 @@ import React, { useState } from "react";
 import useFauna, { register } from "../FaunaAPI/FaunaAPI";
 
 import { path } from "../Routes/routes";
-import eyeVisible from '../assets/iconmonstr-eye-thin.svg';
-import eyeNotVisible from '../assets/iconmonstr-eye-off-thin.svg';
+import eyeVisible from "../assets/iconmonstr-eye-thin.svg";
+import eyeNotVisible from "../assets/iconmonstr-eye-off-thin.svg";
 
 import {
    DivFlexStyled,
@@ -46,7 +46,7 @@ export default function SignupPage() {
 
    const fauna = useFauna();
 
-   function togglePasswordVisibilty(){
+   function togglePasswordVisibilty() {
       setPasswordVisible(!passwordVisible);
    }
 
@@ -74,8 +74,8 @@ export default function SignupPage() {
          setErrors([]); // sucsess! register user
 
          register(fauna, values)
-         .then((res) => alert("registered"))
-         .catch((err) => alert(err));
+            .then(() => alert("registered"))
+            .catch((err) => alert(err));
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);
@@ -149,16 +149,16 @@ export default function SignupPage() {
                   </LabelStyled>
                   <InputStyled
                      id="password"
-                     type={passwordVisible ? 'text' : 'password'}
+                     type={passwordVisible ? "text" : "password"}
                      name="password"
                      value={values.password}
                      onChange={onChange}
                      onFocus={onFocus}
                      onBlur={onBlur}
                   />
-                  <ImgEyeStyled 
+                  <ImgEyeStyled
                      src={passwordVisible ? eyeNotVisible : eyeVisible}
-                     alt=''
+                     alt=""
                      onClick={togglePasswordVisibilty}
                   />
                </DivFieldsetStyled>
@@ -173,16 +173,16 @@ export default function SignupPage() {
                   </LabelStyled>
                   <InputStyled
                      id="passwordConf"
-                     type={passwordVisible ? 'text' : 'password'}
+                     type={passwordVisible ? "text" : "password"}
                      name="passwordConf"
                      value={values.passwordConf}
                      onChange={onChange}
                      onFocus={onFocus}
                      onBlur={onBlur}
                   />
-                  <ImgEyeStyled 
+                  <ImgEyeStyled
                      src={passwordVisible ? eyeNotVisible : eyeVisible}
-                     alt=''
+                     alt=""
                      onClick={togglePasswordVisibilty}
                   />
                </DivFieldsetStyled>

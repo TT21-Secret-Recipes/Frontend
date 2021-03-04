@@ -125,7 +125,7 @@ export function register({ client, q }, req) {
                      data: newreq,
                   })
                )
-               .then((ret) => resolve(ret));
+               .then(() => resolve("registered"));
          });
    });
 }
