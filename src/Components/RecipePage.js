@@ -234,7 +234,7 @@ function RecipePage(props) {
                }
             />
          ) : (
-            <div> {recipe.instructions} </div>
+            <div style={{whiteSpace: 'pre-wrap'}}> {recipe.instructions} </div>
          )}
       </div>
    );
