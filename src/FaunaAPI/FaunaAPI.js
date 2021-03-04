@@ -2,7 +2,6 @@ import * as faunadb from "faunadb";
 import { useState } from "react";
 import sha512 from "crypto-js/sha512";
 import { v4 } from "uuid";
-import dayjs from "dayjs";
 const DBKEY = "fnAEDU6P0MACCG7RBdvmIKviKzteD2ATpMvtVVxF";
 
 export function login2({ client, q }, req) {
@@ -102,13 +101,9 @@ export function register({ client, q }, req) {
    const newreq = {
       id: v4(),
       passwordHash: sha512(req.password + "_tt21").toString(),
-      username: req.username,
+      name: req.username,
       email: req.email,
       recipes: [],
-      timeregistered: dayjs().format().split("T")[0],
-      firstname: "",
-      lastname: "",
-      bio: "",
    };
    return new Promise((resolve, reject) => {
       client
