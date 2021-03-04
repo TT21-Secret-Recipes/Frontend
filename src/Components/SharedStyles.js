@@ -42,6 +42,7 @@ export const H1TitleStyled = styled.h1`
 export const DivFieldsetStyled = styled.div`
   border: 1px solid black;
   border-radius: 4px;
+  box-sizing: border-box;
   margin: 10px auto;
   padding: 10px;
   position: relative;
@@ -82,7 +83,7 @@ export const InputStyled = styled.input`
   display: inline-block;
   font-size: 20px;
   outline: none;
-  width: 270px;
+  width: 250px;
 `
 
 export const DivButtonPaddingStyled = styled.div`
