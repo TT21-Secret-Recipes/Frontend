@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { RiArrowGoBackFill, RiAddBoxFill } from "react-icons/ri";
-import useFauna, { getRecipe, deleteRecipe } from "../FaunaAPI/FaunaAPI";
+import useFauna, {
+   getRecipe,
+   deleteRecipe,
+   updateRecipe,
+} from "../FaunaAPI/FaunaAPI";
 import { RecipeContext } from "../Contexts";
 
 function RecipePage(props) {
@@ -103,7 +107,18 @@ function RecipePage(props) {
                   <div
                      style={{ marginRight: "2vh" }}
                      className="menuicon"
-                     onClick={() => toggle()}
+                     onClick={() => {
+                        if (editmode) {
+                           updateRecipe(fauna, recipe.id, recipe).then(
+                              (res) => {
+                                 toggle();
+                                 window.location.reload();
+                              }
+                           );
+                        } else {
+                           toggle();
+                        }
+                     }}
                   >
                      {editmode ? "OK" : "Edit"}
                   </div>
@@ -116,11 +131,24 @@ function RecipePage(props) {
             />
          </div>
 
-         <h2> {recipe.title} </h2>
+         {editmode ? (
+            <input
+               defaultValue={recipe.title}
+               onChange={(e) => setRecipe({ ...recipe, title: e.target.value })}
+               style={{ width: "50%", fontSize: "1.4rem", fontWeight: "600" }}
+            />
+         ) : (
+            <h2> {recipe.title} </h2>
+         )}
          <div>
             <span style={{ fontWeight: "600" }}> Source: </span>{" "}
             {editmode ? (
-               <input defaultValue={recipe.source} />
+               <input
+                  defaultValue={recipe.source}
+                  onChange={(e) =>
+                     setRecipe({ ...recipe, source: e.target.value })
+                  }
+               />
             ) : (
                <span>{recipe.source}</span>
             )}
@@ -128,7 +156,12 @@ function RecipePage(props) {
          <div>
             <span style={{ fontWeight: "600" }}> Category: </span>
             {editmode ? (
-               <input defaultValue={recipe.category} />
+               <input
+                  defaultValue={recipe.category}
+                  onChange={(e) =>
+                     setRecipe({ ...recipe, category: e.target.value })
+                  }
+               />
             ) : (
                <span>{recipe.category}</span>
             )}
@@ -158,7 +191,14 @@ function RecipePage(props) {
                <ul>
                   {recipe.ingredients.map((i, j) => (
                      <div key={j}>
-                        <input defaultValue={i} />
+                        <input
+                           defaultValue={i}
+                           onChange={(e) => {
+                              let newing = [...recipe.ingredients];
+                              newing[j] = e.target.value;
+                              setRecipe({ ...recipe, ingredients: newing });
+                           }}
+                        />
                         <span
                            className="menuicon"
                            style={{
@@ -187,7 +227,12 @@ function RecipePage(props) {
          </div>
          <h3>Instructions:</h3>
          {editmode ? (
-            <textarea defaultValue={recipe.instructions} />
+            <textarea
+               defaultValue={recipe.instructions}
+               onChange={(e) =>
+                  setRecipe({ ...recipe, instructions: e.target.value })
+               }
+            />
          ) : (
             <div> {recipe.instructions} </div>
          )}

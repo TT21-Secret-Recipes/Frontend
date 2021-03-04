@@ -206,10 +206,10 @@ export function updateUser({ client, q }, userid, params) {
 }
 
 // edit recipe not yet finished
-export function updateRecipe({ client, q }, userid, params) {
+export function updateRecipe({ client, q }, recipeid, params) {
    return new Promise((resolve, reject) => {
       client
-         .query(q.Get(q.Match(q.Index("RefByRecipeID"), userid)))
+         .query(q.Get(q.Match(q.Index("RefByRecipeID"), recipeid)))
          .then((ret) => {
             client
                .query(q.Update(ret.ref, { data: params }))
