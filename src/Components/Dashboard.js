@@ -61,7 +61,7 @@ function Dashboard(props) {
          <Switch>
             <Route exact path="/dashboard/">
                <div style={{ marginLeft: "1%" }}>
-                  Welcome {currentUser.name}
+                  Welcome {currentUser.username}
                </div>
             </Route>
             <Route path="/dashboard/addnew">
