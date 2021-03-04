@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useHistory } from 'react-router-dom';
+
 // import { Link } from "react-router-dom";
 // import styled from "styled-components";
 // import axios from "axios";
-import useFauna, { register } from "../FaunaAPI/FaunaAPI";
+import useFauna, { register, login } from "../FaunaAPI/FaunaAPI";
+import { LoginContext } from '../Contexts';
 
 import { path } from "../Routes/routes";
 import eyeVisible from "../assets/iconmonstr-eye-thin.svg";
@@ -44,6 +47,9 @@ export default function SignupPage() {
    const [errors, setErrors] = useState([]);
    const [passwordVisible, setPasswordVisible] = useState(false);
 
+   const { setCurrentUser } = useContext(LoginContext);
+   const history = useHistory();
+
    const fauna = useFauna();
 
    function togglePasswordVisibilty() {
@@ -74,8 +80,22 @@ export default function SignupPage() {
          setErrors([]); // sucsess! register user
 
          register(fauna, values)
-            .then(() => alert("registered"))
-            .catch((err) => alert(err));
+            .then(() => {
+               login(fauna, {
+                  email: values.email,
+                  password: values.password,
+               })
+                  .then((res) => {
+                     // alert(res);
+                     setCurrentUser(res);
+                     history.push('/dashboard');
+                  })
+                  .catch( err => {
+                     //honestly dunno what to do if the login with the newly registerd user doesn't work
+                  })
+            })
+            .catch((err) => setErrors([err.charAt(0).toUpperCase() + err.slice(1)]));
+
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);
