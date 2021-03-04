@@ -31,7 +31,7 @@ const initialFocus = {
    password: false,
 };
 
-export default function LoginPage({ submit }) {
+export default function LoginPage() {
    const [values, setValues] = useState(initialValues);
    const [focus, setFocus] = useState(initialFocus);
    const [errors, setErrors] = useState([]);
