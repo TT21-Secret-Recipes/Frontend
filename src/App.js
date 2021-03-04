@@ -47,7 +47,8 @@ function App() {
                position: "fixed",
                width: "100vw",
                zIndex: "50",
-               background: "white",
+               color: "#eeeeee",
+               background: "#333333",
             }}
          >
             <Nav currentUser={currentUser} logout={logout} />

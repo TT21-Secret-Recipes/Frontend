@@ -38,8 +38,8 @@
    transition: 0.01s;
    text-decoration: none;
    color: rgb(224, 224, 224);
-   padding: 8px 16px;
-   margin: 0 1vw;
+   padding: 6px 16px;
+   margin: 0 0.5vw;
    border-radius: 6px;
    display: flex;
    justify-content: center;

@@ -31,6 +31,7 @@ function Search(props) {
          <input
             style={{
                width: "80%",
+
                marginRight: "2%",
                height: "2.7vh",
                fontSize: "1.2rem",
@@ -45,7 +46,7 @@ function Search(props) {
          <select
             name=""
             id=""
-            style={{ height: "2.8vh", fontSize: "0.9rem" }}
+            style={{ height: "2.8vh", fontSize: "0.9rem", maxWidth: "100px" }}
             onChange={(e) => setSearchCategory(e.target.value)}
             value={searchCategory}
          >
@@ -75,20 +76,6 @@ function Search(props) {
                      setRecipes(res);
                   })
                   .catch((err) => alert(err));
-
-               // if (searchCategory === "") {
-               //    if (props.recipes) {
-               //       setRecipes(props.recipes);
-               //       return;
-               //    } else {
-               //       getRecipes(fauna).then((res) => setRecipes(res));
-               //       return;
-               //    }
-               // }
-
-               // getRecipesByCategory(fauna, searchCategory).then((res) =>
-               //    setRecipes(res)
-               // );
             }}
          >
             OK
