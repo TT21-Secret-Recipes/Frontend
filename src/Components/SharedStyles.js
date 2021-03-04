@@ -53,6 +53,11 @@ export const DivFieldsetStyled = styled.div`
 // needs boolean 'hasData' prop. Otherwise it will cover userinput :/
 export const LabelStyled = styled.label`
   background: #fff;
+  color: ${props => {
+    if(!props.hasData)
+        return props.focus ? 'black' : 'grey'
+      return 'black'
+  }};
   font-size: ${props => {
       if(!props.hasData)
         return props.focus ? '18px' : '24px'
@@ -69,7 +74,7 @@ export const LabelStyled = styled.label`
   padding: 0 3px;
   position: absolute;
   top: 0;
-  transition: margin-top 0.15s, font-size 0.15s; // transitions from over input to part of div
+  transition: margin-top 0.15s, font-size 0.15s, color 0.15s; // transitions from over input to part of div
 `
 
 export const InputStyled = styled.input`
