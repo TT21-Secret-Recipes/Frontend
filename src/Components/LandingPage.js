@@ -27,6 +27,10 @@ const DivMainStyled = styled.div`
       transform: translate(0, 0);
       width: 100%;
    }
+
+   @media (max-width: 600px){
+      border: none;
+   }
 `;
 
 export default function LandingPage() {
