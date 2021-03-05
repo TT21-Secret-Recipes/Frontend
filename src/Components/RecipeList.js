@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { DashContext } from "../Contexts";
 import RecipeCard from "./RecipeCard";
-import MyRecipeCard from "./MyRecipeCard";
+// import MyRecipeCard from "./MyRecipeCard";
 import useFauna, { getRecipes, search } from "../FaunaAPI/FaunaAPI";
 import { useRouteMatch } from "react-router-dom";
 

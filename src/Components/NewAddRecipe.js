@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 // import { RiCloseFill } from "react-icons/ri";
 import useFauna, { submitRecipe } from "../FaunaAPI/FaunaAPI";
@@ -62,12 +62,6 @@ export default function NewAddRecipe(props){
 
   function submit(evt){
     evt.preventDefault();
-    // console.log({
-    //   ...values,
-    //   ingredients: parseIngredients(values.ingredients),
-    //   submittedBy: currentUser.id,
-    // })
-
     submitRecipe(fauna, {
       ...values,
       ingredients: parseIngredients(values.ingredients),
@@ -75,9 +69,7 @@ export default function NewAddRecipe(props){
     }).then( res => {
       // console.log(res);
       // I dunno
-    }).catch( err => {
-      // console.log('failed', err);
-    })
+    }).catch( err => { console.log(err)})
   }
 
   return (

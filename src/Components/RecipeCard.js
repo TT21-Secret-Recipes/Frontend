@@ -4,7 +4,6 @@ import { RiArrowDownSFill } from "react-icons/ri";
 import useFauna, { getRecipe } from "../FaunaAPI/FaunaAPI";
 import { DashContext } from "../Contexts";
 import styled from "styled-components";
-import RecipePage from './RecipePage';
 
 const DivDescriptionStyled = styled.div`
    height: auto;
