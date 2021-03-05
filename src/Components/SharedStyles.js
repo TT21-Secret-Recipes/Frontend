@@ -42,6 +42,7 @@ export const H1TitleStyled = styled.h1`
 export const DivFieldsetStyled = styled.div`
   border: 1px solid black;
   border-radius: 4px;
+  box-sizing: border-box;
   margin: 10px auto;
   padding: 10px;
   position: relative;
@@ -82,7 +83,7 @@ export const InputStyled = styled.input`
   display: inline-block;
   font-size: 20px;
   outline: none;
-  width: 270px;
+  width: 250px;
 `
 
 export const DivButtonPaddingStyled = styled.div`
@@ -112,4 +113,17 @@ export const ImgEyeStyled = styled.img`
   height: 16px;
   margin-top: 4px;
   width: 20px;
+`
+
+// for newAddRecipe and Recipe Card
+export const DivMainStyled = styled.div`
+  align-self: center;
+  background: #f1f1f1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+  padding: 1% 2%;
+  padding-left: ${props => props.noPadding === true ? '0' : '2%'};
+  width: 75vw;
 `

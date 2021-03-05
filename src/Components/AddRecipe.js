@@ -40,12 +40,16 @@ function AddRecipe(props) {
 
    const faunaSubmitRecipe = (e) => {
       e.preventDefault();
+      console.log({
+         ...recipe,
+         submittedBy: currentUser.id,
+      })
       submitRecipe(fauna, {
          ...recipe,
          submittedBy: currentUser.id,
       }).then((res) => {
          console.log(res);
-         history.goBack();
+         //history.goBack();
       });
    };
 
@@ -181,7 +185,7 @@ function AddRecipe(props) {
                   }}
                   onClick={(e) => {
                      faunaSubmitRecipe(e);
-                     window.location.reload();
+                     //window.location.reload();
                   }}
                >
                   Submit

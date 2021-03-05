@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const loginSchema = yup.object().shape({
   username: yup.string()
-    .required('Username is required'),
+    .required('Name is required'),
   email: yup.string()
     .email('Please enter a valid email')
     .required('Email is required'),

@@ -46,7 +46,7 @@ function App() {
       <div className="App">
          <header
             style={{
-               height: "8vh",
+               height: "75px",
                position: "fixed",
                width: "100vw",
                zIndex: "50",
@@ -56,7 +56,7 @@ function App() {
          >
             <Nav currentUser={currentUser} logout={logout} />
          </header>
-         <div style={{ marginTop: "8vh" }}>
+         <div style={{ marginTop: "80px" }}>
             <Route exact path="/">
                {currentUser.id && <Redirect to="/dashboard/" />}
                <HomePage></HomePage>

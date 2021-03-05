@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import DashNav from "./DashNav";
 import AddRecipe from "./AddRecipe";
+import NewAddRecipe from './NewAddRecipe';
 import RecipeList from "./RecipeList";
 import PrivateRoute from "./PrivateRoute";
 import RecipePage from "./RecipePage";
@@ -77,6 +78,7 @@ function Dashboard(props) {
                </div>
             </Route>
             <Route path="/dashboard/addnew">
+               <NewAddRecipe />
                <AddRecipe />
             </Route>
             <Route exact path="/dashboard/recipes">

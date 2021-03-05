@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { DashContext } from "../Contexts";
 import RecipeCard from "./RecipeCard";
+// import MyRecipeCard from "./MyRecipeCard";
 import MyRecipeCard from "./MyRecipeCard";
 import useFauna, {
    getRecipes,
@@ -9,6 +10,7 @@ import useFauna, {
    getNextPage,
    getPrevPage,
 } from "../FaunaAPI/FaunaAPI";
+
 import { useRouteMatch } from "react-router-dom";
 import {
    // BsChevronDoubleLeft,
@@ -286,8 +288,8 @@ function RecipeList(props) {
          {!onMyRecipes() && <Search bundle={bundle} />}
 
          {onMyRecipes()
-            ? recipes.map((i) => <MyRecipeCard recipe={i} key={i.id} />)
-            : recipes.map((i) => <RecipeCard recipe={i} key={i.id} />)}
+            ? recipes.map((i) => <RecipeCard recipe={i} key={i.id} isMyRecipe={true}/>)
+            : recipes.map((i) => <RecipeCard recipe={i} key={i.id} isMyRecipe={false}/>)}
          {}
 
          {showpage && <PageControl></PageControl>}
