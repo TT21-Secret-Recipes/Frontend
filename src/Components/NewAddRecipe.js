@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 // import { RiCloseFill } from "react-icons/ri";
-import useFauna, { submitRecipe } from "../FaunaAPI/FaunaAPI";
+import useFauna, { submitRecipe, updateRecipe } from "../FaunaAPI/FaunaAPI";
 // import { useHistory } from "react-router-dom";
 import { DashContext } from "../Contexts";
 
@@ -34,7 +34,7 @@ const TextAreaStyled = styled.textarea`
 `
 
 function parseIngredientsArray(ingredients){
-  return ingredients.concat();
+  return ingredients.join();
 }
 
 function parseIngredientsString(ingredients){
@@ -76,8 +76,7 @@ export default function NewAddRecipe(props){
     setValues({ ...values, [name]: value});
   }
 
-  function submit(evt){
-    evt.preventDefault();
+  function addNew(){
     submitRecipe(fauna, {
       ...values,
       ingredients: parseIngredientsString(values.ingredients),
@@ -86,6 +85,22 @@ export default function NewAddRecipe(props){
       // console.log(res);
       // I dunno
     }).catch( err => { console.log(err)})
+  }
+
+  function update(){
+    updateRecipe(fauna, props.recipe.id, values)
+      .then( (res) => {
+        // console.log(res)
+        // window.location.reload();
+      })
+      .catch( err => console.log(err))
+  }
+
+  function submit(evt){
+    evt.preventDefault();
+    props.recipe === undefined
+      ? addNew()
+      : update()
   }
 
   return (
