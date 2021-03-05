@@ -1,12 +1,11 @@
-
 import React, { useState, useContext } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 // import { Link } from "react-router-dom";
 // import styled from "styled-components";
 // import axios from "axios";
 import useFauna, { register, login } from "../FaunaAPI/FaunaAPI";
-import { LoginContext } from '../Contexts';
+import { LoginContext } from "../Contexts";
 
 import { path } from "../Routes/routes";
 import eyeVisible from "../assets/iconmonstr-eye-thin.svg";
@@ -50,7 +49,6 @@ export default function SignupPage() {
    const history = useHistory();
 
    const { setCurrentUser } = useContext(LoginContext);
-   const history = useHistory();
 
    const fauna = useFauna();
 
@@ -83,7 +81,6 @@ export default function SignupPage() {
 
          register(fauna, values)
             .then(() => {
-
                login(fauna, {
                   email: values.email,
                   password: values.password,
@@ -91,16 +88,15 @@ export default function SignupPage() {
                   .then((res) => {
                      // alert(res);
                      setCurrentUser(res);
-                     history.push('/dashboard');
+                     history.push("/dashboard");
                   })
-                  .catch( err => {
+                  .catch((err) => {
                      //honestly dunno what to do if the login with the newly registerd user doesn't work
-                  })
+                  });
             })
-            .catch((err) => setErrors([err.charAt(0).toUpperCase() + err.slice(1)]));
-
-
-     
+            .catch((err) =>
+               setErrors([err.charAt(0).toUpperCase() + err.slice(1)])
+            );
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);

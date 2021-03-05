@@ -4,8 +4,8 @@ import useFauna, { getRecipe } from "../FaunaAPI/FaunaAPI";
 import { DashContext } from "../Contexts";
 import styled from "styled-components";
 
-import NewAddRecipe from './NewAddRecipe';
-import { DivMainStyled } from './SharedStyles';
+import NewAddRecipe from "./NewAddRecipe";
+import { DivMainStyled } from "./SharedStyles";
 
 const DivDescriptionStyled = styled.div`
    height: auto;
@@ -40,15 +40,15 @@ function FullRecipeCard(props) {
             .then((res) => setRecipe(res.data))
             .catch((err) => console.log(err));
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, []);
 
    return (
       <DivDescriptionStyled expanded={expanded}>
          <h3>Ingredients:</h3>
          <ul>
-            {Array.isArray(recipe.ingredients) && recipe.ingredients.map((i, j) => (
-               <li key={j}> {i} </li>
-            ))}
+            {Array.isArray(recipe.ingredients) &&
+               recipe.ingredients.map((i, j) => <li key={j}> {i} </li>)}
          </ul>
 
          <h3>Instructions:</h3>
@@ -56,7 +56,6 @@ function FullRecipeCard(props) {
       </DivDescriptionStyled>
    );
 }
-
 
 const H1VStyled = styled.h1`
    display: inline-block;
@@ -67,9 +66,9 @@ const H1VStyled = styled.h1`
 
 const H4EditStyled = styled.h4`
    margin: 0;
-   opacity: ${ props => props.expanded ? 1 : 0};
+   opacity: ${(props) => (props.expanded ? 1 : 0)};
    transition: opacity 0.5s linear;
-`
+`;
 
 export default function RecipeCard(props) {
    const { title, source, category } = props.recipe;
@@ -79,7 +78,7 @@ export default function RecipeCard(props) {
 
    //console.log('Props:', props)
 
-   function toggleEditMode(evt){
+   function toggleEditMode(evt) {
       setEditMode(!editMode);
    }
 
@@ -91,44 +90,56 @@ export default function RecipeCard(props) {
    return (
       <DivMainStyled>
          {/* optional img */}
-         {!editMode && <div>
-            <div
-            style={{
-               display: "flex",
-               justifyContent: "space-between",
-               fontWeight: "700",
-               fontSize: "1.3rem",
-            }}
-            >
-               {title}
-
+         {!editMode && (
+            <div>
                <div
                   style={{
                      display: "flex",
                      justifyContent: "space-between",
-                     alignItems: "center",
+                     fontWeight: "700",
+                     fontSize: "1.3rem",
                   }}
                >
-                  { ( isMyRecipe ) && <H4EditStyled expanded={expanded} onClick={toggleEditMode}>Edit</H4EditStyled>}
-                  <H1VStyled expanded={expanded} onClick={toggleExpand}>
-                     <RiArrowDownSFill className="menuicon" />
-                  </H1VStyled>
+                  {title}
+
+                  <div
+                     style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                     }}
+                  >
+                     {isMyRecipe && (
+                        <H4EditStyled
+                           expanded={expanded}
+                           onClick={toggleEditMode}
+                        >
+                           Edit
+                        </H4EditStyled>
+                     )}
+                     <H1VStyled expanded={expanded} onClick={toggleExpand}>
+                        <RiArrowDownSFill className="menuicon" />
+                     </H1VStyled>
+                  </div>
                </div>
-            </div>
 
+               <div>
+                  <span style={{ fontWeight: "600" }}> Source: </span> {source}
+               </div>
+
+               <div>
+                  <span style={{ fontWeight: "600" }}> Category: </span>{" "}
+                  {category}
+               </div>
+               <FullRecipeCard recipeID={props.recipe.id} expanded={expanded} />
+            </div>
+         )}
+
+         {editMode && (
             <div>
-               <span style={{ fontWeight: "600" }}> Source: </span> {source}
+               <NewAddRecipe recipe={props.recipe} getBack={toggleEditMode} />
             </div>
-
-            <div>
-               <span style={{ fontWeight: "600" }}> Category: </span> {category}
-            </div>
-            <FullRecipeCard recipeID={props.recipe.id} expanded={expanded} />
-         </div>}
-
-         {editMode && <div>
-            <NewAddRecipe recipe={props.recipe} getBack={toggleEditMode}/>
-         </div>}
+         )}
       </DivMainStyled>
    );
 }

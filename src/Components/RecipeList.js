@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import { DashContext } from "../Contexts";
 import RecipeCard from "./RecipeCard";
 // import MyRecipeCard from "./MyRecipeCard";
-import MyRecipeCard from "./MyRecipeCard";
+// import MyRecipeCard from "./MyRecipeCard";
 import useFauna, {
    getRecipes,
    search,
@@ -288,8 +288,12 @@ function RecipeList(props) {
          {!onMyRecipes() && <Search bundle={bundle} />}
 
          {onMyRecipes()
-            ? recipes.map((i) => <RecipeCard recipe={i} key={i.id} isMyRecipe={true}/>)
-            : recipes.map((i) => <RecipeCard recipe={i} key={i.id} isMyRecipe={false}/>)}
+            ? recipes.map((i) => (
+                 <RecipeCard recipe={i} key={i.id} isMyRecipe={true} />
+              ))
+            : recipes.map((i) => (
+                 <RecipeCard recipe={i} key={i.id} isMyRecipe={false} />
+              ))}
          {}
 
          {showpage && <PageControl></PageControl>}
