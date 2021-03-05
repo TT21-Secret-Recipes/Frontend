@@ -145,6 +145,10 @@ function RecipeList(props) {
    };
 
    function PageControl() {
+      if (onMyRecipes()) {
+         return <></>;
+      }
+
       return (
          <div
             style={{
