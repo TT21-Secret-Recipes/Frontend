@@ -84,7 +84,7 @@ export default function NewAddRecipe(props){
     }).then( res => {
       // console.log(res);
       // I dunno
-    }).catch( err => { console.log(err)})
+    }).catch( err => console.log(err))
   }
 
   function update(){
@@ -92,6 +92,7 @@ export default function NewAddRecipe(props){
       .then( (res) => {
         // console.log(res)
         // window.location.reload();
+        props.getOut();
       })
       .catch( err => console.log(err))
   }
@@ -100,7 +101,7 @@ export default function NewAddRecipe(props){
     evt.preventDefault();
     props.recipe === undefined
       ? addNew()
-      : update()
+      : update();
   }
 
   return (
@@ -163,6 +164,10 @@ export default function NewAddRecipe(props){
           
           <div>
             <button type='submit'>Submit</button>
+          </div>
+
+          <div>
+            {props.recipe !== undefined && <button type='button' onClick={props.getOut}>Cancel</button>}
           </div>
          </form>
       </DivMainStyled>

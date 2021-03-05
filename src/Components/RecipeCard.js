@@ -84,6 +84,10 @@ function RecipeCard(props) {
 
    //console.log('Props:', props)
 
+   function toggleEditMode(evt){
+      setEditMode(!editMode);
+   }
+
    function toggleExpand(evt) {
       evt.stopPropagation();
       setExpanded(!expanded);
@@ -121,7 +125,7 @@ function RecipeCard(props) {
                      alignItems: "center",
                   }}
                >
-                  { ( isMyRecipe ) && <H4EditStyled expanded={expanded} onClick={setEditMode.bind(!editMode)}>Edit</H4EditStyled>}
+                  { ( isMyRecipe ) && <H4EditStyled expanded={expanded} onClick={toggleEditMode}>Edit</H4EditStyled>}
                   <H1VStyled expanded={expanded} onClick={toggleExpand}>
                      <RiArrowDownSFill className="menuicon" />
                   </H1VStyled>
@@ -171,7 +175,7 @@ function RecipeCard(props) {
          </div>
          <FullRecipeCard recipeID={props.recipe.id} expanded={expanded} /> */}
          {editMode && <div>
-            <NewAddRecipe recipe={props.recipe} />
+            <NewAddRecipe recipe={props.recipe} getOut={toggleEditMode}/>
          </div>}
       </div>
    );
