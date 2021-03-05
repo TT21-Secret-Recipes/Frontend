@@ -27,6 +27,7 @@ function FullRecipeCard(props) {
       instructions: "",
       category: "",
    });
+   // console.log(recipe.ingredients)
    // const [editmode, setEditmode] = useState(false);
 
    // console.log('ID:', recipeID)
@@ -49,7 +50,7 @@ function FullRecipeCard(props) {
       <DivDescriptionStyled expanded={expanded}>
          <h3>Ingredients:</h3>
          <ul>
-            {recipe.ingredients.map((i, j) => (
+            {Array.isArray(recipe.ingredients) && recipe.ingredients.map((i, j) => (
                <li key={j}> {i} </li>
             ))}
          </ul>
@@ -59,6 +60,7 @@ function FullRecipeCard(props) {
       </DivDescriptionStyled>
    );
 }
+
 
 const H1VStyled = styled.h1`
    display: inline-block;

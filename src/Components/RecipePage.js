@@ -20,7 +20,7 @@ function RecipePage(props) {
       instructions: "",
       category: "",
    });
-   const [editmode, setEditmode] = useState(props.editmode);
+   const [editmode, setEditmode] = useState(false);
    const toggle = () => {
       setEditmode(!editmode);
    };
