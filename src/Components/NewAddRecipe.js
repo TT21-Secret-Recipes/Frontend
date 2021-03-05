@@ -99,7 +99,7 @@ export default function NewAddRecipe(props){
   function update(){
     updateRecipe(fauna, props.recipe.id, {...values, ingredients: parseIngredientsString(values.ingredients)})
       .then( (res) => {
-        console.log(res)
+        // console.log(res)
         // window.location.reload();
       })
       .catch( err => console.log(err))
@@ -110,7 +110,7 @@ export default function NewAddRecipe(props){
     props.recipe === undefined
       ? addNew()
       : update();
-    //window.location.reload();
+    window.location.reload();
   }
 
   return (
