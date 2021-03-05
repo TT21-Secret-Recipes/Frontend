@@ -23,7 +23,7 @@ const TextAreaStyled = styled.textarea`
 
 function parseIngredientsArray(ingredients){
   return ingredients !== ''
-    ? ingredients.join()
+    ? ingredients.join('\n')
     : [];
 }
 
