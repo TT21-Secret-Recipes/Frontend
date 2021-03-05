@@ -14,15 +14,7 @@ function EditProfile() {
       lastname: "",
       bio: "",
    };
-   // const defaultProfile = {
-   //     username: 'CookieMonster',
-   //     name: 'Ettore Boiardi',
-   //     pic: `${defaultPic}`,
-   //     bio: 'I love to cook, but I need to learn more!',
-   //     onlinestatus: 'online',
-   //     datejoined: 'Dec 25, 2020',
-   //     numrecipes: '0',
-   // }
+
    const { currentUser } = useContext(ProfileContext);
    const [values, setValues] = useState(initialValues);
    const [userProfile] = useState(currentUser);
@@ -35,12 +27,6 @@ function EditProfile() {
    const onSubmit = (evt) => {
       evt.preventDefault();
 
-      //   axios
-      //      .put("")
-      //      .then((res) => {})
-      //      .catch((err) => {
-      //         console.log(err);
-      //      });
       updateUser(fauna, currentUser.id, { ...values }).then((res) => {
          history.push("/userprofile");
          setTimeout(() => {

@@ -43,7 +43,7 @@ function AddRecipe(props) {
       console.log({
          ...recipe,
          submittedBy: currentUser.id,
-      })
+      });
       submitRecipe(fauna, {
          ...recipe,
          submittedBy: currentUser.id,

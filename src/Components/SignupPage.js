@@ -1,9 +1,5 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-
-// import { Link } from "react-router-dom";
-// import styled from "styled-components";
-// import axios from "axios";
 import useFauna, { register, login } from "../FaunaAPI/FaunaAPI";
 import { LoginContext } from "../Contexts";
 
@@ -101,15 +97,6 @@ export default function SignupPage() {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);
       }
-
-      // axios.post('url', values)
-      //   .then( respones => {
-      //     //confirmation and login user
-      //   })
-      //   .catch( err => {
-      //     // assuming the error looks something like "username/email already taken"
-      //     //setErrors(err.data);
-      //   });
    }
 
    return (

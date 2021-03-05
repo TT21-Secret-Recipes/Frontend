@@ -11,11 +11,6 @@ function DashNav(props) {
             background: "#222222",
          }}
       >
-         {/* this should be a bar on dashboard that let user select tabs to browser existing recipes/ add recipes/ and others */}
-
-         {/* <NavLink to="/dashboard/" className="navbutton">
-            <div>Dashboard</div>
-         </NavLink> */}
          <NavLink to="/dashboard/recipes" className="navbutton">
             <div>Recipes</div>
          </NavLink>

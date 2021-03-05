@@ -25,8 +25,6 @@ function Profile() {
       setUserProfile(currentUser);
    }, [currentUser]);
 
-   //    const [error, setError] = useState("");
-
    return (
       <Styledpage>
          <Styledheader className="profheader">

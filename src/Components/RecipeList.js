@@ -2,8 +2,7 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
 import { DashContext } from "../Contexts";
 import RecipeCard from "./RecipeCard";
-// import MyRecipeCard from "./MyRecipeCard";
-// import MyRecipeCard from "./MyRecipeCard";
+
 import useFauna, {
    getRecipes,
    search,
@@ -12,12 +11,7 @@ import useFauna, {
 } from "../FaunaAPI/FaunaAPI";
 
 import { useRouteMatch } from "react-router-dom";
-import {
-   // BsChevronDoubleLeft,
-   // BsChevronDoubleRight,
-   BsChevronLeft,
-   BsChevronRight,
-} from "react-icons/bs";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
 function Search(props) {
    const {
@@ -67,9 +61,6 @@ function Search(props) {
             onChange={(e) => setSearchCategory(e.target.value)}
             value={searchCategory}
          >
-            {/* we have a empty string in database, so we use that as search all */}
-            {/* <option value=""> </option> */}
-            {/* this ideally should be a .map() by searching against api for all available categories somewhere in the app*/}
             {existingCategory.map((i) => (
                <option value={String(i)} key={i}>
                   {i}
@@ -84,7 +75,6 @@ function Search(props) {
                if (searchCategory !== "") {
                   setShowpage(false);
                }
-               // console.log(searchbox.current.value);
                if (searchbox.current.value === "" && searchCategory === "") {
                   if (props.recipes) {
                      setRecipes(props.recipes);
@@ -164,12 +154,6 @@ function RecipeList(props) {
                margin: "1%",
             }}
          >
-            {/* <BsChevronDoubleLeft
-               className="menuicon"
-               onClick={() => {
-                  setCurrentPage(currentPage - 5 < 1 ? 1 : currentPage - 5);
-               }}
-            /> */}
             <button
                className="menuicon"
                style={{
@@ -237,18 +221,9 @@ function RecipeList(props) {
             >
                <BsChevronRight />
             </button>
-
-            {/* <BsChevronDoubleRight
-               className="menuicon"
-               onClick={() => {
-                  setCurrentPage(currentPage + 5);
-               }}
-            /> */}
          </div>
       );
    }
-
-   useEffect(() => {}, [currentPage]);
 
    useEffect(() => {
       setExistingCategory(searchCategories);
@@ -263,7 +238,6 @@ function RecipeList(props) {
          }
 
          setRecipes(props.myrecipes);
-         // disable recipe fetch for myrecipe for now
          return;
       } else {
          if (props.recipes) {

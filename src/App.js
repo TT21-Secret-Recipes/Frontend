@@ -56,7 +56,7 @@ function App() {
          >
             <Nav currentUser={currentUser} logout={logout} />
          </header>
-         <div style={{ marginTop: "80px" }}>
+         <div style={{ marginTop: "75px" }}>
             <Route exact path="/">
                {currentUser.id && <Redirect to="/dashboard/" />}
                <HomePage></HomePage>

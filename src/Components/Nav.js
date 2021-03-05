@@ -14,13 +14,6 @@ function Nav(props) {
       drawerback.current.style.visibility = "visible";
    };
 
-   // const hidedrawerback = () => {
-   //    drawerback.current.style.visibility = "hidden";
-   // };
-   // const showdrawerback = () => {
-   //    drawerback.current.style.visibility = "visible";
-   // };
-
    return (
       <nav
          style={{

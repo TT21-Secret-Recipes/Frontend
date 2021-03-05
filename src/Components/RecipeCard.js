@@ -65,7 +65,7 @@ const H1VStyled = styled.h1`
 `;
 
 const H4EditStyled = styled.h4`
-   margin: 0;
+   margin: 0 6px;
    opacity: ${(props) => (props.expanded ? 1 : 0)};
    transition: opacity 0.5s linear;
 `;
@@ -75,8 +75,6 @@ export default function RecipeCard(props) {
    const isMyRecipe = props.isMyRecipe;
    const [expanded, setExpanded] = useState(false);
    const [editMode, setEditMode] = useState(false);
-
-   //console.log('Props:', props)
 
    function toggleEditMode(evt) {
       setEditMode(!editMode);
@@ -113,6 +111,7 @@ export default function RecipeCard(props) {
                         <H4EditStyled
                            expanded={expanded}
                            onClick={toggleEditMode}
+                           className="menuicon"
                         >
                            Edit
                         </H4EditStyled>

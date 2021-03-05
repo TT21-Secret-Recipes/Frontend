@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
+import useFauna, { login } from "../FaunaAPI/FaunaAPI";
+import { LoginContext } from "../Contexts";
 
-import useFauna, { login } from '../FaunaAPI/FaunaAPI';
-import { LoginContext } from '../Contexts';
-
-import { path } from '../Routes/routes';
-import eyeVisible from '../assets/iconmonstr-eye-thin.svg';
-import eyeNotVisible from '../assets/iconmonstr-eye-off-thin.svg';
+import { path } from "../Routes/routes";
+import eyeVisible from "../assets/iconmonstr-eye-thin.svg";
+import eyeNotVisible from "../assets/iconmonstr-eye-off-thin.svg";
 
 import {
    DivFlexStyled,
@@ -22,12 +21,12 @@ import {
    ButtonSubmitStyled,
    PRedStyled,
    ImgEyeStyled,
-} from './SharedStyles';
-import schema from '../yupSchema/loginSchema';
+} from "./SharedStyles";
+import schema from "../yupSchema/loginSchema";
 
 const initialValues = {
-   email: '',
-   password: '',
+   email: "",
+   password: "",
 };
 
 const initialFocus = {
@@ -45,7 +44,7 @@ export default function LoginPage() {
    const { setCurrentUser } = useContext(LoginContext);
    const history = useHistory();
 
-   function togglePasswordVisibilty(){
+   function togglePasswordVisibilty() {
       setPasswordVisible(!passwordVisible);
    }
 
@@ -75,15 +74,12 @@ export default function LoginPage() {
             password: values.password,
          })
             .then((res) => {
-               // alert(res);
                setCurrentUser(res);
-               history.push('/dashboard');
+               history.push("/dashboard");
             })
             .catch((err) => {
-               // alert(err)
-               setErrors(['The provided email/password do not match']);
+               setErrors(["The provided email/password do not match"]);
             });
-
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);
@@ -99,19 +95,19 @@ export default function LoginPage() {
 
             <H1TitleStyled>Login</H1TitleStyled>
 
-            <form onSubmit={onSubmit} id='login'>
+            <form onSubmit={onSubmit} id="login">
                <DivFieldsetStyled>
                   <LabelStyled
                      focus={focus.email}
-                     htmlFor='email'
-                     hasData={values.email === '' ? false : true}
+                     htmlFor="email"
+                     hasData={values.email === "" ? false : true}
                   >
                      Email
                   </LabelStyled>
                   <InputStyled
-                     id='email'
-                     type='text'
-                     name='email'
+                     id="email"
+                     type="text"
+                     name="email"
                      value={values.email}
                      onChange={onChange}
                      onFocus={onFocus}
@@ -121,24 +117,24 @@ export default function LoginPage() {
 
                <DivFieldsetStyled>
                   <LabelStyled
-                     htmlFor='password'
+                     htmlFor="password"
                      focus={focus.password}
-                     hasData={values.password === '' ? false : true}
+                     hasData={values.password === "" ? false : true}
                   >
                      Password
                   </LabelStyled>
                   <InputStyled
-                     id='password'
-                     type={passwordVisible ? 'text' : 'password'}
-                     name='password'
+                     id="password"
+                     type={passwordVisible ? "text" : "password"}
+                     name="password"
                      value={values.password}
                      onChange={onChange}
                      onFocus={onFocus}
                      onBlur={onBlur}
                   />
-                  <ImgEyeStyled 
+                  <ImgEyeStyled
                      src={passwordVisible ? eyeNotVisible : eyeVisible}
-                     alt=''
+                     alt=""
                      onClick={togglePasswordVisibilty}
                   />
                </DivFieldsetStyled>
@@ -147,11 +143,10 @@ export default function LoginPage() {
             {errors.map((error, i) => (
                <PRedStyled key={i}>{error}</PRedStyled>
             ))}
-
          </DivFlexGrowStyled>
 
          <DivButtonPaddingStyled>
-            <ButtonSubmitStyled type='submit' form='login'>
+            <ButtonSubmitStyled type="submit" form="login">
                Login
             </ButtonSubmitStyled>
          </DivButtonPaddingStyled>

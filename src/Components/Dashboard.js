@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import DashNav from "./DashNav";
-import AddRecipe from "./AddRecipe";
-import NewAddRecipe from './NewAddRecipe';
+import NewAddRecipe from "./NewAddRecipe";
 import RecipeList from "./RecipeList";
 import PrivateRoute from "./PrivateRoute";
 import RecipePage from "./RecipePage";
@@ -48,7 +47,6 @@ function Dashboard(props) {
             getCategories(fauna).then((res) => setSearchCategories(res.data));
          } else {
             history.push("/");
-            // well since the code is getting messy, just hacking here.
             setTimeout(() => {
                history.push("/dashboard");
             }, 50);
@@ -79,7 +77,6 @@ function Dashboard(props) {
             </Route>
             <Route path="/dashboard/addnew">
                <NewAddRecipe />
-               <AddRecipe />
             </Route>
             <Route exact path="/dashboard/recipes">
                <RecipeList recipes={currentDisplayedRecipes} />
