@@ -114,3 +114,16 @@ export const ImgEyeStyled = styled.img`
   margin-top: 4px;
   width: 20px;
 `
+
+// for newAddRecipe and Recipe Card
+export const DivMainStyled = styled.div`
+  align-self: center;
+  background: #f1f1f1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+  padding: 1% 2%;
+  padding-left: ${props => props.noPadding === true ? '0' : '2%'};
+  width: 75vw;
+`

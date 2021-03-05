@@ -3,18 +3,7 @@ import styled from "styled-components";
 // import { RiCloseFill } from "react-icons/ri";
 import useFauna, { submitRecipe, updateRecipe, deleteRecipe } from "../FaunaAPI/FaunaAPI";
 import { DashContext } from "../Contexts";
-
-const DivMainStyled = styled.div`
-  align-self: center;
-  background: #f1f1f1;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  margin-top: 2%;
-  padding: 1% 2%;
-  padding-left: ${props => props.noPadding === true ? '0' : '2%'};
-  width: 75vw;
-`
+import { DivMainStyled } from './SharedStyles';
 
 const DivLabelStyled = styled.div`
   font-weight: 700;
@@ -112,7 +101,6 @@ export default function NewAddRecipe(props){
       .then( (res) => {
         // console.log(res)
         // window.location.reload();
-        props.getOut();
       })
       .catch( err => console.log(err))
   }
@@ -122,6 +110,7 @@ export default function NewAddRecipe(props){
     props.recipe === undefined
       ? addNew()
       : update();
+    window.location.reload();
   }
 
   return (
@@ -187,7 +176,7 @@ export default function NewAddRecipe(props){
           </div>
 
           <div>
-            {props.recipe !== undefined && <button type='button' onClick={props.getOut}>Cancel</button>}
+            {props.recipe !== undefined && <button type='button' onClick={props.getBack}>Cancel</button>}
           </div>
 
           <div>
