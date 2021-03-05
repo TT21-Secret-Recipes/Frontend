@@ -1,3 +1,4 @@
+
 import React, { useState, useContext } from "react";
 import { useHistory } from 'react-router-dom';
 
@@ -46,6 +47,7 @@ export default function SignupPage() {
    const [focus, setFocus] = useState(initialFocus);
    const [errors, setErrors] = useState([]);
    const [passwordVisible, setPasswordVisible] = useState(false);
+   const history = useHistory();
 
    const { setCurrentUser } = useContext(LoginContext);
    const history = useHistory();
@@ -81,6 +83,7 @@ export default function SignupPage() {
 
          register(fauna, values)
             .then(() => {
+
                login(fauna, {
                   email: values.email,
                   password: values.password,
@@ -96,6 +99,8 @@ export default function SignupPage() {
             })
             .catch((err) => setErrors([err.charAt(0).toUpperCase() + err.slice(1)]));
 
+
+     
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);
          setErrors(list);

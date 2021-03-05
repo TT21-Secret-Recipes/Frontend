@@ -29,7 +29,7 @@ function Profile() {
 
    return (
       <Styledpage>
-         <Styledheader class="profheader">
+         <Styledheader className="profheader">
             <Styledpicbox>
                <Styleimg src={defaultPic} />
             </Styledpicbox>

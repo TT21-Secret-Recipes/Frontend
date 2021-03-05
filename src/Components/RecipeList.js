@@ -3,8 +3,21 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import { DashContext } from "../Contexts";
 import RecipeCard from "./RecipeCard";
 // import MyRecipeCard from "./MyRecipeCard";
-import useFauna, { getRecipes, search } from "../FaunaAPI/FaunaAPI";
+import MyRecipeCard from "./MyRecipeCard";
+import useFauna, {
+   getRecipes,
+   search,
+   getNextPage,
+   getPrevPage,
+} from "../FaunaAPI/FaunaAPI";
+
 import { useRouteMatch } from "react-router-dom";
+import {
+   // BsChevronDoubleLeft,
+   // BsChevronDoubleRight,
+   BsChevronLeft,
+   BsChevronRight,
+} from "react-icons/bs";
 
 function Search(props) {
    const {
@@ -14,9 +27,13 @@ function Search(props) {
       setRecipes,
       searchCategory,
       setSearchCategory,
+      setShowpage,
       searchbox,
       fauna,
+      setCurrentPage,
+      setCurrentAfter,
    } = props.bundle;
+
    return (
       <div
          style={{
@@ -31,6 +48,7 @@ function Search(props) {
          <input
             style={{
                width: "80%",
+
                marginRight: "2%",
                height: "2.7vh",
                fontSize: "1.2rem",
@@ -45,11 +63,12 @@ function Search(props) {
          <select
             name=""
             id=""
-            style={{ height: "2.8vh", fontSize: "0.9rem" }}
+            style={{ height: "2.8vh", fontSize: "0.9rem", maxWidth: "100px" }}
             onChange={(e) => setSearchCategory(e.target.value)}
             value={searchCategory}
          >
-            <option value=""> </option>
+            {/* we have a empty string in database, so we use that as search all */}
+            {/* <option value=""> </option> */}
             {/* this ideally should be a .map() by searching against api for all available categories somewhere in the app*/}
             {existingCategory.map((i) => (
                <option value={String(i)} key={i}>
@@ -60,13 +79,20 @@ function Search(props) {
          <button
             style={{ marginLeft: "2%", padding: "4px 12px" }}
             onClick={() => {
+               setShowpage(true);
+               setCurrentPage(1);
+               if (searchCategory !== "") {
+                  setShowpage(false);
+               }
                // console.log(searchbox.current.value);
                if (searchbox.current.value === "" && searchCategory === "") {
                   if (props.recipes) {
                      setRecipes(props.recipes);
                      return;
                   } else {
-                     getRecipes(fauna).then((res) => setRecipes(res));
+                     getRecipes(fauna, setCurrentAfter).then((res) =>
+                        setRecipes(res)
+                     );
                      return;
                   }
                }
@@ -75,20 +101,6 @@ function Search(props) {
                      setRecipes(res);
                   })
                   .catch((err) => alert(err));
-
-               // if (searchCategory === "") {
-               //    if (props.recipes) {
-               //       setRecipes(props.recipes);
-               //       return;
-               //    } else {
-               //       getRecipes(fauna).then((res) => setRecipes(res));
-               //       return;
-               //    }
-               // }
-
-               // getRecipesByCategory(fauna, searchCategory).then((res) =>
-               //    setRecipes(res)
-               // );
             }}
          >
             OK
@@ -102,8 +114,19 @@ function RecipeList(props) {
    const [searchterm, setSearchTerm] = useState("");
    const [recipes, setRecipes] = useState([]);
    const [existingCategory, setExistingCategory] = useState([]);
+   const [showpage, setShowpage] = useState(true);
    const [searchCategory, setSearchCategory] = useState("");
-   const { searchCategories } = useContext(DashContext);
+   const [loading, setLoading] = useState(false);
+   const {
+      currentBefore,
+      setCurrentBefore,
+      currentAfter,
+      setCurrentAfter,
+      searchCategories,
+      currentPage,
+      setCurrentPage,
+      maxPage,
+   } = useContext(DashContext);
    const { path } = useRouteMatch();
    const searchbox = useRef();
    const onMyRecipes = () =>
@@ -113,15 +136,124 @@ function RecipeList(props) {
       searchterm,
       setSearchTerm,
       existingCategory,
+      setShowpage,
       searchCategory,
       setSearchCategory,
       searchbox,
+      setCurrentPage,
       setRecipes,
+      setCurrentAfter,
       fauna,
    };
+
+   function PageControl() {
+      if (onMyRecipes()) {
+         return <></>;
+      }
+
+      return (
+         <div
+            style={{
+               display: "flex",
+               alignItems: "center",
+               alignSelf: "center",
+               justifyContent: "space-between",
+               width: "20vh",
+               minWidth: "200px",
+               fontSize: "1.2rem",
+               margin: "1%",
+            }}
+         >
+            {/* <BsChevronDoubleLeft
+               className="menuicon"
+               onClick={() => {
+                  setCurrentPage(currentPage - 5 < 1 ? 1 : currentPage - 5);
+               }}
+            /> */}
+            <button
+               className="menuicon"
+               style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: "1.2rem",
+                  marginTop: "0.4rem",
+               }}
+               onClick={() => {
+                  if (currentPage === 1) {
+                     return;
+                  }
+                  if (loading) {
+                     return;
+                  }
+                  setLoading(true);
+                  setCurrentPage(currentPage - 1 < 1 ? 1 : currentPage - 1);
+
+                  if (currentPage !== 1) {
+                     getPrevPage(
+                        fauna,
+                        currentBefore,
+                        setCurrentBefore,
+                        setCurrentAfter
+                     ).then((res) => {
+                        setLoading(false);
+                        setRecipes(res);
+                     });
+                  }
+               }}
+            >
+               <BsChevronLeft />
+            </button>
+            <div>{currentPage}</div>
+            <button
+               className="menuicon"
+               style={{
+                  background: "none",
+                  border: "none",
+                  fontSize: "1.2rem",
+                  marginTop: "0.4rem",
+               }}
+               onClick={(e) => {
+                  if (loading) {
+                     return;
+                  }
+                  setLoading(true);
+                  setCurrentPage(
+                     currentPage + 1 > maxPage ? maxPage : currentPage + 1
+                  );
+                  if (currentPage + 1 > maxPage) {
+                     return;
+                  }
+
+                  getNextPage(
+                     fauna,
+                     currentAfter,
+                     setCurrentBefore,
+                     setCurrentAfter
+                  ).then((res) => {
+                     setLoading(false);
+                     setRecipes(res);
+                  });
+               }}
+            >
+               <BsChevronRight />
+            </button>
+
+            {/* <BsChevronDoubleRight
+               className="menuicon"
+               onClick={() => {
+                  setCurrentPage(currentPage + 5);
+               }}
+            /> */}
+         </div>
+      );
+   }
+
+   useEffect(() => {}, [currentPage]);
+
    useEffect(() => {
       setExistingCategory(searchCategories);
       setSearchCategory("");
+      setCurrentPage(1);
       if (onMyRecipes()) {
          if (!props.myrecipes) {
             getCurrentUserRecipes(
@@ -138,7 +270,7 @@ function RecipeList(props) {
             setRecipes(props.recipes);
             return;
          } else {
-            getRecipes(fauna).then((res) => setRecipes(res));
+            getRecipes(fauna, setCurrentAfter).then((res) => setRecipes(res));
             return;
          }
       }
@@ -159,6 +291,8 @@ function RecipeList(props) {
             ? recipes.map((i) => <RecipeCard recipe={i} key={i.id} isMyRecipe={true}/>)
             : recipes.map((i) => <RecipeCard recipe={i} key={i.id} isMyRecipe={false}/>)}
          {}
+
+         {showpage && <PageControl></PageControl>}
       </div>
    );
 }

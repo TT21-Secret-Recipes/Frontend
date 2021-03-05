@@ -12,6 +12,7 @@ import useFauna, {
    getCurrentUserRecipes,
    getRecipes,
    getCategories,
+   getCount,
 } from "../FaunaAPI/FaunaAPI";
 
 function Dashboard(props) {
@@ -21,15 +22,26 @@ function Dashboard(props) {
       setCurrentUsersRecipes,
       setSearchCategories,
       currentDisplayedRecipes,
+      setCurrentAfter,
       setCurrentDisplayedRecipes,
+      setMaxPage,
    } = useContext(DashContext);
    const fauna = useFauna();
    const history = useHistory();
 
    useEffect(() => {
+      getCount(fauna).then((res) => {
+         if (res % 6 === 0) {
+            setMaxPage(res / 6);
+         } else {
+            setMaxPage(Math.floor(res / 6) + 1);
+         }
+      });
       if (localStorage.getItem("tt21_token")) {
          if (currentUser.id !== undefined) {
-            getRecipes(fauna).then((res) => setCurrentDisplayedRecipes(res));
+            getRecipes(fauna, setCurrentAfter).then((res) =>
+               setCurrentDisplayedRecipes(res)
+            );
             getCurrentUserRecipes(fauna, currentUser.id).then((res) =>
                setCurrentUsersRecipes(res)
             );

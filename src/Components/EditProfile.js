@@ -69,7 +69,7 @@ function EditProfile() {
 
    return (
       <Styledpage>
-         <Styledheader class="profheader">
+         <Styledheader className="profheader">
             <Styledpicbox>
                <Styleimg src={defaultPic} />
             </Styledpicbox>
@@ -95,7 +95,7 @@ function EditProfile() {
                         value={values.username}
                         name="username"
                         type="text"
-                        defaultValue={currentUser.username}
+                        // defaultValue={currentUser.username}
                         onChange={onChange}
                      />
                   </Stylelabel>
@@ -108,7 +108,7 @@ function EditProfile() {
                         value={values.firstname}
                         name="firstname"
                         type="text"
-                        defaultValue={currentUser.firstname}
+                        // defaultValue={currentUser.firstname}
                         onChange={onChange}
                      />
                   </Stylelabel>
@@ -118,7 +118,7 @@ function EditProfile() {
                      </Stylenamebox>
                      <Styleinput
                         value={values.lastname}
-                        defaultValue={currentUser.lastname}
+                        // defaultValue={currentUser.lastname}
                         name="lastname"
                         type="text"
                         onChange={onChange}
