@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 // import styled from "styled-components";
 // import axios from "axios";
 import useFauna, { register } from "../FaunaAPI/FaunaAPI";
@@ -43,6 +43,7 @@ export default function SignupPage() {
    const [focus, setFocus] = useState(initialFocus);
    const [errors, setErrors] = useState([]);
    const [passwordVisible, setPasswordVisible] = useState(false);
+   const history = useHistory();
 
    const fauna = useFauna();
 
@@ -74,7 +75,10 @@ export default function SignupPage() {
          setErrors([]); // sucsess! register user
 
          register(fauna, values)
-            .then(() => alert("registered"))
+            .then(() => {
+               alert("registered successfully");
+               history.push("/auth/login");
+            })
             .catch((err) => alert(err));
       } catch (err) {
          const list = err.inner.map((error) => error.errors[0]);

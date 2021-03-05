@@ -3,7 +3,7 @@ import { useState } from "react";
 import sha512 from "crypto-js/sha512";
 import { v4 } from "uuid";
 import dayjs from "dayjs";
-const DBKEY = "fnAEDU6P0MACCG7RBdvmIKviKzteD2ATpMvtVVxF";
+const DBKEY = process.env.REACT_APP_DBKEY;
 
 export function login2({ client, q }, req) {
    return new Promise((resolve, reject) => {
@@ -130,12 +130,77 @@ export function register({ client, q }, req) {
    });
 }
 
-export function getRecipes({ client, q }) {
+export function getRecipes({ client, q }, setCurrentAfter) {
    // currently no authentication for getting recipes
    return new Promise((resolve, reject) => {
       client
-         .query(q.Paginate(q.Documents(q.Collection("recipes")), { size: 20 }))
+         .query(
+            q.Paginate(q.Documents(q.Collection("recipes")), {
+               size: 6,
+            })
+         )
          .then((ret) => {
+            setCurrentAfter(ret.after);
+            client
+               .query(q.Map(ret.data, q.Lambda("x", q.Get(q.Var("x")))))
+               .then((res) => {
+                  resolve(res.map((i) => i.data));
+               });
+         });
+   });
+}
+
+export function getCount({ client, q }) {
+   return new Promise((resolve, reject) => {
+      client
+         .query(q.Count(q.Documents(q.Collection("recipes"))))
+         .then((res) => resolve(res));
+   });
+}
+
+export function getNextPage(
+   { client, q },
+   currentAfter,
+   setCurrentBefore,
+   setCurrentAfter
+) {
+   return new Promise((resolve, reject) => {
+      client
+         .query(
+            q.Paginate(q.Documents(q.Collection("recipes")), {
+               size: 6,
+               after: currentAfter,
+            })
+         )
+         .then((ret) => {
+            setCurrentBefore(ret.before);
+            setCurrentAfter(ret.after);
+            client
+               .query(q.Map(ret.data, q.Lambda("x", q.Get(q.Var("x")))))
+               .then((res) => {
+                  resolve(res.map((i) => i.data));
+               });
+         });
+   });
+}
+
+export function getPrevPage(
+   { client, q },
+   currentBefore,
+   setCurrentBefore,
+   setCurrentAfter
+) {
+   return new Promise((resolve, reject) => {
+      client
+         .query(
+            q.Paginate(q.Documents(q.Collection("recipes")), {
+               size: 6,
+               before: currentBefore,
+            })
+         )
+         .then((ret) => {
+            setCurrentBefore(ret.before);
+            setCurrentAfter(ret.after);
             client
                .query(q.Map(ret.data, q.Lambda("x", q.Get(q.Var("x")))))
                .then((res) => {
@@ -147,10 +212,11 @@ export function getRecipes({ client, q }) {
 
 export function getRecipesByCategory({ client, q }, category) {
    return new Promise((resolve, reject) => {
+      // not enough time to handle pagination now, code is getting messy
       client
          .query(
             q.Paginate(q.Match(q.Index("RefByRecipeCategory"), category), {
-               size: 15,
+               size: 5000,
             })
          )
          .then((ret) => {
