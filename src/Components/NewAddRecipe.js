@@ -5,6 +5,18 @@ import useFauna, { submitRecipe } from "../FaunaAPI/FaunaAPI";
 // import { useHistory } from "react-router-dom";
 import { DashContext } from "../Contexts";
 
+const DivMainStyled = styled.div`
+  align-self: center;
+  background: #f1f1f1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+  padding: 1% 2%;
+  padding-left: ${props => props.noPadding === true ? '0' : '2%'};
+  width: 75vw;
+`
+
 const DivLabelStyled = styled.div`
   font-weight: 700;
   font-size: 1.3rem;
@@ -21,7 +33,11 @@ const TextAreaStyled = styled.textarea`
   width: 260px;
 `
 
-function parseIngredients(ingredients){
+function parseIngredientsArray(ingredients){
+  return ingredients.concat();
+}
+
+function parseIngredientsString(ingredients){
   return ingredients !== ''
     ? ingredients.split('\n').filter( str => str !== '')
     : [];
@@ -52,7 +68,7 @@ export default function NewAddRecipe(props){
   const fauna = useFauna();
   const { currentUser } = useContext(DashContext);
   
-  const initialValues = props.recipe === undefined ? blankValues : props.recipe;
+  const initialValues = props.recipe === undefined ? blankValues : { ...props.recipe, ingredients: parseIngredientsArray(props.recipe.ingredients)};
   const [values, setValues] = useState(initialValues);
 
   function onChange(evt){
@@ -64,7 +80,7 @@ export default function NewAddRecipe(props){
     evt.preventDefault();
     submitRecipe(fauna, {
       ...values,
-      ingredients: parseIngredients(values.ingredients),
+      ingredients: parseIngredientsString(values.ingredients),
       submittedBy: currentUser.id,
     }).then( res => {
       // console.log(res);
@@ -73,18 +89,7 @@ export default function NewAddRecipe(props){
   }
 
   return (
-    <div
-         style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "75vw",
-          alignSelf: "center",
-          background: "#f1f1f1",
-          borderRadius: "12px",
-          padding: "1% 2%",
-          marginTop: "2%",
-        }}
-      >Hello
+    <DivMainStyled noPadding={props.recipe !== undefined}>
         <form onSubmit={submit}>
           <label>
             <DivLabelStyled>Title:</DivLabelStyled>
@@ -140,9 +145,11 @@ export default function NewAddRecipe(props){
               onChange={onChange}
             />
           </label>
-
-          <button type='submit'>Submit</button>
+          
+          <div>
+            <button type='submit'>Submit</button>
+          </div>
          </form>
-      </div>
+      </DivMainStyled>
   )
 }

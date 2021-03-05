@@ -5,6 +5,8 @@ import useFauna, { getRecipe } from "../FaunaAPI/FaunaAPI";
 import { DashContext } from "../Contexts";
 import styled from "styled-components";
 
+import NewAddRecipe from './NewAddRecipe';
+
 const DivDescriptionStyled = styled.div`
    height: auto;
    max-height: ${(props) => {
@@ -101,7 +103,42 @@ function RecipeCard(props) {
          }}
       >
          {/* optional img */}
-         <div
+         {!editMode && <div>
+            <div
+            style={{
+               display: "flex",
+               justifyContent: "space-between",
+               fontWeight: "700",
+               fontSize: "1.3rem",
+            }}
+            >
+               {title}
+
+               <div
+                  style={{
+                     display: "flex",
+                     justifyContent: "space-between",
+                     alignItems: "center",
+                  }}
+               >
+                  { ( isMyRecipe ) && <H4EditStyled expanded={expanded} onClick={setEditMode.bind(!editMode)}>Edit</H4EditStyled>}
+                  <H1VStyled expanded={expanded} onClick={toggleExpand}>
+                     <RiArrowDownSFill className="menuicon" />
+                  </H1VStyled>
+               </div>
+            </div>
+
+            <div>
+               <span style={{ fontWeight: "600" }}> Source: </span> {source}
+            </div>
+
+            <div>
+               <span style={{ fontWeight: "600" }}> Category: </span> {category}
+            </div>
+            <FullRecipeCard recipeID={props.recipe.id} expanded={expanded} />
+         </div>}
+
+         {/* <div
             style={{
                display: "flex",
                justifyContent: "space-between",
@@ -132,7 +169,10 @@ function RecipeCard(props) {
          <div>
             <span style={{ fontWeight: "600" }}> Category: </span> {category}
          </div>
-         <FullRecipeCard recipeID={props.recipe.id} expanded={expanded} />
+         <FullRecipeCard recipeID={props.recipe.id} expanded={expanded} /> */}
+         {editMode && <div>
+            <NewAddRecipe recipe={props.recipe} />
+         </div>}
       </div>
    );
 }
