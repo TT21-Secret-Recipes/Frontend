@@ -1,8 +1,7 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 // import { RiCloseFill } from "react-icons/ri";
-import useFauna, { submitRecipe, updateRecipe } from "../FaunaAPI/FaunaAPI";
-// import { useHistory } from "react-router-dom";
+import useFauna, { submitRecipe, updateRecipe, deleteRecipe } from "../FaunaAPI/FaunaAPI";
 import { DashContext } from "../Contexts";
 
 const DivMainStyled = styled.div`
@@ -34,7 +33,9 @@ const TextAreaStyled = styled.textarea`
 `
 
 function parseIngredientsArray(ingredients){
-  return ingredients.join();
+  return ingredients !== ''
+    ? ingredients.join()
+    : [];
 }
 
 function parseIngredientsString(ingredients){
@@ -70,6 +71,25 @@ export default function NewAddRecipe(props){
   
   const initialValues = props.recipe === undefined ? blankValues : { ...props.recipe, ingredients: parseIngredientsArray(props.recipe.ingredients)};
   const [values, setValues] = useState(initialValues);
+  const [readyToDelete, setReadyToDelete] = useState(false); 
+
+  function deleteFunction(evt){
+    const evtValue = evt.target.value;
+    if(readyToDelete === false){
+      setReadyToDelete(true);
+    } else {
+      console.log(evtValue)
+      if(evtValue === 'true'){
+        deleteRecipe(fauna, props.recipe.id)
+          .then( res => {
+            window.location.reload();
+          })
+          .catch( err => console.log(err))
+      } else {
+        setReadyToDelete(false);
+      }
+    }
+  }
 
   function onChange(evt){
     const { name, value } = evt.target;
@@ -168,6 +188,12 @@ export default function NewAddRecipe(props){
 
           <div>
             {props.recipe !== undefined && <button type='button' onClick={props.getOut}>Cancel</button>}
+          </div>
+
+          <div>
+            {readyToDelete === true && <h5>Are you sure you're ready to delete this recipe?</h5>}
+            {readyToDelete === true && <button type='button' value='false' onClick={deleteFunction}>Cancel</button>}
+            {props.recipe !== undefined && <button type='button' value='true' onClick={deleteFunction}>Delete</button>}
           </div>
          </form>
       </DivMainStyled>
