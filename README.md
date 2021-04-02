@@ -1,5 +1,9 @@
 # Secret Family Recipes Cookbook Frontend
 
+- The vercel team was deleted since it costs money. A new deployment is set:
+
+## Now at: https://tt21-recipes-frontend.vercel.app/
+
 #### Prompt
 - https://www.notion.so/Secret-Family-Recipes-Cookbook-ecf9be06b6044e9cb5e69eba6f82f658
 
